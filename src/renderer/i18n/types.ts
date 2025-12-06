@@ -210,4 +210,34 @@ export interface Translations {
     snow: string;
     thunderstorm: string;
   };
+  // Welcome page
+  welcome: {
+    importData: string;
+    importDescription: string;
+    searchingBrowsers: string;
+    importing: string;
+    done: string;
+    notFound: string;
+    import: string;
+    continue: string;
+    chooseAccent: string;
+    accentDescription: string;
+    startWork: string;
+    close: string;
+    minimize: string;
+    maximize: string;
+    // Accent colors
+    colors: {
+      white: string;
+      gray: string;
+      blue: string;
+      green: string;
+      red: string;
+      orange: string;
+      yellow: string;
+      purple: string;
+      pink: string;
+      cyan: string;
+    };
+  };
 }

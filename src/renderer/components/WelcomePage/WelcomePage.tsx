@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { DetectedBrowser } from '../../types';
 import { ChromeIcon, EdgeIcon, FirefoxIcon, ZenBrowserIcon } from '../ZenSidebar/icons';
+import { useTranslation } from '../../hooks/useTranslation';
+import { Language } from '../../i18n';
 import '@/renderer/styles/components/welcome-page.css';
 
 interface WelcomePageProps {
   onComplete: (accentColor: string) => void;
   onImport: (browser: 'chrome' | 'firefox' | 'edge' | 'zen') => Promise<void>;
+  language?: Language;
 }
 
 const browserIcons: Record<string, React.FC<{ size?: number }>> = {
@@ -16,19 +19,20 @@ const browserIcons: Record<string, React.FC<{ size?: number }>> = {
 };
 
 const ACCENT_COLORS = [
-  { id: 'white', color: '#ffffff', name: 'Белый' },
-  { id: 'gray', color: '#9ca3af', name: 'Серый' },
-  { id: 'blue', color: '#3b82f6', name: 'Синий' },
-  { id: 'green', color: '#22c55e', name: 'Зелёный' },
-  { id: 'red', color: '#ef4444', name: 'Красный' },
-  { id: 'orange', color: '#f97316', name: 'Оранжевый' },
-  { id: 'yellow', color: '#eab308', name: 'Жёлтый' },
-  { id: 'purple', color: '#a855f7', name: 'Фиолетовый' },
-  { id: 'pink', color: '#ec4899', name: 'Розовый' },
-  { id: 'cyan', color: '#06b6d4', name: 'Голубой' },
-];
+  { id: 'white', color: '#ffffff' },
+  { id: 'gray', color: '#9ca3af' },
+  { id: 'blue', color: '#3b82f6' },
+  { id: 'green', color: '#22c55e' },
+  { id: 'red', color: '#ef4444' },
+  { id: 'orange', color: '#f97316' },
+  { id: 'yellow', color: '#eab308' },
+  { id: 'purple', color: '#a855f7' },
+  { id: 'pink', color: '#ec4899' },
+  { id: 'cyan', color: '#06b6d4' },
+] as const;
 
-const WelcomePage: React.FC<WelcomePageProps> = ({ onComplete, onImport }) => {
+const WelcomePage: React.FC<WelcomePageProps> = ({ onComplete, onImport, language = 'ru' }) => {
+  const t = useTranslation(language);
   const [currentPage, setCurrentPage] = useState(0);
   const [browsers, setBrowsers] = useState<DetectedBrowser[]>([]);
   const [loading, setLoading] = useState(true);
@@ -90,17 +94,17 @@ const WelcomePage: React.FC<WelcomePageProps> = ({ onComplete, onImport }) => {
         <button 
           className="window-control-btn close" 
           onClick={() => window.electronAPI.close()}
-          title="Закрыть"
+          title={t.welcome.close}
         />
         <button 
           className="window-control-btn minimize" 
           onClick={() => window.electronAPI.minimize()}
-          title="Свернуть"
+          title={t.welcome.minimize}
         />
         <button 
           className="window-control-btn maximize" 
           onClick={() => window.electronAPI.maximize()}
-          title="Развернуть"
+          title={t.welcome.maximize}
         />
       </div>
 
@@ -121,13 +125,13 @@ const WelcomePage: React.FC<WelcomePageProps> = ({ onComplete, onImport }) => {
             {/* Right column: Import */}
             <div className="welcome-column welcome-column-right">
               <div className="welcome-import">
-                <h2>Импорт данных</h2>
+                <h2>{t.welcome.importData}</h2>
                 <p className="import-description">
-                  Перенесите закладки и историю из другого браузера
+                  {t.welcome.importDescription}
                 </p>
 
                 {loading ? (
-                  <div className="import-loading">Поиск браузеров...</div>
+                  <div className="import-loading">{t.welcome.searchingBrowsers}</div>
                 ) : (
                   <div className="browser-list">
                     {browsers.map(browser => {
@@ -149,13 +153,13 @@ const WelcomePage: React.FC<WelcomePageProps> = ({ onComplete, onImport }) => {
                           <span className="browser-item-name">{browser.name}</span>
                           <span className="browser-item-status">
                             {isImporting ? (
-                              <span className="status-importing">Импорт...</span>
+                              <span className="status-importing">{t.welcome.importing}</span>
                             ) : isImported ? (
-                              <span className="status-done">Готово</span>
+                              <span className="status-done">{t.welcome.done}</span>
                             ) : !browser.available ? (
-                              <span className="status-unavailable">Не найден</span>
+                              <span className="status-unavailable">{t.welcome.notFound}</span>
                             ) : (
-                              <span className="status-available">Импортировать</span>
+                              <span className="status-available">{t.welcome.import}</span>
                             )}
                           </span>
                         </button>
@@ -167,7 +171,7 @@ const WelcomePage: React.FC<WelcomePageProps> = ({ onComplete, onImport }) => {
 
               <div className="welcome-actions">
                 <button className="btn-primary" onClick={goToNextPage}>
-                  Продолжить
+                  {t.welcome.continue}
                 </button>
               </div>
             </div>
@@ -178,12 +182,12 @@ const WelcomePage: React.FC<WelcomePageProps> = ({ onComplete, onImport }) => {
         <div className={`welcome-slide ${currentPage === 1 ? 'active' : 'hidden'}`}>
           <div className="welcome-content accent-page">
             <div className="welcome-header">
-              <h1 className="welcome-title">Выберите акцент</h1>
-              <p className="welcome-subtitle">Этот цвет будет использоваться для кнопок и выделений</p>
+              <h1 className="welcome-title">{t.welcome.chooseAccent}</h1>
+              <p className="welcome-subtitle">{t.welcome.accentDescription}</p>
             </div>
 
             <div className="accent-grid">
-              {ACCENT_COLORS.map(({ id, color, name }) => (
+              {ACCENT_COLORS.map(({ id, color }) => (
                 <button
                   key={id}
                   className={`accent-option ${selectedAccent === color ? 'selected' : ''}`}
@@ -191,13 +195,13 @@ const WelcomePage: React.FC<WelcomePageProps> = ({ onComplete, onImport }) => {
                   style={{ '--accent-preview': color } as React.CSSProperties}
                 >
                   <div className="accent-swatch" />
-                  <span className="accent-name">{name}</span>
+                  <span className="accent-name">{t.welcome.colors[id as keyof typeof t.welcome.colors]}</span>
                 </button>
               ))}
             </div>
             <div className="welcome-actions">
               <button className="btn-primary" onClick={handleFinish} style={{ background: selectedAccent }}>
-                Начать работу
+                {t.welcome.startWork}
               </button>
             </div>
 

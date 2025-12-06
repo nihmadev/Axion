@@ -16,7 +16,24 @@ export interface Tab {
   thumbnailUpdatedAt?: number; // Время последнего обновления скриншота
 }
 
-export type Language = 'ru' | 'en';
+export type Language = 'ru' | 'en' | 'es' | 'fr' | 'de';
+
+// Определяет системный язык пользователя
+export function getSystemLanguage(): Language {
+  const browserLang = navigator.language.split('-')[0].toLowerCase();
+  const supportedLanguages: Language[] = ['ru', 'en', 'es', 'fr', 'de'];
+  return supportedLanguages.includes(browserLang as Language) 
+    ? (browserLang as Language) 
+    : 'en';
+}
+
+// Определяет системный формат времени (12h или 24h)
+export function getSystemTimeFormat(): '12h' | '24h' {
+  const testDate = new Date(2000, 0, 1, 13, 0, 0);
+  const formatted = testDate.toLocaleTimeString(navigator.language, { hour: 'numeric' });
+  // Если в строке есть AM/PM или время меньше 13, значит 12-часовой формат
+  return /am|pm/i.test(formatted) || parseInt(formatted) < 13 ? '12h' : '24h';
+}
 
 export interface TabError {
   code: number;
@@ -108,7 +125,7 @@ export interface Settings {
   soundEnabled: boolean;
   notificationsEnabled: boolean;
   downloadPath: string;
-  language: 'ru' | 'en';
+  language: Language;
   showWelcomeOnNextLaunch: boolean;
 }
 
@@ -125,33 +142,92 @@ export interface DetectedBrowser {
   available: boolean;
 }
 
+// Функция для создания дефолтных настроек с системными значениями
+export function createDefaultSettings(): Settings {
+  return {
+    // Поиск
+    searchEngine: 'google',
+    
+    // Внешний вид
+    theme: 'dark',
+    accentColor: '#7c3aed',
+    fontSize: 14,
+    fontFamily: 'system',
+    borderRadius: 'medium',
+    
+    // Сайдбар
+    sidebarPosition: 'right',
+    sidebarStyle: 'default',
+    sidebarAutoHide: false,
+    showSidebarQuickSites: true,
+    showSidebarWorkspaces: true,
+    showSidebarNavigation: true,
+    
+    // Вкладки
+    tabPosition: 'top',
+    tabStyle: 'default',
+    showTabPreviews: true,
+    showTabFavicons: true,
+    tabCloseButton: 'hover',
+    
+    // Стартовая страница
+    startPageBackground: 'gradient',
+    wallpaperUrl: '/walpaper1.jpg',
+    wallpaperBlur: 0,
+    wallpaperDim: 20,
+    showWeather: true,
+    showQuotes: false,
+    showTodos: false,
+    showClock: true,
+    clockFormat: getSystemTimeFormat(), // Берём из системы
+    showSearchOnStartPage: true,
+    showQuickSitesOnStartPage: true,
+    quickSitesLayout: 'grid',
+    
+    // Приватность и безопасность
+    adBlockEnabled: true,
+    trackingProtection: true,
+    httpsOnly: false,
+    clearDataOnExit: false,
+    
+    // Производительность
+    hardwareAcceleration: true,
+    tabSuspension: true,
+    tabSuspensionTimeout: 30,
+    preloadPages: false,
+    
+    // Дополнительно
+    showBookmarksBar: true,
+    readerModeEnabled: false,
+    smoothScrolling: true,
+    animationsEnabled: true,
+    soundEnabled: true,
+    notificationsEnabled: true,
+    downloadPath: '',
+    language: getSystemLanguage(), // Берём из системы
+    showWelcomeOnNextLaunch: false,
+  };
+}
+
+// Для обратной совместимости - статический объект с fallback значениями
 export const defaultSettings: Settings = {
-  // Поиск
   searchEngine: 'google',
-  
-  // Внешний вид
   theme: 'dark',
   accentColor: '#7c3aed',
   fontSize: 14,
   fontFamily: 'system',
   borderRadius: 'medium',
-  
-  // Сайдбар
   sidebarPosition: 'right',
   sidebarStyle: 'default',
   sidebarAutoHide: false,
   showSidebarQuickSites: true,
   showSidebarWorkspaces: true,
   showSidebarNavigation: true,
-  
-  // Вкладки
   tabPosition: 'top',
   tabStyle: 'default',
   showTabPreviews: true,
   showTabFavicons: true,
   tabCloseButton: 'hover',
-  
-  // Стартовая страница
   startPageBackground: 'gradient',
   wallpaperUrl: '/walpaper1.jpg',
   wallpaperBlur: 0,
@@ -164,20 +240,14 @@ export const defaultSettings: Settings = {
   showSearchOnStartPage: true,
   showQuickSitesOnStartPage: true,
   quickSitesLayout: 'grid',
-  
-  // Приватность и безопасность
   adBlockEnabled: true,
   trackingProtection: true,
   httpsOnly: false,
   clearDataOnExit: false,
-  
-  // Производительность
   hardwareAcceleration: true,
   tabSuspension: true,
   tabSuspensionTimeout: 30,
   preloadPages: false,
-  
-  // Дополнительно
   showBookmarksBar: true,
   readerModeEnabled: false,
   smoothScrolling: true,
@@ -185,7 +255,7 @@ export const defaultSettings: Settings = {
   soundEnabled: true,
   notificationsEnabled: true,
   downloadPath: '',
-  language: 'ru',
+  language: 'en',
   showWelcomeOnNextLaunch: false,
 };
 

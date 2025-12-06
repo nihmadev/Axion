@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useRef, useMemo, useEffect } from 'react';
-import { Settings, defaultSettings } from './types';
+import { Settings, createDefaultSettings } from './types';
 import { useTranslation } from './hooks/useTranslation';
 import TitleBar from './components/TitleBar/TitleBar';
 import AddressBar from './components/AddressBar/AddressBar';
@@ -27,7 +27,7 @@ import './styles/App.css';
 const App: React.FC = () => {
   
   // Базовые состояния
-  const [settings, setSettings] = useState<Settings>(defaultSettings);
+  const [settings, setSettings] = useState<Settings>(() => createDefaultSettings());
   const [showNewTabModal, setShowNewTabModal] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showImportDialog, setShowImportDialog] = useState(false);

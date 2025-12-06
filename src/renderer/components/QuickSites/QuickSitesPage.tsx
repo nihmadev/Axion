@@ -12,7 +12,7 @@ interface QuickSite {
 // Предустановленные популярные сайты
 const POPULAR_SITES: QuickSite[] = [
   { name: 'Google', url: 'https://google.com' },
-  { name: 'Pornhub', url: 'https://pornhub.com' },
+  { name: 'Pornhub', url: 'https://pornhub.com' }, //idk
   { name: 'YouTube', url: 'https://youtube.com' },
   { name: 'Twitter', url: 'https://twitter.com' },
   { name: 'Reddit', url: 'https://reddit.com' },
