@@ -197,6 +197,7 @@ export interface Translations {
     downloadCompleted: string;
     searchOrUrl: string;
     unknown: string;
+    pip: string;
   };
   // Weather descriptions
   weather: {

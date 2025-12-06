@@ -39,11 +39,16 @@ interface AddressBarProps {
   onReload: () => void;
   onStop: () => void;
   onBookmark: () => void;
+  onPip?: () => void;
+  pipTitle?: string;
+  isSplitView?: boolean;
+  onToggleSplitView?: () => void;
 }
 
 const AddressBar: React.FC<AddressBarProps> = ({
   url, isLoading, canGoBack, canGoForward, isBookmarked, isSecure,
-  onNavigate, onBack, onForward, onReload, onStop, onBookmark
+  onNavigate, onBack, onForward, onReload, onStop, onBookmark, onPip, pipTitle,
+  isSplitView, onToggleSplitView
 }) => {
   const [inputValue, setInputValue] = useState(url);
   const [autoComplete, setAutoComplete] = useState('');
@@ -257,6 +262,27 @@ const AddressBar: React.FC<AddressBarProps> = ({
       </div>
 
       <div className="action-buttons">
+        {onToggleSplitView && (
+          <button 
+            className={`action-btn split-view-btn ${isSplitView ? 'active' : ''}`} 
+            onClick={onToggleSplitView} 
+            title={isSplitView ? 'Закрыть Split View' : 'Открыть Split View'}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <rect x="3" y="3" width="18" height="18" rx="2"/>
+              <line x1="12" y1="3" x2="12" y2="21"/>
+            </svg>
+          </button>
+        )}
+        {url && onPip && (
+          <button className="action-btn pip-btn" onClick={onPip} title={pipTitle || 'Picture-in-Picture'}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+              <rect x="12" y="9" width="8" height="6" rx="1" fill="currentColor" opacity="0.3"/>
+              <rect x="12" y="9" width="8" height="6" rx="1"/>
+            </svg>
+          </button>
+        )}
         <button className={`action-btn ${isBookmarked ? 'bookmarked' : ''}`} onClick={onBookmark} title="Добавить в закладки">
           <svg width="18" height="18" viewBox="0 0 24 24" fill={isBookmarked ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2">
             <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>

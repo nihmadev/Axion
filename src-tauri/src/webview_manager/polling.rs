@@ -7,11 +7,13 @@ use super::types::WebViewUpdateEvent;
 /// Периодическая проверка состояния WebView и инжекция observer скрипта
 /// 
 /// ВАЖНО: webview.url() может НЕ обновляться при клиентской навигации (Google redirects)!
-/// Поэтому мы агрессивно инжектируем скрипт на КАЖДОЙ итерации.
+/// Поэтому мы инжектируем скрипт периодически, но с оптимизацией для экономии памяти.
 pub async fn poll_webview_state(app: AppHandle, id: String) {
     let webview_id = format!("webview_{}", id);
     let mut last_js_url = String::new();
     let mut iteration = 0u32;
+    let mut idle_iterations = 0u32; // Счётчик итераций без изменений
+    let mut observer_injected = false;
     
     // Даём время на начальную загрузку страницы
     tokio::time::sleep(tokio::time::Duration::from_millis(300)).await;
@@ -23,16 +25,33 @@ pub async fn poll_webview_state(app: AppHandle, id: String) {
             None => break,
         };
         
+        // Проверяем, не заморожена ли вкладка
+        let is_frozen = {
+            let state = app.state::<crate::AppState>();
+            let result = if let Ok(frozen_tabs) = state.frozen_tabs.lock() {
+                frozen_tabs.contains(&id)
+            } else {
+                false
+            };
+            result
+        };
+        
+        // Если вкладка заморожена - прекращаем polling
+        if is_frozen {
+            break;
+        }
+        
         iteration = iteration.wrapping_add(1);
         
-        // ВСЕГДА инжектируем скрипт на КАЖДОЙ итерации
-        // Скрипт сам проверяет __AXION_OBSERVER_INITIALIZED__ чтобы не дублироваться
-        // Это критично для обнаружения навигации когда webview.url() не обновляется
-        let _ = webview.eval(PAGE_OBSERVER_SCRIPT);
+        // Инжектируем observer только если ещё не инжектирован или после навигации
+        // Скрипт сам проверяет __AXION_OBSERVER_INITIALIZED__
+        if !observer_injected || iteration % 20 == 0 {
+            let _ = webview.eval(PAGE_OBSERVER_SCRIPT);
+            observer_injected = true;
+        }
         
-        // Каждые 3 итерации принудительно запрашиваем обновление через JS
-        // Это гарантирует что мы получим актуальный URL даже если обычный механизм не работает
-        if iteration % 3 == 0 {
+        // Запрашиваем обновление реже - каждые 10 итераций вместо 3
+        if iteration % 10 == 0 {
             let force_update = r#"
                 (function() {
                     if (!window.__AXION_OBSERVER_INITIALIZED__) return;
@@ -69,9 +88,12 @@ pub async fn poll_webview_state(app: AppHandle, id: String) {
         };
         
         // Если URL изменился - эмитим событие на фронтенд
-        // Приоритет у данных из page observer (manager_url), т.к. они содержат реальные URL после SPA навигации
-        if !manager_url.is_empty() && manager_url != "about:blank" && manager_url != last_js_url {
+        let url_changed = !manager_url.is_empty() && manager_url != "about:blank" && manager_url != last_js_url;
+        
+        if url_changed {
             last_js_url = manager_url.clone();
+            idle_iterations = 0; // Сбрасываем счётчик при изменении
+            observer_injected = false; // Переинжектируем после навигации
             
             // Отправляем событие на фронтенд с реальными данными страницы
             let _ = app.emit("webview-url-changed", WebViewUpdateEvent {
@@ -83,15 +105,21 @@ pub async fn poll_webview_state(app: AppHandle, id: String) {
                 can_go_back: None,
                 can_go_forward: None,
             });
+        } else {
+            idle_iterations += 1;
         }
         
-        // Быстрый polling для обнаружения навигации
+        // Адаптивный интервал polling для экономии ресурсов
         let sleep_duration = if iteration < 10 {
-            150 // Очень быстро сначала
-        } else if iteration < 30 {
-            300 // Потом помедленнее
+            200 // Быстро в начале для первой загрузки
+        } else if idle_iterations > 100 {
+            3000 // Очень медленно если долго нет изменений (3 сек)
+        } else if idle_iterations > 30 {
+            2000 // Медленнее если нет активности (2 сек)
+        } else if idle_iterations > 10 {
+            1000 // Умеренно (1 сек)
         } else {
-            500 // Стабильный интервал
+            500 // Стандартный интервал
         };
         
         tokio::time::sleep(tokio::time::Duration::from_millis(sleep_duration)).await;

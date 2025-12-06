@@ -1,6 +1,7 @@
 import { useCallback, useEffect } from 'react';
 import { Workspace } from '../types';
 import { TAB_FREEZE_TIMEOUT, MAX_ACTIVE_TABS } from '../constants';
+import { removeWebViewFromCache } from '../components/WebView/WebView2Container';
 
 interface UseTabMemoryOptions {
   workspaces: Workspace[];
@@ -15,6 +16,9 @@ export const useTabMemory = ({
 }: UseTabMemoryOptions) => {
   
   const freezeTab = useCallback((tabId: string) => {
+    // Удаляем WebView из фронтенд кэша
+    removeWebViewFromCache(tabId);
+    // Вызываем бэкенд для закрытия нативного WebView
     window.electronAPI.freezeTab(tabId);
     setWorkspaces(prev => prev.map(ws => ({
       ...ws,

@@ -194,6 +194,7 @@ export const fr: Translations = {
     downloadCompleted: 'Téléchargement terminé',
     searchOrUrl: 'Rechercher ou entrer une URL...',
     unknown: 'Inconnu',
+    pip: 'Image dans l\'image',
   },
   weather: {
     clear: 'Dégagé',

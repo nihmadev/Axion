@@ -102,6 +102,7 @@ fn main() {
             webview_manager::commands::misc::execute_script,
             webview_manager::commands::misc::set_zoom,
             webview_manager::commands::misc::update_page_info,
+            webview_manager::commands::misc::toggle_pip,
         ])
         .setup(|app| {
             let window = app.get_webview_window("main").unwrap();

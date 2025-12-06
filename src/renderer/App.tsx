@@ -9,6 +9,7 @@ import AppModals from './components/AppModals';
 import UpdateBanner from './components/UpdateBanner';
 import WelcomePage from './components/WelcomePage';
 import { extractSearchQueries } from './utils/url';
+import { electronAPI } from './tauri-api';
 import {
   useWorkspaces,
   useNavigation,
@@ -101,6 +102,11 @@ const App: React.FC = () => {
     updateTab,
     setActiveTabInWorkspace,
     selectTabFromSearch,
+    splitView,
+    toggleSplitView,
+    setSplitViewTab,
+    setSplitRatio,
+    closeSplitView,
   } = useWorkspaces({ settings, language: settings.language });
 
   const {
@@ -235,6 +241,13 @@ const App: React.FC = () => {
     createNewTab(query);
   }, [createNewTab]);
 
+  // Picture-in-Picture для видео
+  const handlePip = useCallback(() => {
+    if (activeTabId) {
+      electronAPI.togglePip(activeTabId).catch(console.error);
+    }
+  }, [activeTabId]);
+
   // Обработчик импорта для WelcomePage
   const handleWelcomeImport = useCallback(async (browser: 'chrome' | 'firefox' | 'edge' | 'zen') => {
     const result = await window.electronAPI.importFromBrowser(browser);
@@ -314,6 +327,10 @@ const App: React.FC = () => {
               onReload={reloadTab}
               onStop={stopLoading}
               onBookmark={addBookmark}
+              onPip={handlePip}
+              pipTitle={t.common.pip}
+              isSplitView={splitView?.enabled || false}
+              onToggleSplitView={toggleSplitView}
             />
           )}
           
@@ -339,6 +356,10 @@ const App: React.FC = () => {
               onDeleteSite={handleDeleteSite}
               onRenameSite={handleRenameSite}
               t={t}
+              splitView={splitView}
+              onSetSplitViewTab={setSplitViewTab}
+              onSetSplitRatio={setSplitRatio}
+              onCloseSplitView={closeSplitView}
             />
           </div>
         </div>

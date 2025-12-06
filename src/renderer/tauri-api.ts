@@ -150,6 +150,9 @@ export const electronAPI = {
   updateWebViewBounds: (id: string, bounds: { x: number; y: number; width: number; height: number }) => 
     invoke('update_webview_bounds', { id, bounds }),
 
+  // Picture-in-Picture
+  togglePip: (id: string) => invoke('toggle_pip', { id }),
+
   // WebView URL change listener
   onWebViewUrlChanged: (callback: (data: { id: string; url?: string; title?: string; favicon?: string; is_loading?: boolean }) => void) => {
     const unlisten = listen('webview-url-changed', (event: any) => {

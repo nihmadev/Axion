@@ -1,4 +1,4 @@
-use tauri::Window;
+use tauri::{Window, Manager};
 use crate::{AppState, storage, downloads};
 
 // Window commands
@@ -165,9 +165,28 @@ pub async fn import_bookmarks(app: tauri::AppHandle) -> Result<Option<Vec<storag
 
 // Tab freezing commands
 #[tauri::command]
-pub async fn freeze_tab(state: tauri::State<'_, AppState>, tab_id: String) -> Result<bool, String> {
-    let mut frozen_tabs = state.frozen_tabs.lock().map_err(|e| e.to_string())?;
-    frozen_tabs.insert(tab_id);
+pub async fn freeze_tab(app: tauri::AppHandle, state: tauri::State<'_, AppState>, tab_id: String) -> Result<bool, String> {
+    // Добавляем в список замороженных
+    {
+        let mut frozen_tabs = state.frozen_tabs.lock().map_err(|e| e.to_string())?;
+        frozen_tabs.insert(tab_id.clone());
+    }
+    
+    // Закрываем нативный WebView для освобождения памяти
+    let webview_id = format!("webview_{}", tab_id);
+    if let Some(webview) = app.get_webview(&webview_id) {
+        // Сначала скрываем
+        let _ = webview.hide();
+        // Затем закрываем для освобождения памяти
+        let _ = webview.close();
+    }
+    
+    // Удаляем из менеджера WebView
+    {
+        let mut manager = state.webview_manager.lock().map_err(|e| e.to_string())?;
+        manager.remove(&tab_id);
+    }
+    
     Ok(true)
 }
 
@@ -175,6 +194,7 @@ pub async fn freeze_tab(state: tauri::State<'_, AppState>, tab_id: String) -> Re
 pub async fn unfreeze_tab(state: tauri::State<'_, AppState>, tab_id: String) -> Result<bool, String> {
     let mut frozen_tabs = state.frozen_tabs.lock().map_err(|e| e.to_string())?;
     frozen_tabs.remove(&tab_id);
+    // WebView будет пересоздан при активации вкладки через create_webview
     Ok(true)
 }
 

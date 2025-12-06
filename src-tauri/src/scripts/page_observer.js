@@ -226,27 +226,23 @@
     }
     
     // Периодическая проверка как fallback (для SPA)
-    // Быстрая проверка (200ms) для обнаружения навигации
-    setInterval(updatePageInfo, 200);
+    // Увеличен интервал до 1 секунды для экономии памяти
+    setInterval(updatePageInfo, 1000);
     
     // Отслеживаем клики по ссылкам (SPA часто навигируются через click)
     document.addEventListener('click', (e) => {
         // Проверяем после небольшой задержки (дать время на навигацию)
-        setTimeout(updatePageInfo, 100);
-        setTimeout(updatePageInfo, 300);
+        setTimeout(updatePageInfo, 150);
     }, true);
     
     // Отслеживаем submit форм
     document.addEventListener('submit', () => {
-        setTimeout(updatePageInfo, 100);
-        setTimeout(updatePageInfo, 500);
+        setTimeout(updatePageInfo, 200);
     }, true);
     
-    // Начальное обновление - несколько раз для надёжности
+    // Начальное обновление
     updatePageInfo();
-    setTimeout(updatePageInfo, 100);
-    setTimeout(updatePageInfo, 500);
-    setTimeout(updatePageInfo, 1000);
+    setTimeout(updatePageInfo, 300);
     
     return 'initialized';
 })();

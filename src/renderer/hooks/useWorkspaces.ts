@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { Tab, Workspace, Settings, Language } from '../types';
+import { Tab, Workspace, Settings, Language, SplitView } from '../types';
 import { normalizeUrl } from '../utils/url';
 import { removeWebViewFromCache } from '../components/WebView/WebView2Container';
 import { useTranslation } from './useTranslation';
@@ -244,8 +244,78 @@ export const useWorkspaces = ({ settings, language }: UseWorkspacesOptions) => {
     ));
   }, [activeWorkspaceId]);
 
+  // Split View функции
+  const toggleSplitView = useCallback(() => {
+    if (!activeWorkspaceId) return;
+    
+    setWorkspaces(prev => prev.map(ws => {
+      if (ws.id !== activeWorkspaceId) return ws;
+      
+      const currentSplit = ws.splitView;
+      if (currentSplit?.enabled) {
+        // Выключаем split view
+        return { ...ws, splitView: undefined };
+      } else {
+        // Включаем split view - берём активную вкладку слева, следующую справа
+        const activeIdx = ws.tabs.findIndex(t => t.id === ws.activeTabId);
+        const rightTab = ws.tabs[activeIdx + 1] || ws.tabs[0];
+        return {
+          ...ws,
+          splitView: {
+            enabled: true,
+            leftTabId: ws.activeTabId,
+            rightTabId: rightTab?.id !== ws.activeTabId ? rightTab?.id : null,
+            splitRatio: 0.5,
+          },
+        };
+      }
+    }));
+  }, [activeWorkspaceId]);
+
+  const setSplitViewTab = useCallback((side: 'left' | 'right', tabId: string) => {
+    if (!activeWorkspaceId) return;
+    
+    setWorkspaces(prev => prev.map(ws => {
+      if (ws.id !== activeWorkspaceId || !ws.splitView?.enabled) return ws;
+      
+      return {
+        ...ws,
+        splitView: {
+          ...ws.splitView,
+          [side === 'left' ? 'leftTabId' : 'rightTabId']: tabId,
+        },
+      };
+    }));
+  }, [activeWorkspaceId]);
+
+  const setSplitRatio = useCallback((ratio: number) => {
+    if (!activeWorkspaceId) return;
+    
+    setWorkspaces(prev => prev.map(ws => {
+      if (ws.id !== activeWorkspaceId || !ws.splitView?.enabled) return ws;
+      
+      return {
+        ...ws,
+        splitView: {
+          ...ws.splitView,
+          splitRatio: Math.max(0.2, Math.min(0.8, ratio)),
+        },
+      };
+    }));
+  }, [activeWorkspaceId]);
+
+  const closeSplitView = useCallback(() => {
+    if (!activeWorkspaceId) return;
+    
+    setWorkspaces(prev => prev.map(ws => {
+      if (ws.id !== activeWorkspaceId) return ws;
+      return { ...ws, splitView: undefined };
+    }));
+  }, [activeWorkspaceId]);
+
   // Получение активного workspace и вкладки
   const activeWorkspace = workspaces.find(w => w.id === activeWorkspaceId);
+  const splitView = activeWorkspace?.splitView;
   const tabs = activeWorkspace?.tabs ?? [];
   const activeTabId = activeWorkspace?.activeTabId ?? '';
   const activeTab = tabs.find(t => t.id === activeTabId);
@@ -261,6 +331,7 @@ export const useWorkspaces = ({ settings, language }: UseWorkspacesOptions) => {
     tabs,
     activeTabId,
     activeTab,
+    splitView,
     createWorkspace,
     deleteWorkspace,
     renameWorkspace,
@@ -272,5 +343,9 @@ export const useWorkspaces = ({ settings, language }: UseWorkspacesOptions) => {
     updateTab,
     setActiveTabInWorkspace,
     selectTabFromSearch,
+    toggleSplitView,
+    setSplitViewTab,
+    setSplitRatio,
+    closeSplitView,
   };
 };

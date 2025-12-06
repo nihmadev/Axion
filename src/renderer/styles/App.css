@@ -23,6 +23,7 @@
 @import './components/toast.css';
 @import './components/frozen-tab.css';
 @import './components/banners.css';
+@import './components/split-view.css';
 
 /* Import sidebar styles */
 @import './sidebar/index.css';

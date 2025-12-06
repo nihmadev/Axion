@@ -194,6 +194,7 @@ export const ru: Translations = {
     downloadCompleted: 'Загрузка завершена',
     searchOrUrl: 'Поиск или введите URL...',
     unknown: 'Неизвестно',
+    pip: 'Картинка в картинке',
   },
   weather: {
     clear: 'Ясно',

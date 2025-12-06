@@ -40,6 +40,13 @@ export interface TabError {
   description: string;
 }
 
+export interface SplitView {
+  enabled: boolean;
+  leftTabId: string | null;
+  rightTabId: string | null;
+  splitRatio: number; // 0.5 = 50/50, 0.3 = 30/70, etc.
+}
+
 export interface Workspace {
   id: string;
   name: string;
@@ -47,6 +54,7 @@ export interface Workspace {
   color?: string;
   activeTabId: string;
   tabs: Tab[];
+  splitView?: SplitView;
 }
 
 export interface Bookmark {
