@@ -20,15 +20,38 @@ renderer/
 │   ├── AddressBar/       # URL bar and navigation controls
 │   ├── Downloads/        # Download manager UI
 │   ├── History/          # Browsing history page
+│   ├── Import/           # Browser data import wizard
+│   ├── Notifications/    # Toast notifications system
+│   ├── QuickSites/       # Quick access sites grid
 │   ├── Settings/         # Settings page with tabs
 │   ├── StartPage/        # New tab start page
 │   ├── Tabs/             # Tab bar and tab management
 │   ├── TitleBar/         # Window title bar and controls
 │   ├── WebView/          # WebView container components
 │   ├── WelcomePage/      # First-run welcome screen
-│   └── ZenSidebar/       # Main sidebar with workspaces and tabs
+│   ├── ZenSidebar/       # Main sidebar with workspaces and tabs
+│   ├── AppModals.tsx     # Global modals container
+│   └── UpdateBanner.tsx  # App update notification banner
 ├── hooks/                # Custom React hooks
-├── i18n/                 # Internationalization (translations)
+│   ├── useAppHandlers.ts # App-level event handlers
+│   ├── useAppState.ts    # Global app state management
+│   ├── useBookmarks.ts   # Bookmarks CRUD operations
+│   ├── useHistory.ts     # Browsing history management
+│   ├── useNavigation.ts  # WebView navigation controls
+│   ├── useSession.ts     # Session save/restore
+│   ├── useShortcuts.ts   # Keyboard shortcuts handler
+│   ├── useStartPageData.ts # Start page widgets data
+│   ├── useTabMemory.ts   # Tab freezing/memory management
+│   ├── useTabThumbnails.ts # Tab preview screenshots
+│   ├── useTranslation.ts # i18n hook
+│   ├── useWallpaper.ts   # Wallpaper management
+│   ├── useWebViewVisibility.ts # WebView show/hide logic
+│   ├── useWorkspaces.ts  # Workspace management
+│   └── useZoom.ts        # Page zoom controls
+├── i18n/                 # Internationalization
+│   ├── en.ts, ru.ts, es.ts, fr.ts, de.ts, zh-CN.ts
+│   ├── types.ts          # Translation key types
+│   └── index.ts          # i18n exports
 ├── styles/               # CSS files
 │   ├── components/       # Component-specific styles
 │   ├── themes/           # Theme files (dark/light)
@@ -45,26 +68,43 @@ renderer/
 ```
 src/
 ├── commands.rs           # Tauri command handlers (window, settings, etc.)
-├── downloads.rs          # Download manager logic
 ├── main.rs               # Application entry point
+├── adblock/              # Ad blocking module
+│   ├── mod.rs            # Module exports
+│   └── commands.rs       # Adblock Tauri commands
+├── downloads/            # Download manager module
+│   ├── mod.rs            # Module exports
+│   ├── downloader.rs     # Download execution logic
+│   ├── storage.rs        # Download history persistence
+│   ├── types.rs          # Download types
+│   └── utils.rs          # Download utilities
 ├── scripts/              # JavaScript injection scripts
 │   └── page_observer.js  # Page info observer script
 ├── storage/              # Data persistence modules
+│   ├── mod.rs            # Module exports
 │   ├── bookmarks.rs      # Bookmark storage
-│   ├── history.rs        # History storage
+│   ├── history.rs        # History storage (SQLite)
 │   ├── import.rs         # Browser data import
 │   ├── session.rs        # Session management
-│   └── settings.rs       # Settings storage
+│   ├── settings.rs       # Settings storage
+│   └── passwords/        # Password manager module
+│       ├── mod.rs        # Module exports
+│       ├── crypto.rs     # AES-GCM encryption
+│       ├── operations.rs # CRUD operations
+│       ├── types.rs      # Password types
+│       └── vault.rs      # Encrypted vault storage
 └── webview_manager/      # WebView2 lifecycle management
-    ├── commands/         # WebView-specific commands
-    │   ├── info.rs       # WebView info queries
-    │   ├── lifecycle.rs  # Create/close WebView
-    │   ├── navigation.rs # Navigate, back, forward, reload
-    │   ├── visibility.rs # Show/hide, bounds updates
-    │   └── misc.rs       # Scripts, zoom, PiP
+    ├── mod.rs            # Module exports
     ├── manager.rs        # WebView instance manager
     ├── polling.rs        # State polling logic
-    └── types.rs          # WebView type definitions
+    ├── types.rs          # WebView type definitions
+    └── commands/         # WebView-specific commands
+        ├── mod.rs        # Commands exports
+        ├── info.rs       # WebView info queries
+        ├── lifecycle.rs  # Create/close WebView
+        ├── navigation.rs # Navigate, back, forward, reload
+        ├── visibility.rs # Show/hide, bounds updates
+        └── misc/         # Additional commands (zoom, PiP, scripts)
 ```
 
 ## Code Organization Patterns
@@ -77,10 +117,11 @@ src/
 - **Types**: Centralized in `types/index.ts`
 
 ### Backend
-- **Module organization**: Features separated into modules (`storage/`, `webview_manager/`)
-- **Commands**: Tauri commands grouped by functionality
+- **Module organization**: Features separated into modules (`storage/`, `webview_manager/`, `downloads/`, `adblock/`)
+- **Commands**: Tauri commands grouped by functionality in submodules
 - **State**: Shared state via `AppState` struct with `Mutex` wrappers
 - **Error handling**: Result types with proper error propagation
+- **Security**: Password vault uses AES-GCM encryption with Argon2 key derivation
 
 ## Key Files
 

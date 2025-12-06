@@ -29,3 +29,7 @@ npm-debug.log*
 # Tauri
 src-tauri/target/
 src-tauri/Cargo.lock
+soon.md
+STRUCTURE.md
+.kiro
+.vscode

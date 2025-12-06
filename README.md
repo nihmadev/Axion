@@ -1,6 +1,6 @@
 ## Overview
 
-XOLO (Axion) is a lightweight, high-performance web browser designed for Windows. It leverages Tauri framework with React frontend and Rust backend, utilizing native WebView2 for web content rendering.
+Axion is a lightweight, high-performance web browser designed for Windows. It leverages Tauri 2.0 framework with React frontend and Rust backend, utilizing native WebView2 for web content rendering.
 
 ## Technology Stack
 
@@ -8,6 +8,7 @@ XOLO (Axion) is a lightweight, high-performance web browser designed for Windows
 - **React 18** - UI framework
 - **TypeScript 5** - Type-safe JavaScript
 - **Vite 5** - Build tool and dev server
+- **CSS Modules** - Component styling
 
 ### Backend
 - **Rust (Edition 2021)** - Core application logic
@@ -16,74 +17,111 @@ XOLO (Axion) is a lightweight, high-performance web browser designed for Windows
 - **SQLite** - Local data storage (via rusqlite)
 
 ### Key Dependencies
+
+**Frontend:**
+- `@tauri-apps/api` - Tauri IPC bindings
+- `uuid` - ID generation
+- `simple-icons` - Icon library
+
+**Backend:**
 - `tauri-plugin-shell` - Shell command execution
 - `tauri-plugin-dialog` - Native dialogs
+- `tauri-plugin-opener` - File/URL opener
 - `webview2-com` - WebView2 COM bindings
 - `tokio` - Async runtime
 - `reqwest` - HTTP client
+- `adblock` - Ad blocking engine
 
 ## Project Structure
 
 ```
-XOLO/
+Axion/
 ├── src/
-│   └── renderer/           # Frontend (React)
-│       ├── components/     # UI components
+│   └── renderer/               # Frontend (React)
+│       ├── components/         # UI components
 │       │   ├── AddressBar/     # URL input and navigation
 │       │   ├── Downloads/      # Download manager UI
 │       │   ├── History/        # Browsing history
+│       │   ├── Import/         # Browser data import UI
+│       │   ├── Notifications/  # Notification system
+│       │   ├── QuickSites/     # Quick access sites
 │       │   ├── Settings/       # Application settings
 │       │   ├── StartPage/      # New tab page
 │       │   ├── Tabs/           # Tab management
 │       │   ├── TitleBar/       # Window controls
 │       │   ├── WebView/        # WebView container
-│       │   └── ZenSidebar/     # Sidebar navigation
-│       ├── hooks/          # React hooks
-│       ├── i18n/           # Internationalization
-│       ├── styles/         # CSS stylesheets
-│       ├── types/          # TypeScript definitions
-│       ├── utils/          # Utility functions
-│       ├── App.tsx         # Main application component
-│       └── main.tsx        # Application entry point
+│       │   ├── WelcomePage/    # First-run welcome screen
+│       │   └── ZenSidebar/     # Sidebar with workspaces and tabs
+│       ├── hooks/              # Custom React hooks
+│       ├── i18n/               # Internationalization
+│       ├── styles/             # CSS stylesheets
+│       │   ├── components/     # Component-specific styles
+│       │   ├── themes/         # Theme files (dark/light)
+│       │   └── sidebar/        # Sidebar-specific styles
+│       ├── types/              # TypeScript definitions
+│       ├── utils/              # Utility functions
+│       ├── App.tsx             # Main application component
+│       ├── main.tsx            # Application entry point
+│       └── tauri-api.ts        # Tauri IPC wrapper
 │
-├── src-tauri/              # Backend (Rust)
+├── src-tauri/                  # Backend (Rust)
 │   ├── src/
-│   │   ├── commands.rs         # Tauri command handlers
-│   │   ├── downloads.rs        # Download management
 │   │   ├── main.rs             # Application entry point
+│   │   ├── commands.rs         # Tauri command handlers
+│   │   ├── adblock/            # Ad blocking module
+│   │   │   ├── mod.rs          # Ad blocker engine
+│   │   │   └── commands.rs     # Ad block commands
+│   │   ├── downloads/          # Download management
+│   │   │   ├── mod.rs          # Module exports
+│   │   │   ├── downloader.rs   # Download logic
+│   │   │   ├── storage.rs      # Download persistence
+│   │   │   ├── types.rs        # Download types
+│   │   │   └── utils.rs        # Download utilities
 │   │   ├── scripts/            # Injected JavaScript
 │   │   ├── storage/            # Data persistence
+│   │   │   ├── mod.rs          # Module exports
 │   │   │   ├── bookmarks.rs    # Bookmark storage
 │   │   │   ├── history.rs      # History storage
 │   │   │   ├── import.rs       # Browser data import
 │   │   │   ├── session.rs      # Session management
-│   │   │   └── settings.rs     # Settings storage
+│   │   │   ├── settings.rs     # Settings storage
+│   │   │   └── passwords/      # Password management
 │   │   └── webview_manager/    # WebView2 management
-│   │       ├── commands/       # WebView commands
-│   │       ├── manager.rs      # WebView lifecycle
-│   │       ├── polling.rs      # State polling
-│   │       └── types.rs        # Type definitions
-│   ├── Cargo.toml          # Rust dependencies
-│   └── tauri.conf.json     # Tauri configuration
+│   │       ├── mod.rs          # Module exports
+│   │       ├── manager.rs      # WebView instance manager
+│   │       ├── polling.rs      # State polling logic
+│   │       ├── types.rs        # Type definitions
+│   │       └── commands/       # WebView commands
+│   │           ├── mod.rs      # Command exports
+│   │           ├── info.rs     # WebView info queries
+│   │           ├── lifecycle.rs # Create/close WebView
+│   │           ├── navigation.rs # Navigate, back, forward, reload
+│   │           ├── visibility.rs # Show/hide, bounds updates
+│   │           └── misc/       # Scripts, zoom, PiP, etc.
+│   ├── Cargo.toml              # Rust dependencies
+│   └── tauri.conf.json         # Tauri configuration
 │
-├── public/                 # Static assets
-├── package.json            # Node.js dependencies
-├── vite.config.ts          # Vite configuration
-└── tsconfig.json           # TypeScript configuration
+├── public/                     # Static assets (icons, wallpapers)
+├── package.json                # Node.js dependencies
+├── vite.config.ts              # Vite configuration
+└── tsconfig.json               # TypeScript configuration
 ```
 
 ## Features
 
-- **Workspace Management** - Organize tabs into separate workspaces
-- **Tab Management** - Create, close, freeze, and restore tabs
+- **Workspace Management** - Organize tabs into separate workspaces with custom icons and colors
+- **Tab Management** - Create, close, freeze, and restore tabs with thumbnails
+- **Ad Blocker** - Built-in ad blocking with customizable filter lists
 - **Bookmarks** - Save and organize favorite pages
 - **History** - Browse and search browsing history
 - **Downloads** - Built-in download manager with pause/resume
 - **Session Restore** - Automatic session persistence
-- **Browser Import** - Import data from other browsers
+- **Browser Import** - Import bookmarks and history from Chrome, Firefox, Edge, and Zen
+- **Password Management** - Secure password storage
 - **Keyboard Shortcuts** - Full keyboard navigation support
 - **Zoom Control** - Per-tab zoom settings
-- **Internationalization** - Multi-language support
+- **Customization** - Themes, accent colors, fonts, sidebar positioning, and wallpapers
+- **Internationalization** - English, Russian, Spanish, French, and German
 
 ## Requirements
 
@@ -102,7 +140,7 @@ XOLO/
 1. Clone the repository:
 ```bash
 git clone https://github.com/nihmadev/Axion
-cd XOLO
+cd Axion
 ```
 
 2. Install Node.js dependencies:
