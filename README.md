@@ -101,7 +101,7 @@ XOLO/
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/zxctehas1337/XOLO.git
+git clone https://github.com/nihmadev/Axion
 cd XOLO
 ```
 
