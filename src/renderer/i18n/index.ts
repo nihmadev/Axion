@@ -4,6 +4,7 @@ export { en } from './en';
 export { es } from './es';
 export { fr } from './fr';
 export { de } from './de';
+export { zhCN } from './zh-CN';
 
 import type { Language, Translations } from './types';
 import { ru } from './ru';
@@ -11,6 +12,7 @@ import { en } from './en';
 import { es } from './es';
 import { fr } from './fr';
 import { de } from './de';
+import { zhCN } from './zh-CN';
 
 export const translations: Record<Language, Translations> = {
   ru,
@@ -18,4 +20,5 @@ export const translations: Record<Language, Translations> = {
   es,
   fr,
   de,
+  'zh-CN': zhCN,
 };

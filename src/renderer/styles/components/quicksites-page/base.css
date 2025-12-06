@@ -1,0 +1,16 @@
+/* Base styles for quicksites page */
+.quicksites-page {
+  width: 100%;
+  height: 100%;
+  background: var(--bg-primary, #1a1a1c);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  z-index: 500;
+}
+
+/* Make the page scrollable */
+.quicksites-page {
+  overflow-y: auto;
+}

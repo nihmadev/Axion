@@ -1,0 +1,29 @@
+/* Header */
+.welcome-header {
+  text-align: center;
+}
+
+.welcome-logo {
+  margin-bottom: 20px;
+}
+
+.welcome-logo-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 16px;
+  filter: grayscale(100%) brightness(1.2);
+}
+
+.welcome-title {
+  font-size: 42px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 12px 0;
+  letter-spacing: -1px;
+}
+
+.welcome-subtitle {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0;
+}

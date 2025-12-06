@@ -1,0 +1,102 @@
+/* Import section */
+.welcome-import {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.welcome-import h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+  margin: 0;
+}
+
+.import-description {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.45);
+  margin: 0;
+}
+
+.import-loading {
+  padding: 24px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 14px;
+}
+
+.browser-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.browser-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: left;
+  width: 100%;
+}
+
+.browser-item:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.browser-item:disabled {
+  cursor: default;
+}
+
+.browser-item.unavailable {
+  opacity: 0.35;
+}
+
+.browser-item.imported {
+  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.browser-item-icon {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.browser-item-name {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.browser-item-status {
+  font-size: 13px;
+}
+
+.status-available {
+  color: #fff;
+}
+
+.status-unavailable {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.status-importing {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.status-done {
+  color: #fff;
+  font-weight: 500;
+}

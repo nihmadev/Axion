@@ -66,7 +66,7 @@ export const useBookmarks = ({ workspaces, activeWorkspaceId }: UseBookmarksOpti
       // Объединяем историю
       const mergedHistory = [...result.history, ...history];
       setHistory(mergedHistory.slice(0, 500));
-      window.electronAPI.setHistory?.(mergedHistory.slice(0, 500));
+      // History is managed via addHistory, not setHistory
       
       alert(`Импортировано: ${result.bookmarks.length} закладок и ${result.history.length} записей истории`);
     } else {

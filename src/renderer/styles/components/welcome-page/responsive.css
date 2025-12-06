@@ -1,0 +1,65 @@
+/* Responsive */
+@media (max-height: 700px) {
+  .welcome-content {
+    padding: 24px 24px;
+    gap: 24px;
+  }
+  
+  .welcome-logo-img {
+    width: 56px;
+    height: 56px;
+  }
+  
+  .welcome-title {
+    font-size: 32px;
+  }
+
+  .accent-grid {
+    gap: 8px;
+  }
+
+  .accent-option {
+    padding: 12px 8px;
+  }
+
+  .accent-swatch {
+    width: 32px;
+    height: 32px;
+  }
+
+  .welcome-content-split {
+    gap: 32px;
+  }
+
+  .welcome-column {
+    gap: 20px;
+  }
+
+  .welcome-column-right {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 800px) {
+  .welcome-content-split {
+    flex-direction: column;
+    max-width: 560px;
+    gap: 32px;
+  }
+
+  .welcome-logo-large .welcome-logo-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 24px;
+  }
+
+  .welcome-column-right {
+    padding: 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  .accent-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

@@ -6,6 +6,7 @@ mod storage;
 mod downloads;
 mod webview_manager;
 mod scripts;
+mod adblock;
 
 use tauri::Manager;
 use std::sync::Mutex;
@@ -64,8 +65,6 @@ fn main() {
             commands::get_downloads,
             commands::start_download,
             commands::cancel_download,
-            commands::pause_download,
-            commands::resume_download,
             commands::open_download,
             commands::show_download_in_folder,
             commands::clear_completed_downloads,
@@ -79,6 +78,21 @@ fn main() {
             commands::save_session,
             commands::restore_session,
             commands::clear_session,
+            // Password manager
+            commands::vault_exists,
+            commands::is_vault_unlocked,
+            commands::create_vault,
+            commands::unlock_vault,
+            commands::lock_vault,
+            commands::get_passwords,
+            commands::add_password,
+            commands::update_password,
+            commands::delete_password,
+            commands::search_passwords,
+            commands::change_master_password,
+            commands::generate_password,
+            commands::delete_vault,
+            commands::get_remaining_attempts,
             // WebView2 commands - lifecycle
             webview_manager::commands::lifecycle::create_webview,
             webview_manager::commands::lifecycle::close_webview,
@@ -99,15 +113,33 @@ fn main() {
             webview_manager::commands::info::debug_webview_info,
             webview_manager::commands::info::get_webview_title,
             // WebView2 commands - misc
-            webview_manager::commands::misc::execute_script,
-            webview_manager::commands::misc::set_zoom,
-            webview_manager::commands::misc::update_page_info,
-            webview_manager::commands::misc::toggle_pip,
+            webview_manager::commands::misc::script::execute_script,
+            webview_manager::commands::misc::zoom::set_zoom,
+            webview_manager::commands::misc::page_info::update_page_info,
+            webview_manager::commands::misc::pip::toggle_pip,
+            webview_manager::commands::misc::reader_mode::toggle_reader_mode,
+            // Ad blocker commands
+            adblock::commands::init_adblock,
+            adblock::commands::check_url_blocked,
+            adblock::commands::set_adblock_enabled,
+            adblock::commands::get_adblock_status,
+            adblock::commands::get_adblock_stats,
+            adblock::commands::reset_adblock_stats,
+            adblock::commands::add_custom_filters,
         ])
         .setup(|app| {
             let window = app.get_webview_window("main").unwrap();
             // Регистрируем горячие клавиши через JavaScript
             setup_keyboard_shortcuts(&window);
+            
+            // Инициализируем блокировщик рекламы в фоне
+            tauri::async_runtime::spawn(async {
+                println!("[AdBlock] Starting filter lists download...");
+                match adblock::load_filter_lists().await {
+                    Ok(count) => println!("[AdBlock] Initialized with {} rules", count),
+                    Err(e) => eprintln!("[AdBlock] Failed to load filter lists: {}", e),
+                }
+            });
             
             Ok(())
         })

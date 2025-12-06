@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { Tab, Workspace, Settings, Language, SplitView } from '../types';
+import { Tab, Workspace, Settings, Language, TabGroup, TabGroupColorId } from '../types';
 import { normalizeUrl } from '../utils/url';
 import { removeWebViewFromCache } from '../components/WebView/WebView2Container';
 import { useTranslation } from './useTranslation';
@@ -313,12 +313,158 @@ export const useWorkspaces = ({ settings, language }: UseWorkspacesOptions) => {
     }));
   }, [activeWorkspaceId]);
 
+  // ========== Tab Groups ==========
+  
+  // Создать новую группу вкладок
+  const createTabGroup = useCallback((name: string, colorId: TabGroupColorId, tabIds: string[]) => {
+    if (!activeWorkspaceId) return;
+    
+    const groupId = uuidv4();
+    const newGroup: TabGroup = {
+      id: groupId,
+      name,
+      colorId,
+      collapsed: false,
+    };
+    
+    setWorkspaces(prev => prev.map(ws => {
+      if (ws.id !== activeWorkspaceId) return ws;
+      
+      return {
+        ...ws,
+        tabGroups: [...(ws.tabGroups || []), newGroup],
+        tabs: ws.tabs.map(tab => 
+          tabIds.includes(tab.id) ? { ...tab, groupId } : tab
+        ),
+      };
+    }));
+    
+    return groupId;
+  }, [activeWorkspaceId]);
+
+  // Добавить вкладку в группу
+  const addTabToGroup = useCallback((tabId: string, groupId: string) => {
+    if (!activeWorkspaceId) return;
+    
+    setWorkspaces(prev => prev.map(ws => {
+      if (ws.id !== activeWorkspaceId) return ws;
+      
+      return {
+        ...ws,
+        tabs: ws.tabs.map(tab => 
+          tab.id === tabId ? { ...tab, groupId } : tab
+        ),
+      };
+    }));
+  }, [activeWorkspaceId]);
+
+  // Удалить вкладку из группы
+  const removeTabFromGroup = useCallback((tabId: string) => {
+    if (!activeWorkspaceId) return;
+    
+    setWorkspaces(prev => prev.map(ws => {
+      if (ws.id !== activeWorkspaceId) return ws;
+      
+      const updatedTabs = ws.tabs.map(tab => 
+        tab.id === tabId ? { ...tab, groupId: undefined } : tab
+      );
+      
+      // Проверяем, остались ли вкладки в группах
+      const tab = ws.tabs.find(t => t.id === tabId);
+      const groupId = tab?.groupId;
+      
+      if (groupId) {
+        const remainingTabsInGroup = updatedTabs.filter(t => t.groupId === groupId);
+        if (remainingTabsInGroup.length === 0) {
+          // Удаляем пустую группу
+          return {
+            ...ws,
+            tabs: updatedTabs,
+            tabGroups: ws.tabGroups?.filter(g => g.id !== groupId),
+          };
+        }
+      }
+      
+      return { ...ws, tabs: updatedTabs };
+    }));
+  }, [activeWorkspaceId]);
+
+  // Обновить группу (имя, цвет, свёрнутость)
+  const updateTabGroup = useCallback((groupId: string, updates: Partial<Omit<TabGroup, 'id'>>) => {
+    if (!activeWorkspaceId) return;
+    
+    setWorkspaces(prev => prev.map(ws => {
+      if (ws.id !== activeWorkspaceId) return ws;
+      
+      return {
+        ...ws,
+        tabGroups: ws.tabGroups?.map(group => 
+          group.id === groupId ? { ...group, ...updates } : group
+        ),
+      };
+    }));
+  }, [activeWorkspaceId]);
+
+  // Свернуть/развернуть группу
+  const toggleTabGroupCollapsed = useCallback((groupId: string) => {
+    if (!activeWorkspaceId) return;
+    
+    setWorkspaces(prev => prev.map(ws => {
+      if (ws.id !== activeWorkspaceId) return ws;
+      
+      return {
+        ...ws,
+        tabGroups: ws.tabGroups?.map(group => 
+          group.id === groupId ? { ...group, collapsed: !group.collapsed } : group
+        ),
+      };
+    }));
+  }, [activeWorkspaceId]);
+
+  // Удалить группу (вкладки остаются)
+  const deleteTabGroup = useCallback((groupId: string) => {
+    if (!activeWorkspaceId) return;
+    
+    setWorkspaces(prev => prev.map(ws => {
+      if (ws.id !== activeWorkspaceId) return ws;
+      
+      return {
+        ...ws,
+        tabGroups: ws.tabGroups?.filter(g => g.id !== groupId),
+        tabs: ws.tabs.map(tab => 
+          tab.groupId === groupId ? { ...tab, groupId: undefined } : tab
+        ),
+      };
+    }));
+  }, [activeWorkspaceId]);
+
+  // Закрыть все вкладки в группе
+  const closeTabGroup = useCallback((groupId: string) => {
+    if (!activeWorkspaceId) return;
+    
+    const ws = workspaces.find(w => w.id === activeWorkspaceId);
+    if (!ws) return;
+    
+    const tabsInGroup = ws.tabs.filter(t => t.groupId === groupId);
+    tabsInGroup.forEach(tab => closeTab(tab.id));
+    
+    // Удаляем группу
+    setWorkspaces(prev => prev.map(w => {
+      if (w.id !== activeWorkspaceId) return w;
+      return {
+        ...w,
+        tabGroups: w.tabGroups?.filter(g => g.id !== groupId),
+      };
+    }));
+  }, [activeWorkspaceId, workspaces, closeTab]);
+
   // Получение активного workspace и вкладки
   const activeWorkspace = workspaces.find(w => w.id === activeWorkspaceId);
   const splitView = activeWorkspace?.splitView;
   const tabs = activeWorkspace?.tabs ?? [];
   const activeTabId = activeWorkspace?.activeTabId ?? '';
   const activeTab = tabs.find(t => t.id === activeTabId);
+  const tabGroups = activeWorkspace?.tabGroups ?? [];
 
   return {
     workspaces,
@@ -347,5 +493,14 @@ export const useWorkspaces = ({ settings, language }: UseWorkspacesOptions) => {
     setSplitViewTab,
     setSplitRatio,
     closeSplitView,
+    // Tab Groups
+    tabGroups,
+    createTabGroup,
+    addTabToGroup,
+    removeTabFromGroup,
+    updateTabGroup,
+    toggleTabGroupCollapsed,
+    deleteTabGroup,
+    closeTabGroup,
   };
 };

@@ -168,6 +168,17 @@ const WebViewArea: React.FC<WebViewAreaProps> = ({
 
   // Рендер одиночной панели (WebView или внутренняя страница)
   const renderPanel = (tab: Tab, isActive: boolean) => {
+    // Проверяем замороженность в первую очередь - показываем плейсхолдер с кнопкой разморозки
+    if (tab.isFrozen) {
+      return (
+        <div className="frozen-tab-placeholder">
+          <div className="frozen-icon"><SnowflakeIcon size={48} /></div>
+          <p>{t.common.frozenForMemory}</p>
+          <button onClick={() => unfreezeTab(tab.id)}>{t.common.unfreeze}</button>
+        </div>
+      );
+    }
+    
     const hasWebView = tab.url && !tab.url.startsWith('axion://');
     
     if (hasWebView) {
@@ -226,6 +237,11 @@ const WebViewArea: React.FC<WebViewAreaProps> = ({
               {leftTab.favicon && <img src={leftTab.favicon} alt="" className="split-view-favicon" />}
               {leftTab.title || leftTab.url || 'Новая вкладка'}
             </span>
+            <button className="split-view-close" onClick={onCloseSplitView} title="Закрыть Split View">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M18 6L6 18M6 6l12 12"/>
+              </svg>
+            </button>
           </div>
           <div className="split-view-content">
             {renderPanel(leftTab, true)}

@@ -276,3 +276,28 @@
 .app[data-theme="light"] .sidebar-style-option.active span {
   color: var(--accent, #7c3aed);
 }
+
+/* Text Input */
+.app[data-theme="light"] .settings-input {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.08);
+  color: #1e293b;
+}
+
+.app[data-theme="light"] .settings-input::placeholder {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+/* DoH Provider Info */
+.app[data-theme="light"] .doh-provider-info {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.app[data-theme="light"] .doh-url-label {
+  color: #64748b;
+}
+
+.app[data-theme="light"] .doh-url {
+  color: var(--accent, #7c3aed);
+  background: rgba(0, 0, 0, 0.04);
+}

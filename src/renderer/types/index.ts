@@ -14,16 +14,52 @@ export interface Tab {
   lastActiveAt?: number; // Время последней активности
   thumbnail?: string; // Base64 скриншот страницы для превью
   thumbnailUpdatedAt?: number; // Время последнего обновления скриншота
+  isReaderMode?: boolean; // Режим чтения активен
+  groupId?: string; // ID группы вкладок
 }
 
-export type Language = 'ru' | 'en' | 'es' | 'fr' | 'de';
+// Цвета для групп вкладок
+export const TAB_GROUP_COLORS = [
+  { id: 'grey', color: '#5f6368', name: 'Серый' },
+  { id: 'blue', color: '#1a73e8', name: 'Синий' },
+  { id: 'red', color: '#d93025', name: 'Красный' },
+  { id: 'yellow', color: '#f9ab00', name: 'Жёлтый' },
+  { id: 'green', color: '#1e8e3e', name: 'Зелёный' },
+  { id: 'pink', color: '#d01884', name: 'Розовый' },
+  { id: 'purple', color: '#a142f4', name: 'Фиолетовый' },
+  { id: 'cyan', color: '#007b83', name: 'Бирюзовый' },
+  { id: 'orange', color: '#fa903e', name: 'Оранжевый' },
+] as const;
+
+export type TabGroupColorId = typeof TAB_GROUP_COLORS[number]['id'];
+
+export interface TabGroup {
+  id: string;
+  name: string;
+  colorId: TabGroupColorId;
+  collapsed: boolean; // Свёрнута ли группа
+}
+
+export type Language = 'ru' | 'en' | 'es' | 'fr' | 'de' | 'zh-CN';
 
 // Определяет системный язык пользователя
 export function getSystemLanguage(): Language {
-  const browserLang = navigator.language.split('-')[0].toLowerCase();
-  const supportedLanguages: Language[] = ['ru', 'en', 'es', 'fr', 'de'];
-  return supportedLanguages.includes(browserLang as Language) 
-    ? (browserLang as Language) 
+  const browserLang = navigator.language;
+  const supportedLanguages: Language[] = ['ru', 'en', 'es', 'fr', 'de', 'zh-CN'];
+  
+  // Проверяем полный код языка (например, 'zh-CN')
+  if (supportedLanguages.includes(browserLang as Language)) {
+    return browserLang as Language;
+  }
+  
+  // Проверяем только первую часть (например, 'zh')
+  const langPrefix = browserLang.split('-')[0].toLowerCase();
+  if (langPrefix === 'zh') {
+    return 'zh-CN';
+  }
+  
+  return supportedLanguages.includes(langPrefix as Language) 
+    ? (langPrefix as Language) 
     : 'en';
 }
 
@@ -55,6 +91,7 @@ export interface Workspace {
   activeTabId: string;
   tabs: Tab[];
   splitView?: SplitView;
+  tabGroups?: TabGroup[]; // Группы вкладок внутри workspace
 }
 
 export interface Bookmark {
@@ -118,6 +155,11 @@ export interface Settings {
   trackingProtection: boolean;
   httpsOnly: boolean;
   clearDataOnExit: boolean;
+  
+  // DNS-over-HTTPS
+  dohEnabled: boolean;
+  dohProvider: 'cloudflare' | 'google' | 'quad9' | 'adguard' | 'custom';
+  dohCustomUrl: string;
   
   // Производительность
   hardwareAcceleration: boolean;
@@ -198,6 +240,11 @@ export function createDefaultSettings(): Settings {
     httpsOnly: false,
     clearDataOnExit: false,
     
+    // DNS-over-HTTPS
+    dohEnabled: false,
+    dohProvider: 'cloudflare',
+    dohCustomUrl: '',
+    
     // Производительность
     hardwareAcceleration: true,
     tabSuspension: true,
@@ -252,6 +299,9 @@ export const defaultSettings: Settings = {
   trackingProtection: true,
   httpsOnly: false,
   clearDataOnExit: false,
+  dohEnabled: false,
+  dohProvider: 'cloudflare',
+  dohCustomUrl: '',
   hardwareAcceleration: true,
   tabSuspension: true,
   tabSuspensionTimeout: 30,
@@ -307,7 +357,9 @@ declare global {
       isTabFrozen: (tabId: string) => Promise<boolean>;
       // Downloads
       getDownloads: () => Promise<Download[]>;
+      onDownloadStarted: (callback: (download: Download) => void) => () => void;
       onDownloadUpdate: (callback: (download: Download) => void) => () => void;
+      onDownloadCompleted: (callback: (download: Download) => void) => () => void;
       cancelDownload: (id: string) => Promise<void>;
       openDownload: (path: string) => Promise<void>;
       showDownloadInFolder: (path: string) => Promise<void>;

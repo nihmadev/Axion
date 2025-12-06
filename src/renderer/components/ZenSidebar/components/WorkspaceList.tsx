@@ -54,7 +54,7 @@ interface WorkspaceListProps {
   onOpenContextMenu: (e: React.MouseEvent, workspaceId: string) => void;
   onOpenIconPicker: () => void;
   onCloseContextMenu: () => void;
-  language: 'ru' | 'en';
+  language: 'ru' | 'en' | 'es' | 'fr' | 'de' | 'zh-CN';
 }
 
 export const WorkspaceList: React.FC<WorkspaceListProps> = ({

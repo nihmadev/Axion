@@ -1,0 +1,37 @@
+/* Slider container */
+.welcome-slider {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.welcome-slider.transitioning .welcome-slide.active {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+.welcome-slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.welcome-slide.hidden {
+  opacity: 0;
+  transform: translateX(30px);
+  pointer-events: none;
+}
+
+.welcome-slide.active {
+  opacity: 1;
+  transform: translateX(0);
+}

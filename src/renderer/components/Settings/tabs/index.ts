@@ -5,3 +5,4 @@ export { StartPageSettings } from './StartPageSettings';
 export { PrivacySettings } from './PrivacySettings';
 export { PerformanceSettings } from './PerformanceSettings';
 export { AdvancedSettings } from './AdvancedSettings';
+export { PasswordsSettings } from './PasswordsSettings';

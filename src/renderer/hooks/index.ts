@@ -11,3 +11,5 @@ export { useWallpaper } from './useWallpaper';
 export { useTranslation } from './useTranslation';
 export { useStartPageData } from './useStartPageData';
 export { useTabThumbnails } from './useTabThumbnails';
+export { useAppState } from './useAppState';
+export { useAppHandlers } from './useAppHandlers';

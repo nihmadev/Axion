@@ -1,0 +1,179 @@
+.webview-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  flex: 1;
+  z-index: 1;
+  isolation: isolate;
+}
+
+/* Loading Progress Bar */
+.loading-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent, #6366f1), #818cf8);
+  animation: loading-progress 1.5s ease-in-out infinite;
+  z-index: 10;
+  border-radius: 0 2px 2px 0;
+}
+
+@keyframes loading-progress {
+  0% { width: 0%; opacity: 1; }
+  50% { width: 70%; opacity: 1; }
+  90% { width: 95%; opacity: 0.8; }
+  100% { width: 100%; opacity: 0; }
+}
+
+.webview {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  border: none;
+  background: white;
+  position: relative;
+  z-index: 1;
+}
+
+/* Find Bar */
+.find-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--bg-secondary, #2d2d2d);
+  border-bottom: 1px solid var(--border-color, #404040);
+}
+
+.find-bar input {
+  flex: 1;
+  max-width: 300px;
+  padding: 6px 10px;
+  border: 1px solid var(--border-color, #404040);
+  border-radius: 4px;
+  background: var(--bg-primary, #1e1e1e);
+  color: var(--text-primary, #fff);
+  font-size: 13px;
+}
+
+.find-bar input:focus {
+  outline: none;
+  border-color: var(--accent, #6366f1);
+}
+
+.find-bar .find-count {
+  font-size: 12px;
+  color: var(--text-secondary, #888);
+  min-width: 60px;
+}
+
+.find-bar button {
+  padding: 4px 8px;
+  background: transparent;
+  border: 1px solid var(--border-color, #404040);
+  border-radius: 4px;
+  color: var(--text-primary, #fff);
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.find-bar button:hover {
+  background: var(--bg-hover, #3d3d3d);
+}
+
+/* Context Menu */
+.context-menu {
+  position: absolute;
+  background: var(--bg-secondary, #2d2d2d);
+  border: 1px solid var(--border-color, #404040);
+  border-radius: 6px;
+  padding: 4px 0;
+  min-width: 180px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+}
+
+.context-menu button {
+  display: block;
+  width: 100%;
+  padding: 8px 16px;
+  background: transparent;
+  border: none;
+  color: var(--text-primary, #fff);
+  font-size: 13px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.context-menu button:hover {
+  background: var(--accent, #6366f1);
+}
+
+.context-menu-divider {
+  height: 1px;
+  background: var(--border-color, #404040);
+  margin: 4px 0;
+}
+
+/* Error Page */
+.webview-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 40px;
+  text-align: center;
+  background: var(--bg-primary, #1e1e1e);
+  color: var(--text-primary, #fff);
+}
+
+.webview-error .error-icon {
+  font-size: 64px;
+  margin-bottom: 20px;
+}
+
+.webview-error h2 {
+  margin: 0 0 16px;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.webview-error .error-url {
+  color: var(--text-secondary, #888);
+  font-size: 14px;
+  word-break: break-all;
+  margin-bottom: 12px;
+}
+
+.webview-error .error-description {
+  font-size: 16px;
+  margin-bottom: 8px;
+  max-width: 500px;
+}
+
+.webview-error .error-code {
+  font-size: 12px;
+  color: var(--text-secondary, #888);
+  margin-bottom: 24px;
+}
+
+.webview-error button {
+  padding: 10px 24px;
+  background: var(--accent, #6366f1);
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.webview-error button:hover {
+  opacity: 0.9;
+}

@@ -1,0 +1,11 @@
+/* Welcome Page - Base Styles */
+.welcome-page {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  overflow: hidden;
+}

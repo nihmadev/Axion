@@ -1,4 +1,4 @@
-export type Language = 'ru' | 'en' | 'es' | 'fr' | 'de';
+export type Language = 'ru' | 'en' | 'es' | 'fr' | 'de' | 'zh-CN';
 
 export interface Translations {
   // Settings page
@@ -10,6 +10,7 @@ export interface Translations {
       tabs: string;
       startpage: string;
       privacy: string;
+      passwords: string;
       performance: string;
       advanced: string;
     };
@@ -107,6 +108,19 @@ export interface Translations {
     data: string;
     clearOnExit: string;
     clearOnExitDesc: string;
+    // DNS-over-HTTPS
+    dnsOverHttps: string;
+    dohEnabled: string;
+    dohEnabledDesc: string;
+    dohProvider: string;
+    dohProviderDesc: string;
+    dohCustomUrl: string;
+    dohCustomUrlDesc: string;
+    dohProviderCloudflare: string;
+    dohProviderGoogle: string;
+    dohProviderQuad9: string;
+    dohProviderAdguard: string;
+    dohProviderCustom: string;
     // Performance
     acceleration: string;
     hardwareAcceleration: string;
@@ -211,6 +225,39 @@ export interface Translations {
     snow: string;
     thunderstorm: string;
   };
+  // Password manager
+  passwords: {
+    setupTitle: string;
+    setupDesc: string;
+    masterPassword: string;
+    confirmPassword: string;
+    createVault: string;
+    unlockTitle: string;
+    unlockDesc: string;
+    unlock: string;
+    lock: string;
+    search: string;
+    add: string;
+    addPassword: string;
+    editPassword: string;
+    noPasswords: string;
+    website: string;
+    username: string;
+    password: string;
+    leaveEmpty: string;
+    length: string;
+    includeSymbols: string;
+    changeMaster: string;
+    currentPassword: string;
+    newPassword: string;
+    confirmNewPassword: string;
+    change: string;
+    minLength: string;
+    noMatch: string;
+    wrongPassword: string;
+    fillAll: string;
+    vaultDeleted: string;
+  };
   // Welcome page
   welcome: {
     importData: string;
@@ -240,5 +287,16 @@ export interface Translations {
       pink: string;
       cyan: string;
     };
+  };
+  // Tab Groups
+  tabGroups: {
+    createGroup: string;
+    groupName: string;
+    rename: string;
+    ungroup: string;
+    closeAll: string;
+    addToGroup: string;
+    removeFromGroup: string;
+    newGroup: string;
   };
 }

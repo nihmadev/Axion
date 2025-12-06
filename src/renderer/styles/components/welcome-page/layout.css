@@ -1,0 +1,66 @@
+/* Content layout */
+.welcome-content {
+  width: 100%;
+  max-width: 560px;
+  padding: 48px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.welcome-content.accent-page {
+  max-width: 640px;
+}
+
+/* Two-column layout for first page */
+.welcome-content-split {
+  max-width: 900px;
+  flex-direction: row;
+  gap: 60px;
+  align-items: stretch;
+}
+
+.welcome-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.welcome-column-left {
+  justify-content: center;
+  align-items: center;
+}
+
+.welcome-column-left .welcome-header {
+  text-align: center;
+}
+
+.welcome-header-centered {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.welcome-logo-large .welcome-logo-img {
+  width: 180px;
+  height: 180px;
+  border-radius: 32px;
+}
+
+.welcome-column-right {
+  justify-content: center;
+  padding: 32px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.welcome-column-right .welcome-import {
+  flex: 1;
+}
+
+.welcome-column-right .welcome-actions {
+  padding-top: 16px;
+}

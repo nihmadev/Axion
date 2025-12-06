@@ -15,15 +15,29 @@
   order: 0;
 }
 
-/* Style variants - Compact */
+/* ==============================================
+   Style variants - Compact
+   Промежуточный режим: показывает текст, но компактнее
+   ============================================== */
 .zen-sidebar--compact {
-  width: 60px;
   padding: 8px;
   gap: 4px;
 }
 
 .zen-sidebar--compact .zen-sidebar__tab {
-  padding: 8px 10px;
+  padding: 6px 8px;
+  gap: 8px;
+  border-radius: 6px;
+}
+
+.zen-sidebar--compact .zen-sidebar__tab-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.zen-sidebar--compact .zen-sidebar__tab-icon img {
+  width: 14px;
+  height: 14px;
 }
 
 .zen-sidebar--compact .zen-sidebar__tab-title {
@@ -31,12 +45,28 @@
 }
 
 .zen-sidebar--compact .zen-sidebar__workspace-btn {
-  padding: 6px 10px;
+  padding: 6px 8px;
   font-size: 12px;
+  gap: 8px;
+  border-radius: 6px;
+}
+
+.zen-sidebar--compact .zen-sidebar__workspace-icon {
+  font-size: 13px;
+}
+
+.zen-sidebar--compact .zen-sidebar__workspace-icon svg {
+  width: 14px;
+  height: 14px;
 }
 
 .zen-sidebar--compact .zen-sidebar__search {
   padding: 8px 10px;
+  border-radius: 8px;
+}
+
+.zen-sidebar--compact .zen-sidebar__search-input {
+  font-size: 11px;
 }
 
 .zen-sidebar--compact .zen-sidebar__quick-sites {
@@ -44,130 +74,292 @@
 }
 
 .zen-sidebar--compact .zen-sidebar__quick-site {
-  border-radius: 10px;
+  border-radius: 8px;
+  padding: 6px;
 }
 
 .zen-sidebar--compact .zen-sidebar__quick-site img {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
 }
 
-/* Style variants - Minimal */
+.zen-sidebar--compact .zen-sidebar__new-tab {
+  padding: 6px 8px;
+  font-size: 12px;
+  border-radius: 6px;
+}
+
+.zen-sidebar--compact .zen-sidebar__bottom-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+}
+
+.zen-sidebar--compact .zen-sidebar__nav-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+}
+
+.zen-sidebar--compact .zen-sidebar__workspaces {
+  padding: 6px 0;
+}
+
+.zen-sidebar--compact .zen-sidebar__tabs {
+  padding: 3px 0;
+  gap: 1px;
+}
+
+/* ==============================================
+   Style variants - Minimal
+   Только иконки с улучшенным UX
+   ============================================== */
 .zen-sidebar--minimal {
-  width: 60px !important;
-  min-width: 60px;
-  max-width: 60px;
-  padding: 8px;
-  gap: 4px;
+  width: 56px !important;
+  min-width: 56px;
+  max-width: 56px;
+  padding: 8px 6px;
+  gap: 6px;
 }
 
-.zen-sidebar--minimal .zen-sidebar__search,
+/* Скрываем текстовые элементы */
+.zen-sidebar--minimal .zen-sidebar__search-input,
 .zen-sidebar--minimal .zen-sidebar__workspace-name,
 .zen-sidebar--minimal .zen-sidebar__tab-title,
-.zen-sidebar--minimal .zen-sidebar__new-tab span {
-  display: none;
-}
-
+.zen-sidebar--minimal .zen-sidebar__new-tab span,
 .zen-sidebar--minimal .zen-sidebar__quick-sites {
   display: none;
 }
 
-.zen-sidebar--minimal .zen-sidebar__tab,
-.zen-sidebar--minimal .zen-sidebar__workspace-btn {
+/* Поиск как иконка */
+.zen-sidebar--minimal .zen-sidebar__search {
+  padding: 10px;
+  justify-content: center;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.zen-sidebar--minimal .zen-sidebar__search:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.zen-sidebar--minimal .zen-sidebar__search-icon {
+  width: 18px;
+  height: 18px;
+}
+
+/* Вкладки */
+.zen-sidebar--minimal .zen-sidebar__tab {
   justify-content: center;
   padding: 10px;
+  border-radius: 10px;
+  position: relative;
+}
+
+.zen-sidebar--minimal .zen-sidebar__tab-icon {
+  width: 22px;
+  height: 22px;
+}
+
+.zen-sidebar--minimal .zen-sidebar__tab-icon img {
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+}
+
+.zen-sidebar--minimal .zen-sidebar__tab-icon svg {
+  width: 18px;
+  height: 18px;
 }
 
 .zen-sidebar--minimal .zen-sidebar__tab-close {
   display: none;
 }
 
-.zen-sidebar--minimal .zen-sidebar__new-tab {
+.zen-sidebar--minimal .zen-sidebar__tab.is-active::before {
+  width: 3px;
+  height: 22px;
+}
+
+/* Воркспейсы */
+.zen-sidebar--minimal .zen-sidebar__workspace-btn {
   justify-content: center;
   padding: 10px;
-}
-
-.zen-sidebar--minimal .zen-sidebar__bottom-btn {
-  width: 36px;
-  height: 36px;
-}
-
-/* Compact mode improvements */
-.zen-sidebar--compact .zen-sidebar__search,
-.zen-sidebar--compact .zen-sidebar__workspace-name,
-.zen-sidebar--compact .zen-sidebar__tab-title,
-.zen-sidebar--compact .zen-sidebar__new-tab span {
-  display: none;
-}
-
-.zen-sidebar--compact .zen-sidebar__quick-sites {
-  grid-template-columns: 1fr;
-  gap: 4px;
-}
-
-.zen-sidebar--compact .zen-sidebar__quick-site {
   border-radius: 10px;
-}
-
-.zen-sidebar--compact .zen-sidebar__tab {
-  justify-content: center;
-  padding: 8px;
-}
-
-.zen-sidebar--compact .zen-sidebar__workspace-btn {
-  justify-content: center;
-  padding: 8px;
-}
-
-.zen-sidebar--compact .zen-sidebar__tab-close {
-  display: none;
-}
-
-.zen-sidebar--compact .zen-sidebar__new-tab {
-  justify-content: center;
-  padding: 8px;
-}
-
-.zen-sidebar--compact .zen-sidebar__bottom-btn {
-  width: 32px;
-  height: 32px;
-}
-
-/* Улучшенная анимация для компактного режима */
-.zen-sidebar--compact .zen-sidebar__workspace-icon,
-.zen-sidebar--compact .zen-sidebar__tab-icon {
-  transform: scale(1.1);
-}
-
-/* Tooltip для компактного режима */
-.zen-sidebar--compact .zen-sidebar__workspace-btn,
-.zen-sidebar--compact .zen-sidebar__tab {
   position: relative;
 }
 
-.zen-sidebar--compact .zen-sidebar__workspace-btn::after,
-.zen-sidebar--compact .zen-sidebar__tab::after {
+.zen-sidebar--minimal .zen-sidebar__workspace-icon {
+  font-size: 16px;
+}
+
+.zen-sidebar--minimal .zen-sidebar__workspace-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.zen-sidebar--minimal .zen-sidebar__workspace[style*="--workspace-accent"] .zen-sidebar__workspace-btn {
+  border-left: none;
+  padding-left: 10px;
+  background: rgba(var(--workspace-accent-rgb, 124, 58, 237), 0.1);
+}
+
+.zen-sidebar--minimal .zen-sidebar__workspace-add {
+  padding: 10px;
+  border-radius: 10px;
+}
+
+/* Новая вкладка */
+.zen-sidebar--minimal .zen-sidebar__new-tab {
+  justify-content: center;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.zen-sidebar--minimal .zen-sidebar__new-tab svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Нижняя панель */
+.zen-sidebar--minimal .zen-sidebar__bottom {
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 4px;
+}
+
+.zen-sidebar--minimal .zen-sidebar__bottom-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+}
+
+/* Навигация */
+.zen-sidebar--minimal .zen-sidebar__nav {
+  flex-wrap: wrap;
+  gap: 2px;
+}
+
+.zen-sidebar--minimal .zen-sidebar__nav-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+}
+
+/* Секции */
+.zen-sidebar--minimal .zen-sidebar__workspaces {
+  padding: 6px 0;
+  gap: 3px;
+}
+
+.zen-sidebar--minimal .zen-sidebar__tabs {
+  padding: 4px 0;
+  gap: 3px;
+}
+
+/* ==============================================
+   Tooltips для minimal режима
+   ============================================== */
+.zen-sidebar--minimal .zen-sidebar__workspace-btn,
+.zen-sidebar--minimal .zen-sidebar__tab,
+.zen-sidebar--minimal .zen-sidebar__new-tab,
+.zen-sidebar--minimal .zen-sidebar__bottom-btn,
+.zen-sidebar--minimal .zen-sidebar__search {
+  position: relative;
+}
+
+/* Tooltip базовые стили */
+.zen-sidebar--minimal .zen-sidebar__workspace-btn::after,
+.zen-sidebar--minimal .zen-sidebar__tab::after,
+.zen-sidebar--minimal .zen-sidebar__new-tab::after,
+.zen-sidebar--minimal .zen-sidebar__bottom-btn::after,
+.zen-sidebar--minimal .zen-sidebar__search::after {
   content: attr(title);
   position: absolute;
-  right: 100%;
   top: 50%;
   transform: translateY(-50%);
-  margin-right: 12px;
-  padding: 6px 12px;
-  background: rgba(30, 30, 32, 0.98);
+  padding: 8px 12px;
+  background: rgba(20, 20, 24, 0.98);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 8px;
-  color: white;
+  color: rgba(255, 255, 255, 0.95);
   font-size: 12px;
+  font-weight: 500;
   white-space: nowrap;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.2s ease;
-  z-index: 1000;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  z-index: 10000;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
 }
 
-.zen-sidebar--compact .zen-sidebar__workspace-btn:hover::after,
-.zen-sidebar--compact .zen-sidebar__tab:hover::after {
+/* Позиция tooltip в зависимости от стороны сайдбара */
+.zen-sidebar--minimal.zen-sidebar--right .zen-sidebar__workspace-btn::after,
+.zen-sidebar--minimal.zen-sidebar--right .zen-sidebar__tab::after,
+.zen-sidebar--minimal.zen-sidebar--right .zen-sidebar__new-tab::after,
+.zen-sidebar--minimal.zen-sidebar--right .zen-sidebar__bottom-btn::after,
+.zen-sidebar--minimal.zen-sidebar--right .zen-sidebar__search::after {
+  right: calc(100% + 12px);
+  left: auto;
+  transform: translateY(-50%) translateX(4px);
+}
+
+.zen-sidebar--minimal.zen-sidebar--left .zen-sidebar__workspace-btn::after,
+.zen-sidebar--minimal.zen-sidebar--left .zen-sidebar__tab::after,
+.zen-sidebar--minimal.zen-sidebar--left .zen-sidebar__new-tab::after,
+.zen-sidebar--minimal.zen-sidebar--left .zen-sidebar__bottom-btn::after,
+.zen-sidebar--minimal.zen-sidebar--left .zen-sidebar__search::after {
+  left: calc(100% + 12px);
+  right: auto;
+  transform: translateY(-50%) translateX(-4px);
+}
+
+/* Hover состояние */
+.zen-sidebar--minimal .zen-sidebar__workspace-btn:hover::after,
+.zen-sidebar--minimal .zen-sidebar__tab:hover::after,
+.zen-sidebar--minimal .zen-sidebar__new-tab:hover::after,
+.zen-sidebar--minimal .zen-sidebar__bottom-btn:hover::after,
+.zen-sidebar--minimal .zen-sidebar__search:hover::after {
   opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+
+/* Скрываем tooltip если нет title */
+.zen-sidebar--minimal .zen-sidebar__workspace-btn:not([title])::after,
+.zen-sidebar--minimal .zen-sidebar__tab:not([title])::after,
+.zen-sidebar--minimal .zen-sidebar__new-tab:not([title])::after,
+.zen-sidebar--minimal .zen-sidebar__bottom-btn:not([title])::after,
+.zen-sidebar--minimal .zen-sidebar__search:not([title])::after {
+  display: none;
+}
+
+/* ==============================================
+   Hover эффекты для minimal
+   ============================================== */
+.zen-sidebar--minimal .zen-sidebar__tab:hover,
+.zen-sidebar--minimal .zen-sidebar__workspace-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: scale(1.02);
+}
+
+.zen-sidebar--minimal .zen-sidebar__tab.is-active {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.zen-sidebar--minimal .zen-sidebar__workspace.is-active .zen-sidebar__workspace-btn {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* Light theme для minimal */
+[data-theme="light"] .zen-sidebar--minimal .zen-sidebar__workspace-btn::after,
+[data-theme="light"] .zen-sidebar--minimal .zen-sidebar__tab::after,
+[data-theme="light"] .zen-sidebar--minimal .zen-sidebar__new-tab::after,
+[data-theme="light"] .zen-sidebar--minimal .zen-sidebar__bottom-btn::after,
+[data-theme="light"] .zen-sidebar--minimal .zen-sidebar__search::after {
+  background: rgba(255, 255, 255, 0.98);
+  border-color: rgba(0, 0, 0, 0.1);
+  color: rgba(0, 0, 0, 0.85);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 }

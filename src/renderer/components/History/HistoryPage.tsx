@@ -7,12 +7,27 @@ interface HistoryPageProps {
   history: HistoryEntry[];
   onNavigate: (url: string) => void;
   onClearHistory: () => void;
-  language: 'ru' | 'en';
+  language: 'ru' | 'en' | 'es' | 'fr' | 'de' | 'zh-CN';
 }
 
 const HistoryPage: React.FC<HistoryPageProps> = ({ history, onNavigate, onClearHistory, language }) => {
   const [searchFilter, setSearchFilter] = useState('');
   const t = useTranslation(language);
+
+  // Функция для получения правильной локали
+  const getLocale = (lang: string) => {
+    switch (lang) {
+      case 'ru': return 'ru-RU';
+      case 'en': return 'en-US';
+      case 'es': return 'es-ES';
+      case 'fr': return 'fr-FR';
+      case 'de': return 'de-DE';
+      case 'zh-CN': return 'zh-CN';
+      default: return 'en-US';
+    }
+  };
+
+  const locale = getLocale(language);
 
   const filteredHistory = useMemo(() => 
     history.filter(h =>
@@ -36,7 +51,7 @@ const HistoryPage: React.FC<HistoryPageProps> = ({ history, onNavigate, onClearH
       } else if (date.toDateString() === yesterday.toDateString()) {
         key = t.common.yesterday;
       } else {
-        key = date.toLocaleDateString(language === 'ru' ? 'ru-RU' : 'en-US', { 
+        key = date.toLocaleDateString(locale, { 
           day: 'numeric', 
           month: 'long', 
           year: 'numeric' 
@@ -51,7 +66,7 @@ const HistoryPage: React.FC<HistoryPageProps> = ({ history, onNavigate, onClearH
   }, [filteredHistory, language, t.common.today, t.common.yesterday]);
 
   const formatTime = (timestamp: number) => {
-    return new Date(timestamp).toLocaleTimeString(language === 'ru' ? 'ru-RU' : 'en-US', { 
+    return new Date(timestamp).toLocaleTimeString(locale, { 
       hour: '2-digit', 
       minute: '2-digit' 
     });

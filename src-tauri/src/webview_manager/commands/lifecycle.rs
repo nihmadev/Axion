@@ -6,6 +6,7 @@ use std::path::PathBuf;
 use crate::webview_manager::types::{WebViewUpdateEvent, WebViewBounds};
 use crate::webview_manager::polling::{poll_webview_state, extract_title_from_url, extract_filename_from_url};
 use crate::webview_manager::CHROME_USER_AGENT;
+use crate::adblock;
 
 /// Создание нового нативного WebView для вкладки (встроенного в главное окно)
 #[tauri::command]
@@ -63,6 +64,27 @@ pub async fn create_webview(
         // Обработчик навигации - срабатывает при начале навигации
         .on_navigation(move |nav_url| {
             let url_str = nav_url.to_string();
+            
+            // Проверяем блокировку рекламы/трекеров
+            // Получаем source URL из менеджера
+            let source_url: String = {
+                let state = app_nav.state::<crate::AppState>();
+                let result = if let Ok(manager) = state.webview_manager.lock() {
+                    manager.get(&tab_id_nav)
+                        .map(|info| info.url.clone())
+                        .unwrap_or_default()
+                } else {
+                    String::new()
+                };
+                result
+            };
+            
+            // Проверяем должен ли URL быть заблокирован
+            if adblock::should_block_url(&url_str, &source_url, "document") {
+                println!("[AdBlock] Blocked navigation: {}", url_str);
+                return false; // Блокируем навигацию
+            }
+            
             let title = extract_title_from_url(&url_str);
             
             // Обновляем в менеджере ТОЛЬКО если там нет данных от page observer

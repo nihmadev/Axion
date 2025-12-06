@@ -153,6 +153,29 @@ export const electronAPI = {
   // Picture-in-Picture
   togglePip: (id: string) => invoke('toggle_pip', { id }),
 
+  // Reader Mode
+  toggleReaderMode: (id: string) => invoke('toggle_reader_mode', { id }),
+
+  // Password Manager
+  vaultExists: () => invoke<boolean>('vault_exists'),
+  isVaultUnlocked: () => invoke<boolean>('is_vault_unlocked'),
+  createVault: (masterPassword: string) => invoke<boolean>('create_vault', { masterPassword }),
+  unlockVault: (masterPassword: string) => invoke<boolean>('unlock_vault', { masterPassword }),
+  lockVault: () => invoke<boolean>('lock_vault'),
+  getPasswords: () => invoke<any[]>('get_passwords'),
+  addPassword: (url: string, username: string, password: string) => 
+    invoke<any>('add_password', { url, username, password }),
+  updatePassword: (id: string, url?: string, username?: string, password?: string) => 
+    invoke<any>('update_password', { id, url, username, password }),
+  deletePassword: (id: string) => invoke<boolean>('delete_password', { id }),
+  searchPasswords: (query: string) => invoke<any[]>('search_passwords', { query }),
+  changeMasterPassword: (oldPassword: string, newPassword: string) => 
+    invoke<boolean>('change_master_password', { oldPassword, newPassword }),
+  generatePassword: (length: number, includeSymbols: boolean) => 
+    invoke<string>('generate_password', { length, includeSymbols }),
+  deleteVault: () => invoke<boolean>('delete_vault'),
+  getRemainingAttempts: () => invoke<number>('get_remaining_attempts'),
+
   // WebView URL change listener
   onWebViewUrlChanged: (callback: (data: { id: string; url?: string; title?: string; favicon?: string; is_loading?: boolean }) => void) => {
     const unlisten = listen('webview-url-changed', (event: any) => {

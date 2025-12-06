@@ -1,162 +1,9 @@
-use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
-use std::collections::HashMap;
 use tauri::{AppHandle, Emitter, Manager};
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct Download {
-    pub id: String,
-    pub filename: String,
-    pub url: String,
-    #[serde(rename = "totalBytes")]
-    pub total_bytes: i64,
-    #[serde(rename = "receivedBytes")]
-    pub received_bytes: i64,
-    pub state: String,
-    #[serde(rename = "startTime")]
-    pub start_time: i64,
-    #[serde(rename = "savePath")]
-    pub save_path: Option<String>,
-    #[serde(rename = "speed", default)]
-    pub speed: i64,
-    #[serde(rename = "mimeType", default)]
-    pub mime_type: Option<String>,
-}
-
-/// Менеджер активных загрузок
-pub struct DownloadManager {
-    pub cancel_senders: HashMap<String, tokio::sync::watch::Sender<bool>>,
-}
-
-impl DownloadManager {
-    pub fn new() -> Self {
-        Self {
-            cancel_senders: HashMap::new(),
-        }
-    }
-}
-
-fn get_downloads_dir() -> Result<PathBuf, String> {
-    // Используем стандартную папку Загрузки
-    dirs::download_dir()
-        .ok_or_else(|| "Could not find downloads directory".to_string())
-}
-
-fn get_downloads_file() -> Result<PathBuf, String> {
-    let data_dir = dirs::data_dir()
-        .ok_or_else(|| "Could not find data directory".to_string())?
-        .join("axion-browser");
-    
-    std::fs::create_dir_all(&data_dir).map_err(|e| e.to_string())?;
-    
-    Ok(data_dir.join("downloads.json"))
-}
-
-pub async fn get_downloads() -> Result<Vec<Download>, String> {
-    let path = get_downloads_file()?;
-    
-    if !path.exists() {
-        return Ok(Vec::new());
-    }
-    
-    let content = tokio::fs::read_to_string(path)
-        .await
-        .map_err(|e| e.to_string())?;
-    
-    serde_json::from_str(&content).map_err(|e| e.to_string())
-}
-
-pub async fn save_downloads(downloads: Vec<Download>) -> Result<(), String> {
-    let path = get_downloads_file()?;
-    let content = serde_json::to_string_pretty(&downloads).map_err(|e| e.to_string())?;
-    
-    tokio::fs::write(path, content)
-        .await
-        .map_err(|e| e.to_string())
-}
-
-pub async fn clear_completed() -> Result<(), String> {
-    let path = get_downloads_file()?;
-    
-    if path.exists() {
-        // Читаем текущие загрузки и оставляем только активные
-        let downloads = get_downloads().await.unwrap_or_default();
-        let active: Vec<Download> = downloads.into_iter()
-            .filter(|d| d.state == "progressing")
-            .collect();
-        
-        if active.is_empty() {
-            tokio::fs::remove_file(path)
-                .await
-                .map_err(|e| e.to_string())?;
-        } else {
-            save_downloads(active).await?;
-        }
-    }
-    
-    Ok(())
-}
-
-/// Извлечь имя файла из URL или Content-Disposition
-fn extract_filename(url: &str, content_disposition: Option<&str>) -> String {
-    // Сначала пробуем Content-Disposition
-    if let Some(cd) = content_disposition {
-        // filename="example.pdf" или filename*=UTF-8''example.pdf
-        if let Some(start) = cd.find("filename=") {
-            let rest = &cd[start + 9..];
-            let filename = if rest.starts_with('"') {
-                rest[1..].split('"').next().unwrap_or("download")
-            } else {
-                rest.split(';').next().unwrap_or("download").trim()
-            };
-            if !filename.is_empty() {
-                return filename.to_string();
-            }
-        }
-    }
-    
-    // Извлекаем из URL
-    if let Ok(parsed) = url::Url::parse(url) {
-        if let Some(segments) = parsed.path_segments() {
-            if let Some(last) = segments.last() {
-                let decoded = urlencoding::decode(last).unwrap_or_else(|_| last.into());
-                if !decoded.is_empty() && decoded != "/" {
-                    return decoded.to_string();
-                }
-            }
-        }
-    }
-    
-    // Fallback
-    format!("download_{}", chrono::Utc::now().timestamp())
-}
-
-/// Получить уникальное имя файла (добавляет (1), (2) и т.д. если файл существует)
-fn get_unique_filename(dir: &PathBuf, filename: &str) -> String {
-    let path = dir.join(filename);
-    if !path.exists() {
-        return filename.to_string();
-    }
-    
-    let stem = std::path::Path::new(filename)
-        .file_stem()
-        .and_then(|s| s.to_str())
-        .unwrap_or(filename);
-    let ext = std::path::Path::new(filename)
-        .extension()
-        .and_then(|s| s.to_str())
-        .map(|e| format!(".{}", e))
-        .unwrap_or_default();
-    
-    for i in 1..1000 {
-        let new_name = format!("{} ({}){}", stem, i, ext);
-        if !dir.join(&new_name).exists() {
-            return new_name;
-        }
-    }
-    
-    format!("{}_{}{}", stem, chrono::Utc::now().timestamp(), ext)
-}
+use super::types::Download;
+use super::storage::{get_downloads, save_downloads};
+use super::utils::{get_downloads_dir, extract_filename, get_unique_filename};
 
 /// Начать загрузку файла
 pub async fn start_download(
@@ -292,6 +139,7 @@ async fn download_file(
     cancel_rx: &mut tokio::sync::watch::Receiver<bool>,
 ) -> Result<(), String> {
     use tokio::io::AsyncWriteExt;
+    use futures_util::StreamExt;
     
     let client = reqwest::Client::builder()
         .user_agent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36")
@@ -311,8 +159,6 @@ async fn download_file(
     let mut last_update = std::time::Instant::now();
     let mut last_bytes = 0i64;
     let update_interval = std::time::Duration::from_millis(250);
-    
-    use futures_util::StreamExt;
     
     while let Some(chunk_result) = stream.next().await {
         // Проверяем отмену

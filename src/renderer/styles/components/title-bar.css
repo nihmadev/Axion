@@ -1,4 +1,2 @@
-/* TitleBar hidden - window controls moved to ZenSidebar */
-.title-bar {
-  display: none;
-}
+/* Title Bar */
+@import './title-bar/index.css';

@@ -1,0 +1,17 @@
+/* Scrollbar styles */
+.quicksites-page::-webkit-scrollbar {
+  width: 8px;
+}
+
+.quicksites-page::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.quicksites-page::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.quicksites-page::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}

@@ -24,6 +24,7 @@ export const AdvancedSettings: React.FC<SettingsTabProps> = ({ settings, onUpdat
             { value: 'es', label: 'Español' },
             { value: 'fr', label: 'Français' },
             { value: 'de', label: 'Deutsch' },
+            { value: 'zh-CN', label: '简体中文' },
           ]}
           onChange={(v) => onUpdate({ language: v as typeof settings.language })}
         />

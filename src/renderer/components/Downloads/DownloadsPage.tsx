@@ -17,7 +17,7 @@ export interface Download {
 }
 
 interface DownloadsPageProps {
-  language: 'ru' | 'en';
+  language: 'ru' | 'en' | 'es' | 'fr' | 'de' | 'zh-CN';
 }
 
 const DownloadsPage: React.FC<DownloadsPageProps> = ({ language }) => {

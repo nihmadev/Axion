@@ -10,7 +10,6 @@ interface UseShortcutsOptions {
   zoomOut: () => void;
   zoomReset: () => void;
   toggleFullscreen: () => void;
-  openDevTools: () => void;
   printPage: () => void;
   restoreClosedTab: () => void;
   addBookmark: () => void;
@@ -30,7 +29,6 @@ export const useShortcuts = ({
   zoomOut,
   zoomReset,
   toggleFullscreen,
-  openDevTools,
   printPage,
   restoreClosedTab,
   addBookmark,
@@ -56,7 +54,6 @@ export const useShortcuts = ({
         case 'zoom-out': zoomOut(); break;
         case 'zoom-reset': zoomReset(); break;
         case 'fullscreen': toggleFullscreen(); break;
-        case 'devtools': openDevTools(); break;
         case 'print': printPage(); break;
         case 'restore-tab': restoreClosedTab(); break;
         case 'downloads': openInternalPage('downloads'); break;
@@ -150,7 +147,7 @@ export const useShortcuts = ({
     };
   }, [
     createNewTab, closeTab, zoomIn, zoomOut, zoomReset, 
-    toggleFullscreen, openDevTools, printPage, restoreClosedTab, 
+    toggleFullscreen, printPage, restoreClosedTab, 
     addBookmark, openInternalPage, addToHistory, setWorkspaces
   ]);
 };

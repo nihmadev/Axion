@@ -1,0 +1,12 @@
+/* Welcome Page - Modular Styles */
+@import './base.css';
+@import './window-controls.css';
+@import './slider.css';
+@import './layout.css';
+@import './header.css';
+@import './features.css';
+@import './import.css';
+@import './actions.css';
+@import './accent.css';
+@import './page-dots.css';
+@import './responsive.css';

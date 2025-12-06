@@ -40,6 +40,7 @@ export {
   MaximizeIcon,
   MinimizeIcon,
   ChevronRightIcon,
+  ChevronDownIcon,
   SquareIcon,
 } from './windowIcons';
 

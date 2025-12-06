@@ -1,4 +1,4 @@
-import { Tab, Workspace, Language } from '../../types';
+import { Tab, Workspace, Language, SplitView, TabGroup, TabGroupColorId } from '../../types';
 
 export interface ZenSidebarProps {
   workspaces: Workspace[];
@@ -45,6 +45,20 @@ export interface ZenSidebarProps {
   tabCloseButton?: 'hover' | 'always' | 'never';
   showTabFavicons?: boolean;
   showTabPreviews?: boolean;
+  
+  // Split View
+  splitView?: SplitView;
+  onCloseSplitView?: () => void;
+  
+  // Tab Groups
+  tabGroups?: TabGroup[];
+  onCreateTabGroup?: (name: string, colorId: TabGroupColorId, tabIds: string[]) => void;
+  onToggleTabGroupCollapsed?: (groupId: string) => void;
+  onUpdateTabGroup?: (groupId: string, updates: Partial<Omit<TabGroup, 'id'>>) => void;
+  onDeleteTabGroup?: (groupId: string) => void;
+  onCloseTabGroup?: (groupId: string) => void;
+  onAddTabToGroup?: (tabId: string, groupId: string) => void;
+  onRemoveTabFromGroup?: (tabId: string) => void;
   
   // Localization
   language: Language;

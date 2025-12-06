@@ -1,0 +1,19 @@
+/* Header styles */
+.quicksites-page-header {
+  padding: 24px 32px 16px;
+  border-bottom: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+  background: var(--bg-secondary, #222224);
+}
+
+.quicksites-page-header h1 {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  color: var(--text-primary, #fff);
+}
+
+.quicksites-page-subtitle {
+  font-size: 14px;
+  color: var(--text-secondary, rgba(255, 255, 255, 0.5));
+  margin: 0;
+}

@@ -1,6 +1,4 @@
-import React, { useState, useCallback, useRef, useMemo, useEffect } from 'react';
-import { Settings, createDefaultSettings } from './types';
-import { useTranslation } from './hooks/useTranslation';
+import React, { useMemo } from 'react';
 import TitleBar from './components/TitleBar/TitleBar';
 import AddressBar from './components/AddressBar/AddressBar';
 import ZenSidebar from './components/ZenSidebar';
@@ -8,8 +6,6 @@ import WebViewArea from './components/WebView/WebViewArea';
 import AppModals from './components/AppModals';
 import UpdateBanner from './components/UpdateBanner';
 import WelcomePage from './components/WelcomePage';
-import { extractSearchQueries } from './utils/url';
-import { electronAPI } from './tauri-api';
 import {
   useWorkspaces,
   useNavigation,
@@ -22,51 +18,39 @@ import {
   useWebViewVisibility,
   useStartPageData,
   useTabThumbnails,
+  useTranslation,
+  useAppState,
+  useAppHandlers,
 } from './hooks';
 import './styles/App.css';
 
 const App: React.FC = () => {
-  
-  // Базовые состояния
-  const [settings, setSettings] = useState<Settings>(() => createDefaultSettings());
-  const [showNewTabModal, setShowNewTabModal] = useState(false);
-  const [isFullscreen, setIsFullscreen] = useState(false);
-  const [showImportDialog, setShowImportDialog] = useState(false);
-  const [showTabSearch, setShowTabSearch] = useState(false);
-  const [updateAvailable] = useState(false);
-  const [updateDownloaded] = useState(false);
-  const [sidebarWidth, setSidebarWidth] = useState(220);
-  const [toastMessage, setToastMessage] = useState<string | null>(null);
-  const [showWelcome, setShowWelcome] = useState(false);
-  const [welcomeChecked, setWelcomeChecked] = useState(false);
+  // Базовые состояния из хука
+  const {
+    settings,
+    setSettings,
+    showNewTabModal,
+    setShowNewTabModal,
+    isFullscreen,
+    setIsFullscreen,
+    showImportDialog,
+    setShowImportDialog,
+    showTabSearch,
+    setShowTabSearch,
+    updateAvailable,
+    updateDownloaded,
+    sidebarWidth,
+    setSidebarWidth,
+    toastMessage,
+    setToastMessage,
+    showWelcome,
+    setShowWelcome,
+    welcomeChecked,
+    webviewRefs,
+    isModalOpen,
+  } = useAppState();
   
   const t = useTranslation(settings.language);
-  
-  // Проверка первого запуска или настройки showWelcomeOnNextLaunch
-  useEffect(() => {
-    const checkFirstLaunch = async () => {
-      try {
-        const isFirst = await window.electronAPI.isFirstLaunch();
-        const savedSettings = await window.electronAPI.getSettings();
-        const shouldShowWelcome = isFirst || savedSettings?.showWelcomeOnNextLaunch;
-        setShowWelcome(shouldShowWelcome);
-        
-        // Если показываем приветствие из-за настройки, сбрасываем её
-        if (savedSettings?.showWelcomeOnNextLaunch && !isFirst) {
-          const updatedSettings = { ...savedSettings, showWelcomeOnNextLaunch: false };
-          await window.electronAPI.setSettings(updatedSettings);
-          setSettings(updatedSettings);
-        } else if (savedSettings) {
-          setSettings(savedSettings);
-        }
-      } catch (error) {
-        console.error('Failed to check first launch:', error);
-      } finally {
-        setWelcomeChecked(true);
-      }
-    };
-    checkFirstLaunch();
-  }, []);
   
   // Состояния для StartPage сайтов
   const {
@@ -76,8 +60,6 @@ const App: React.FC = () => {
     handleDeleteSite,
     handleRenameSite
   } = useStartPageData();
-  
-  const webviewRefs = useRef<Map<string, HTMLWebViewElement>>(new Map());
 
   // Хуки для управления данными
   const { history, setHistory, addToHistory, clearHistory } = useHistory();
@@ -107,6 +89,15 @@ const App: React.FC = () => {
     setSplitViewTab,
     setSplitRatio,
     closeSplitView,
+    // Tab Groups
+    tabGroups,
+    createTabGroup,
+    addTabToGroup,
+    removeTabFromGroup,
+    updateTabGroup,
+    toggleTabGroupCollapsed,
+    deleteTabGroup,
+    closeTabGroup,
   } = useWorkspaces({ settings, language: settings.language });
 
   const {
@@ -157,41 +148,36 @@ const App: React.FC = () => {
     setSidebarWidth,
   });
 
-  // Вспомогательные функции
-  const toggleFullscreen = useCallback(() => {
-    window.electronAPI.fullscreen();
-  }, []);
-
-  const openDevTools = useCallback(() => {
-    // DevTools: Press F12 to open DevTools for the entire window
-  }, []);
-
-  const printPage = useCallback(() => {
-    const iframe = webviewRefs.current.get(activeTabIdRef.current) as HTMLIFrameElement;
-    if (iframe?.contentWindow) {
-      try {
-        iframe.contentWindow.print();
-      } catch (e) {
-        console.warn('Cannot print iframe content:', e);
-        window.print();
-      }
-    }
-  }, [activeTabIdRef]);
-
-  const openNewTabModal = useCallback(() => {
-    setShowNewTabModal(true);
-  }, []);
-
-  const updateSettings = useCallback((newSettings: Partial<Settings>) => {
-    const updated = { ...settings, ...newSettings };
-    setSettings(updated);
-    window.electronAPI.setSettings(updated);
-  }, [settings]);
-
-  const handleSidebarWidthChange = useCallback((width: number) => {
-    setSidebarWidth(width);
-    localStorage.setItem('sidebarWidth', width.toString());
-  }, []);
+  // Обработчики из хука
+  const {
+    toggleFullscreen,
+    printPage,
+    openNewTabModal,
+    updateSettings,
+    handleSidebarWidthChange,
+    handleSearch,
+    handlePip,
+    handleReaderMode,
+    handleWelcomeImport,
+    handleWelcomeComplete,
+    recentSearches,
+  } = useAppHandlers({
+    settings,
+    setSettings,
+    setSidebarWidth,
+    activeTabId,
+    activeTabIdRef,
+    activeTab,
+    webviewRefs,
+    updateTab,
+    createNewTab,
+    setShowNewTabModal,
+    setShowWelcome,
+    bookmarks,
+    setBookmarks,
+    history,
+    setHistory,
+  });
 
   // Шорткаты
   useShortcuts({
@@ -203,7 +189,6 @@ const App: React.FC = () => {
     zoomOut,
     zoomReset,
     toggleFullscreen,
-    openDevTools,
     printPage,
     restoreClosedTab,
     addBookmark,
@@ -213,9 +198,6 @@ const App: React.FC = () => {
     addToHistory,
     setWorkspaces,
   });
-
-  // Видимость WebView
-  const isModalOpen = showNewTabModal || showImportDialog || showTabSearch;
   
   useWebViewVisibility({
     workspaces,
@@ -234,42 +216,10 @@ const App: React.FC = () => {
   });
 
   // Вычисляемые значения
-  const isBookmarked = activeTab ? bookmarks.some(b => b.url === activeTab.url) : false;
-  const recentSearches = useMemo(() => extractSearchQueries(history), [history]);
-
-  const handleSearch = useCallback((query: string) => {
-    createNewTab(query);
-  }, [createNewTab]);
-
-  // Picture-in-Picture для видео
-  const handlePip = useCallback(() => {
-    if (activeTabId) {
-      electronAPI.togglePip(activeTabId).catch(console.error);
-    }
-  }, [activeTabId]);
-
-  // Обработчик импорта для WelcomePage
-  const handleWelcomeImport = useCallback(async (browser: 'chrome' | 'firefox' | 'edge' | 'zen') => {
-    const result = await window.electronAPI.importFromBrowser(browser);
-    if (result) {
-      // Объединяем закладки
-      const mergedBookmarks = [...bookmarks, ...result.bookmarks.filter(
-        (imported: { url: string }) => !bookmarks.some(b => b.url === imported.url)
-      )];
-      setBookmarks(mergedBookmarks);
-      window.electronAPI.setBookmarks(mergedBookmarks);
-      
-      // Объединяем историю
-      const mergedHistory = [...result.history, ...history];
-      setHistory(mergedHistory.slice(0, 500));
-    }
-  }, [bookmarks, history, setBookmarks, setHistory]);
-
-  // Обработчик завершения WelcomePage с выбранным акцентным цветом
-  const handleWelcomeComplete = useCallback((accentColor: string) => {
-    updateSettings({ accentColor });
-    setShowWelcome(false);
-  }, [updateSettings]);
+  const isBookmarked = useMemo(() => 
+    activeTab ? bookmarks.some(b => b.url === activeTab.url) : false, 
+    [activeTab, bookmarks]
+  );
 
   // Показываем пустой экран пока проверяем первый запуск
   if (!welcomeChecked) {
@@ -331,6 +281,8 @@ const App: React.FC = () => {
               pipTitle={t.common.pip}
               isSplitView={splitView?.enabled || false}
               onToggleSplitView={toggleSplitView}
+              isReaderMode={activeTab.isReaderMode || false}
+              onToggleReaderMode={handleReaderMode}
             />
           )}
           
@@ -400,7 +352,18 @@ const App: React.FC = () => {
           tabCloseButton={settings.tabCloseButton}
           showTabFavicons={settings.showTabFavicons}
           showTabPreviews={settings.showTabPreviews}
+          splitView={splitView}
+          onCloseSplitView={closeSplitView}
           language={settings.language}
+          // Tab Groups
+          tabGroups={tabGroups}
+          onCreateTabGroup={createTabGroup}
+          onToggleTabGroupCollapsed={toggleTabGroupCollapsed}
+          onUpdateTabGroup={updateTabGroup}
+          onDeleteTabGroup={deleteTabGroup}
+          onCloseTabGroup={closeTabGroup}
+          onAddTabToGroup={addTabToGroup}
+          onRemoveTabFromGroup={removeTabFromGroup}
         />
       </div>
 

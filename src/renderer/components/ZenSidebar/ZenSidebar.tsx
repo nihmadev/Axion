@@ -49,7 +49,18 @@ const ZenSidebar: React.FC<ZenSidebarProps> = ({
   tabCloseButton = 'hover',
   showTabFavicons = true,
   showTabPreviews = true,
+  splitView,
+  onCloseSplitView,
   language,
+  // Tab Groups
+  tabGroups,
+  onCreateTabGroup,
+  onToggleTabGroupCollapsed,
+  onUpdateTabGroup,
+  onDeleteTabGroup,
+  onCloseTabGroup,
+  onAddTabToGroup,
+  onRemoveTabFromGroup,
 }) => {
   const sidebarRef = useRef<HTMLDivElement>(null);
   
@@ -76,12 +87,18 @@ const ZenSidebar: React.FC<ZenSidebarProps> = ({
     `zen-sidebar--${style}`,
   ].join(' ');
 
+  // Определяем ширину в зависимости от стиля
+  const getSidebarWidth = () => {
+    if (style === 'minimal') return '56px';
+    return `${sidebarWidth}px`;
+  };
+
   return (
     <div 
       ref={sidebarRef}
       className={sidebarClasses}
       style={{ 
-        width: style === 'minimal' ? '60px' : `${sidebarWidth}px`,
+        width: getSidebarWidth(),
         ...(activeWorkspaceColor && { '--workspace-accent': activeWorkspaceColor } as React.CSSProperties)
       }}
     >
@@ -147,7 +164,17 @@ const ZenSidebar: React.FC<ZenSidebarProps> = ({
         onTabSelect={onTabSelect}
         onTabClose={onTabClose}
         onNewTab={onNewTab}
+        splitView={splitView}
+        onCloseSplitView={onCloseSplitView}
         language={language}
+        tabGroups={tabGroups}
+        onCreateTabGroup={onCreateTabGroup}
+        onToggleTabGroupCollapsed={onToggleTabGroupCollapsed}
+        onUpdateTabGroup={onUpdateTabGroup}
+        onDeleteTabGroup={onDeleteTabGroup}
+        onCloseTabGroup={onCloseTabGroup}
+        onAddTabToGroup={onAddTabToGroup}
+        onRemoveTabFromGroup={onRemoveTabFromGroup}
       />
 
       <BottomToolbar

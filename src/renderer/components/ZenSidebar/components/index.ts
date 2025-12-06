@@ -5,5 +5,7 @@ export { QuickSites } from './QuickSites';
 export { WorkspaceList } from './WorkspaceList';
 export { TabList } from './TabList';
 export { TabPreview } from './TabPreview';
+export { TabGroupHeader } from './TabGroupHeader';
+export { CreateTabGroupModal } from './CreateTabGroupModal';
 export { BottomToolbar } from './BottomToolbar';
 export { ResizeHandle } from './ResizeHandle';

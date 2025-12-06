@@ -7,7 +7,7 @@ interface TabPreviewProps {
   tab: Tab;
   position: { x: number; y: number };
   sidebarPosition: 'left' | 'right';
-  language: 'ru' | 'en';
+  language: 'ru' | 'en' | 'es' | 'fr' | 'de' | 'zh-CN';
 }
 
 const getInternalIcon = (url?: string) => {

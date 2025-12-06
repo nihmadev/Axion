@@ -1,6 +1,7 @@
 mod bookmarks;
 mod history;
 mod import;
+mod passwords;
 mod session;
 mod settings;
 
@@ -12,6 +13,12 @@ pub use bookmarks::{get_bookmarks, set_bookmarks};
 pub use history::{add_history, clear_history, get_history, set_history};
 pub use import::{detect_browsers, import_from_browser, DetectedBrowser, ImportResult};
 pub use session::{clear_session, restore_session, save_session};
+pub use passwords::{
+    add_password, change_master_password, create_vault, delete_password, delete_vault,
+    generate_password, get_passwords, get_remaining_attempts, is_vault_unlocked, lock_vault,
+    search_passwords, unlock_vault, update_password, vault_exists, DecryptedPasswordEntry,
+    PasswordEntry,
+};
 pub use settings::{get_settings, set_settings};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]

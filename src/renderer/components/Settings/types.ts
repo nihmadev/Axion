@@ -1,7 +1,7 @@
 import { Settings } from '../../types';
 import { Translations } from '../../i18n';
 
-export type SettingsTab = 'appearance' | 'sidebar' | 'tabs' | 'startpage' | 'privacy' | 'performance' | 'advanced';
+export type SettingsTab = 'appearance' | 'sidebar' | 'tabs' | 'startpage' | 'privacy' | 'passwords' | 'performance' | 'advanced';
 
 export interface SettingsTabProps {
   settings: Settings;

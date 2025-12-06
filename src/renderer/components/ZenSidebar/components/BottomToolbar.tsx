@@ -6,7 +6,7 @@ interface BottomToolbarProps {
   onShowSettings?: () => void;
   onShowHistory: () => void;
   onShowDownloads: () => void;
-  language: 'ru' | 'en';
+  language: 'ru' | 'en' | 'es' | 'fr' | 'de' | 'zh-CN';
 }
 
 export const BottomToolbar: React.FC<BottomToolbarProps> = ({

@@ -1,0 +1,68 @@
+/* Mac-style window controls */
+.welcome-window-controls {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  display: flex;
+  gap: 8px;
+  z-index: 10001;
+  -webkit-app-region: no-drag;
+}
+
+.window-control-btn {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  position: relative;
+}
+
+.window-control-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.window-control-btn.close {
+  background: #ff5f57;
+}
+
+.window-control-btn.close:hover {
+  background: #ff3b30;
+}
+
+.window-control-btn.close:hover::before {
+  opacity: 1;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M3 3l6 6M9 3l-6 6' stroke='%23000' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E") center/8px no-repeat;
+}
+
+.window-control-btn.minimize {
+  background: #febc2e;
+}
+
+.window-control-btn.minimize:hover {
+  background: #f5a623;
+}
+
+.window-control-btn.minimize:hover::before {
+  opacity: 1;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 6h8' stroke='%23000' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E") center/8px no-repeat;
+}
+
+.window-control-btn.maximize {
+  background: #28c840;
+}
+
+.window-control-btn.maximize:hover {
+  background: #1aab29;
+}
+
+.window-control-btn.maximize:hover::before {
+  opacity: 1;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 2h3v3H2zM7 7h3v3H7z' fill='%23000'/%3E%3C/svg%3E") center/8px no-repeat;
+}

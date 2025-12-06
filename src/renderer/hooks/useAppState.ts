@@ -1,9 +1,9 @@
-import { useState, useRef, useMemo } from 'react';
-import { Settings, defaultSettings } from '../types';
+import { useState, useRef, useEffect } from 'react';
+import { Settings, createDefaultSettings } from '../types';
 
 export const useAppState = () => {
   // Базовые состояния
-  const [settings, setSettings] = useState<Settings>(defaultSettings);
+  const [settings, setSettings] = useState<Settings>(() => createDefaultSettings());
   const [showNewTabModal, setShowNewTabModal] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showImportDialog, setShowImportDialog] = useState(false);
@@ -12,18 +12,36 @@ export const useAppState = () => {
   const [updateDownloaded] = useState(false);
   const [sidebarWidth, setSidebarWidth] = useState(220);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
-  
-  // Состояния для StartPage сайтов
-  const [hiddenSites, setHiddenSites] = useState<string[]>(() => {
-    const saved = localStorage.getItem('hiddenSites');
-    return saved ? JSON.parse(saved) : [];
-  });
-  const [renamedSites, setRenamedSites] = useState<Record<string, string>>(() => {
-    const saved = localStorage.getItem('renamedSites');
-    return saved ? JSON.parse(saved) : {};
-  });
+  const [showWelcome, setShowWelcome] = useState(false);
+  const [welcomeChecked, setWelcomeChecked] = useState(false);
   
   const webviewRefs = useRef<Map<string, HTMLWebViewElement>>(new Map());
+
+  // Проверка первого запуска или настройки showWelcomeOnNextLaunch
+  useEffect(() => {
+    const checkFirstLaunch = async () => {
+      try {
+        const isFirst = await window.electronAPI.isFirstLaunch();
+        const savedSettings = await window.electronAPI.getSettings();
+        const shouldShowWelcome = isFirst || savedSettings?.showWelcomeOnNextLaunch;
+        setShowWelcome(shouldShowWelcome);
+        
+        // Если показываем приветствие из-за настройки, сбрасываем её
+        if (savedSettings?.showWelcomeOnNextLaunch && !isFirst) {
+          const updatedSettings = { ...savedSettings, showWelcomeOnNextLaunch: false };
+          await window.electronAPI.setSettings(updatedSettings);
+          setSettings(updatedSettings);
+        } else if (savedSettings) {
+          setSettings(savedSettings);
+        }
+      } catch (error) {
+        console.error('Failed to check first launch:', error);
+      } finally {
+        setWelcomeChecked(true);
+      }
+    };
+    checkFirstLaunch();
+  }, []);
 
   // Вычисляемые значения
   const isModalOpen = showNewTabModal || showImportDialog || showTabSearch;
@@ -46,10 +64,9 @@ export const useAppState = () => {
     setSidebarWidth,
     toastMessage,
     setToastMessage,
-    hiddenSites,
-    setHiddenSites,
-    renamedSites,
-    setRenamedSites,
+    showWelcome,
+    setShowWelcome,
+    welcomeChecked,
     webviewRefs,
     isModalOpen,
   };

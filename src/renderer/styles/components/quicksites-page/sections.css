@@ -1,0 +1,31 @@
+/* Sections and grid */
+.quicksites-section {
+  padding: 24px 32px;
+}
+
+.quicksites-section:first-of-type {
+  padding-top: 24px;
+}
+
+.quicksites-section-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary, rgba(255, 255, 255, 0.5));
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0 0 16px 0;
+}
+
+/* Grid */
+.quicksites-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+}
+
+/* Scrollable content */
+.quicksites-page > .quicksites-section:first-of-type,
+.quicksites-page > .quicksites-section:last-of-type {
+  overflow-y: auto;
+  flex: 1;
+}
