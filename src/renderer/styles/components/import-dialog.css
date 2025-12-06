@@ -1,0 +1,225 @@
+.import-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background: transparent;
+  z-index: 10000;
+  pointer-events: auto;
+}
+
+.import-dialog-container {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10001;
+  overflow-y: auto;
+  padding: 16px;
+}
+
+.import-dialog {
+  background: rgba(30, 30, 32, 0.98);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: var(--radius-lg);
+  width: 520px;
+  max-width: 100%;
+  max-height: calc(100vh - 32px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: scaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  flex-shrink: 0;
+  margin: auto;
+}
+
+.import-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-color, #444);
+}
+
+.import-header h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 20px;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition);
+  position: relative;
+}
+
+.close-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.05);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.close-btn:hover::before {
+  opacity: 1;
+}
+
+.close-btn:hover {
+  color: var(--text-primary);
+  transform: scale(1.05);
+}
+
+.close-btn > * {
+  position: relative;
+  z-index: 1;
+}
+
+.import-content {
+  padding: 24px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 0;
+  flex: 1;
+}
+
+.import-content p {
+  margin: 0 0 20px 0;
+  color: var(--text-secondary, #aaa);
+}
+
+.browser-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.browser-option {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.browser-option::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.03);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.browser-option:hover::before {
+  opacity: 1;
+}
+
+.browser-option:hover {
+  border-color: var(--accent);
+  transform: translateX(4px);
+  box-shadow: var(--shadow-sm);
+}
+
+.browser-option.selected {
+  border-color: var(--accent);
+  background: var(--accent-light);
+  box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.1);
+}
+
+.browser-option > * {
+  position: relative;
+  z-index: 1;
+}
+
+.browser-option input[type="radio"] {
+  margin: 0;
+}
+
+.browser-icon {
+  font-size: 32px;
+}
+
+.browser-option span {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.import-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 24px;
+  border-top: 1px solid var(--border-color, #444);
+}
+
+.btn-cancel, .btn-import {
+  padding: 12px 24px;
+  border-radius: var(--radius-sm);
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+  position: relative;
+}
+
+.btn-cancel {
+  background: transparent;
+  color: var(--text-secondary);
+}
+
+.btn-cancel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.05);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.btn-cancel:hover::before {
+  opacity: 1;
+}
+
+.btn-cancel:hover {
+  color: var(--text-primary);
+  transform: scale(1.02);
+}
+
+.btn-cancel > * {
+  position: relative;
+  z-index: 1;
+}
+
+.btn-import {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+}
+
+.btn-import:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(124, 58, 237, 0.4);
+}
+
+.btn-import:active {
+  transform: translateY(0);
+}

@@ -1,0 +1,77 @@
+/* ============================================== 
+   History Page - Dark Theme
+   ============================================== */
+
+.app[data-theme="dark"] .history-page {
+  background: #1a1a1a;
+}
+
+.app[data-theme="dark"] .history-page-header {
+  background: #252525;
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.app[data-theme="dark"] .history-page-header h1 {
+  color: #e4e4e7;
+}
+
+.app[data-theme="dark"] .history-search-box {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.app[data-theme="dark"] .history-search-box:focus-within {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--accent, #7c3aed);
+}
+
+.app[data-theme="dark"] .history-search-box svg {
+  color: #71717a;
+}
+
+.app[data-theme="dark"] .history-search-box input {
+  color: #e4e4e7;
+}
+
+.app[data-theme="dark"] .history-search-box input::placeholder {
+  color: #71717a;
+}
+
+.app[data-theme="dark"] .history-clear-btn {
+  background: rgba(239, 68, 68, 0.08);
+  border-color: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+}
+
+.app[data-theme="dark"] .history-clear-btn:hover {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.25);
+}
+
+.app[data-theme="dark"] .history-empty {
+  color: #71717a;
+}
+
+.app[data-theme="dark"] .history-group-title {
+  color: #a1a1aa;
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.app[data-theme="dark"] .history-item:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.app[data-theme="dark"] .history-item-favicon {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.app[data-theme="dark"] .history-item-title {
+  color: #e4e4e7;
+}
+
+.app[data-theme="dark"] .history-item-url {
+  color: #a1a1aa;
+}
+
+.app[data-theme="dark"] .history-item-time {
+  color: #71717a;
+}

@@ -1,0 +1,50 @@
+/* ==============================================
+   ZenSidebar - Bottom Toolbar
+   ============================================== */
+
+.zen-sidebar__bottom {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px 4px;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  margin-top: auto;
+  flex-shrink: 0;
+}
+
+.zen-sidebar__bottom-btn {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.45);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.zen-sidebar__bottom-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.95);
+  transform: translateY(-2px);
+}
+
+.zen-sidebar__bottom-btn:active {
+  transform: translateY(0) scale(0.95);
+}
+
+.zen-sidebar__bottom-btn--accent {
+  background: rgba(255, 200, 50, 0.15);
+  color: #ffc832;
+}
+
+.zen-sidebar__bottom-btn--accent:hover {
+  background: rgba(255, 200, 50, 0.25);
+}
+
+.zen-sidebar__profile-dot {
+  font-size: 15px;
+}

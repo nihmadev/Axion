@@ -1,0 +1,119 @@
+/* ==============================================
+   ZenSidebar - Workspaces
+   ============================================== */
+
+.zen-sidebar__workspaces {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  flex-shrink: 0;
+  max-height: 200px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.zen-sidebar__workspace {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.zen-sidebar__workspace-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 13px;
+  text-align: left;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.zen-sidebar__workspace-btn:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.zen-sidebar__workspace.is-active .zen-sidebar__workspace-btn {
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+}
+
+.zen-sidebar__workspace-icon {
+  font-size: 14px;
+}
+
+.zen-sidebar__workspace-name {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.zen-sidebar__workspace-edit {
+  width: 100%;
+  padding: 8px 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  color: white;
+  font-size: 13px;
+  outline: none;
+}
+
+/* Workspace add button */
+.zen-sidebar__workspace-add {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 10px;
+  background: transparent;
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 13px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  margin-top: 4px;
+}
+
+.zen-sidebar__workspace-add:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Workspace icon styling */
+.zen-sidebar__workspace-icon svg {
+  width: 16px;
+  height: 16px;
+  color: rgba(255, 255, 255, 0.6);
+  transition: color 0.2s ease;
+}
+
+.zen-sidebar__workspace.is-active .zen-sidebar__workspace-icon svg {
+  color: var(--workspace-accent, var(--accent, #7c3aed));
+}
+
+/* Workspace with custom color - subtle indicator */
+.zen-sidebar__workspace[style*="--workspace-accent"] .zen-sidebar__workspace-btn {
+  border-left: 3px solid var(--workspace-accent);
+  padding-left: 7px;
+}
+
+.zen-sidebar__workspace-btn:hover .zen-sidebar__workspace-icon svg {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.zen-sidebar__workspaces,
+.zen-sidebar__workspace-btn {
+  transition: all 0.2s ease;
+}

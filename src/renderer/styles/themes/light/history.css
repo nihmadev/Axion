@@ -1,0 +1,77 @@
+/* ============================================== 
+   History Page - Light Theme
+   ============================================== */
+
+.app[data-theme="light"] .history-page {
+  background: #f0f2f5;
+}
+
+.app[data-theme="light"] .history-page-header {
+  background: #fafbfc;
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+.app[data-theme="light"] .history-page-header h1 {
+  color: #1e293b;
+}
+
+.app[data-theme="light"] .history-search-box {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.app[data-theme="light"] .history-search-box:focus-within {
+  background: rgba(0, 0, 0, 0.06);
+  border-color: var(--accent, #7c3aed);
+}
+
+.app[data-theme="light"] .history-search-box svg {
+  color: #94a3b8;
+}
+
+.app[data-theme="light"] .history-search-box input {
+  color: #1e293b;
+}
+
+.app[data-theme="light"] .history-search-box input::placeholder {
+  color: #94a3b8;
+}
+
+.app[data-theme="light"] .history-clear-btn {
+  background: rgba(239, 68, 68, 0.08);
+  border-color: rgba(239, 68, 68, 0.15);
+  color: #dc2626;
+}
+
+.app[data-theme="light"] .history-clear-btn:hover {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.25);
+}
+
+.app[data-theme="light"] .history-empty {
+  color: #94a3b8;
+}
+
+.app[data-theme="light"] .history-group-title {
+  color: #64748b;
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+.app[data-theme="light"] .history-item:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.app[data-theme="light"] .history-item-favicon {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.app[data-theme="light"] .history-item-title {
+  color: #1e293b;
+}
+
+.app[data-theme="light"] .history-item-url {
+  color: #64748b;
+}
+
+.app[data-theme="light"] .history-item-time {
+  color: #94a3b8;
+}

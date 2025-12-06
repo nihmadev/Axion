@@ -1,0 +1,236 @@
+/* ============================================== 
+   Components - Dark Theme
+   ============================================== */
+
+/* Scrollbar - Dark Theme */
+.app[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.app[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Frozen Tab Placeholder - Dark Theme */
+.app[data-theme="dark"] .frozen-tab-placeholder {
+  background: rgba(37, 37, 37, 0.95);
+  color: #a1a1aa;
+}
+
+/* Banners - Dark Theme */
+.app[data-theme="dark"] .update-banner {
+  background: rgba(124, 58, 237, 0.95);
+}
+
+.app[data-theme="dark"] .update-banner.update-ready {
+  background: rgba(34, 197, 94, 0.95);
+}
+
+.app[data-theme="dark"] .load-error-banner {
+  background: rgba(239, 68, 68, 0.95);
+}
+
+.app[data-theme="dark"] .session-restored-banner {
+  background: rgba(34, 197, 94, 0.95);
+}
+
+/* Context Menu - Dark Theme */
+.app[data-theme="dark"] .zen-context-menu {
+  background: rgba(0, 0, 0, 0.98);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.app[data-theme="dark"] .zen-context-menu__item {
+  color: #d4d4d8;
+}
+
+.app[data-theme="dark"] .zen-context-menu__item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.app[data-theme="dark"] .zen-context-menu__item--danger {
+  color: #f87171;
+}
+
+.app[data-theme="dark"] .zen-context-menu__item--danger:hover {
+  background: rgba(239, 68, 68, 0.08);
+}
+
+.app[data-theme="dark"] .zen-context-menu__separator {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* Toast Notifications - Dark Theme */
+.app[data-theme="dark"] .toast {
+  background: rgba(0, 0, 0, 0.98);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  color: #e4e4e7;
+}
+
+/* Tab Search - Dark Theme */
+.app[data-theme="dark"] .tab-search-overlay {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.app[data-theme="dark"] .tab-search-modal {
+  background: rgba(0, 0, 0, 0.98);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+}
+
+.app[data-theme="dark"] .tab-search-input {
+  background: rgba(255, 255, 255, 0.04);
+  color: #e4e4e7;
+}
+
+.app[data-theme="dark"] .tab-search-input::placeholder {
+  color: #71717a;
+}
+
+.app[data-theme="dark"] .tab-search-result {
+  color: #d4d4d8;
+}
+
+.app[data-theme="dark"] .tab-search-result:hover,
+.app[data-theme="dark"] .tab-search-result.selected {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* New Tab Modal - Dark Theme */
+.app[data-theme="dark"] .new-tab-modal-overlay {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.app[data-theme="dark"] .new-tab-modal {
+  background: rgba(0, 0, 0, 0.98);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+}
+
+.app[data-theme="dark"] .new-tab-modal input {
+  background: rgba(255, 255, 255, 0.04);
+  color: #e4e4e7;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.app[data-theme="dark"] .new-tab-modal input::placeholder {
+  color: #71717a;
+}
+
+/* Import Dialog - Dark Theme */
+.app[data-theme="dark"] .import-dialog-overlay {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.app[data-theme="dark"] .import-dialog {
+  background: rgba(0, 0, 0, 0.98);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+}
+
+.app[data-theme="dark"] .import-dialog h2 {
+  color: #e4e4e7;
+}
+
+.app[data-theme="dark"] .import-dialog p {
+  color: #a1a1aa;
+}
+
+/* Workspace Context Menu - Dark Theme */
+.app[data-theme="dark"] .zen-workspace-context-menu {
+  background: rgba(0, 0, 0, 0.98);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.app[data-theme="dark"] .zen-workspace-context-menu__item {
+  color: #d4d4d8;
+}
+
+.app[data-theme="dark"] .zen-workspace-context-menu__item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #e4e4e7;
+}
+
+.app[data-theme="dark"] .zen-workspace-context-menu__item svg {
+  color: #a1a1aa;
+}
+
+.app[data-theme="dark"] .zen-workspace-context-menu__item:hover svg {
+  color: #d4d4d8;
+}
+
+.app[data-theme="dark"] .zen-workspace-context-menu__item--danger {
+  color: #f87171;
+}
+
+.app[data-theme="dark"] .zen-workspace-context-menu__item--danger:hover {
+  background: rgba(239, 68, 68, 0.08);
+}
+
+/* Icon Picker - Dark Theme */
+.app[data-theme="dark"] .icon-picker-overlay {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.app[data-theme="dark"] .icon-picker {
+  background: rgba(0, 0, 0, 0.98);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+}
+
+.app[data-theme="dark"] .icon-picker-title {
+  color: #e4e4e7;
+}
+
+.app[data-theme="dark"] .icon-picker-search {
+  background: rgba(255, 255, 255, 0.04);
+  color: #e4e4e7;
+}
+
+.app[data-theme="dark"] .icon-picker-search::placeholder {
+  color: #71717a;
+}
+
+.app[data-theme="dark"] .icon-picker-item {
+  color: #d4d4d8;
+}
+
+.app[data-theme="dark"] .icon-picker-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.app[data-theme="dark"] .icon-picker-item.selected {
+  background: rgba(124, 58, 237, 0.1);
+  color: var(--accent, #7c3aed);
+}
+
+/* Tab Bar (if visible) - Dark Theme */
+.app[data-theme="dark"] .tab-bar {
+  background: rgba(37, 37, 37, 0.95);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.app[data-theme="dark"] .tab {
+  color: #d4d4d8;
+}
+
+.app[data-theme="dark"] .tab:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.app[data-theme="dark"] .tab.active {
+  background: rgba(255, 255, 255, 0.06);
+  color: #e4e4e7;
+}
+
+.app[data-theme="dark"] .tab-close {
+  color: #71717a;
+}
+
+.app[data-theme="dark"] .tab-close:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #d4d4d8;
+}

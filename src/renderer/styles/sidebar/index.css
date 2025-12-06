@@ -1,0 +1,52 @@
+/* ==============================================
+   ZenSidebar - Main Entry Point
+   Модульная структура стилей сайдбара
+   ============================================== */
+
+/* Base styles */
+@import './_base.css';
+
+/* Animations */
+@import './_animations.css';
+
+/* Position & Style variants */
+@import './_variants.css';
+
+/* Window controls (macOS style) */
+@import './_window-controls.css';
+
+/* Navigation buttons */
+@import './_navigation.css';
+
+/* Search bar */
+@import './_search.css';
+
+/* Quick sites grid */
+@import './_quick-sites.css';
+
+/* Workspaces */
+@import './_workspaces.css';
+
+/* Tabs list */
+@import './_tabs.css';
+
+/* Bottom toolbar */
+@import './_bottom.css';
+
+/* Context menu */
+@import './_context-menu.css';
+
+/* Icon picker */
+@import './_icon-picker.css';
+
+/* Color picker */
+@import './_color-picker.css';
+
+/* Scrollbar styles */
+@import './_scrollbar.css';
+
+/* Resize handle */
+@import './_resize.css';
+
+/* Responsive design */
+@import './_responsive.css';

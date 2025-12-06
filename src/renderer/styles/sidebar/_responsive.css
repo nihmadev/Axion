@@ -1,0 +1,265 @@
+/* ==============================================
+   ZenSidebar - Responsive Design
+   ============================================== */
+
+/* Дополнительная адаптация для очень маленьких экранов */
+@media (max-height: 600px) {
+  .zen-sidebar {
+    gap: 2px;
+    padding: 5px;
+  }
+
+  .zen-sidebar__window-controls {
+    padding: 6px 4px;
+  }
+
+  .zen-window-btn {
+    width: 10px;
+    height: 10px;
+  }
+
+  .zen-sidebar__nav {
+    padding: 3px 0;
+  }
+
+  .zen-sidebar__nav-btn {
+    width: 28px;
+    height: 28px;
+  }
+
+  .zen-sidebar__search {
+    padding: 5px 8px;
+    margin: 2px 0;
+  }
+
+  .zen-sidebar__search-input {
+    font-size: 10px;
+  }
+
+  .zen-sidebar__quick-sites {
+    display: none;
+  }
+
+  .zen-sidebar__workspaces {
+    max-height: 100px;
+    padding: 3px 0;
+  }
+
+  .zen-sidebar__workspace-btn {
+    padding: 4px 6px;
+    font-size: 11px;
+    gap: 8px;
+  }
+
+  .zen-sidebar__workspace-icon svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .zen-sidebar__tab {
+    padding: 5px 7px;
+  }
+
+  .zen-sidebar__tab-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .zen-sidebar__tab-icon img {
+    width: 14px;
+    height: 14px;
+  }
+
+  .zen-sidebar__tab-title {
+    font-size: 11px;
+  }
+
+  .zen-sidebar__new-tab {
+    padding: 6px 8px;
+    font-size: 11px;
+  }
+
+  .zen-sidebar__bottom {
+    padding: 6px 3px;
+  }
+
+  .zen-sidebar__bottom-btn {
+    width: 28px;
+    height: 28px;
+  }
+
+  .zen-sidebar__bottom-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+@media (max-height: 650px) {
+  .zen-sidebar {
+    gap: 3px;
+    padding: 6px;
+  }
+
+  .zen-sidebar__quick-sites {
+    display: none;
+  }
+
+  .zen-sidebar__workspaces {
+    max-height: 120px;
+  }
+
+  .zen-sidebar__workspace-btn {
+    padding: 5px 8px;
+  }
+
+  .zen-sidebar__tab {
+    padding: 6px 8px;
+  }
+
+  .zen-sidebar__search {
+    padding: 6px 8px;
+  }
+
+  .zen-sidebar__search-input {
+    font-size: 11px;
+  }
+}
+
+@media (max-height: 700px) {
+  .zen-sidebar {
+    gap: 3px;
+    padding: 7px;
+  }
+
+  .zen-sidebar__quick-sites {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3px;
+  }
+
+  .zen-sidebar__workspaces {
+    max-height: 130px;
+  }
+
+  .zen-sidebar__workspace-btn {
+    padding: 5px 7px;
+    font-size: 11px;
+  }
+
+  .zen-sidebar__tab {
+    padding: 7px 9px;
+  }
+
+  .zen-sidebar__search {
+    padding: 7px 9px;
+  }
+
+  .zen-sidebar__search-input {
+    font-size: 11px;
+  }
+}
+
+@media (max-height: 800px) {
+  .zen-sidebar {
+    gap: 4px;
+    padding: 8px;
+  }
+
+  .zen-sidebar__quick-sites {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4px;
+    padding: 4px 0;
+  }
+
+  .zen-sidebar__quick-site {
+    border-radius: 10px;
+  }
+
+  .zen-sidebar__quick-site img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .zen-sidebar__workspaces {
+    max-height: 150px;
+    padding: 4px 0;
+  }
+
+  .zen-sidebar__workspace-btn {
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+
+  .zen-sidebar__tab {
+    padding: 8px 10px;
+  }
+
+  .zen-sidebar__tab-title {
+    font-size: 12px;
+  }
+
+  .zen-sidebar__search {
+    padding: 8px 10px;
+  }
+
+  .zen-sidebar__bottom {
+    padding: 8px 4px;
+  }
+
+  .zen-sidebar__bottom-btn {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+@media (max-height: 900px) {
+  .zen-sidebar {
+    gap: 5px;
+    padding: 8px;
+  }
+
+  .zen-sidebar__quick-sites {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+    padding: 5px 0;
+  }
+
+  .zen-sidebar__quick-site {
+    border-radius: 12px;
+  }
+
+  .zen-sidebar__quick-site img {
+    width: 24px;
+    height: 24px;
+  }
+
+  .zen-sidebar__workspaces {
+    max-height: 180px;
+    padding: 6px 0;
+  }
+
+  .zen-sidebar__workspace-btn {
+    padding: 7px 9px;
+    font-size: 12px;
+  }
+
+  .zen-sidebar__tab {
+    padding: 9px 10px;
+  }
+
+  .zen-sidebar__tab-title {
+    font-size: 12px;
+  }
+
+  .zen-sidebar__search {
+    padding: 9px 11px;
+  }
+
+  .zen-sidebar__bottom {
+    padding: 9px 4px;
+  }
+
+  .zen-sidebar__bottom-btn {
+    width: 32px;
+    height: 32px;
+  }
+}

@@ -1,0 +1,56 @@
+/* ============================================== 
+   Downloads Page - Dark Theme
+   ============================================== */
+
+.app[data-theme="dark"] .downloads-page {
+  background: #1a1a1a;
+}
+
+.app[data-theme="dark"] .downloads-page-header {
+  background: #252525;
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.app[data-theme="dark"] .downloads-page-header h1 {
+  color: #e4e4e7;
+}
+
+.app[data-theme="dark"] .downloads-clear-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
+  color: #a1a1aa;
+}
+
+.app[data-theme="dark"] .downloads-clear-btn:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #e4e4e7;
+}
+
+.app[data-theme="dark"] .downloads-empty {
+  color: #71717a;
+}
+
+.app[data-theme="dark"] .download-page-item {
+  background: #252525;
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.app[data-theme="dark"] .download-page-filename {
+  color: #e4e4e7;
+}
+
+.app[data-theme="dark"] .download-page-details {
+  color: #a1a1aa;
+}
+
+.app[data-theme="dark"] .download-page-progress {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.app[data-theme="dark"] .download-page-controls button {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.app[data-theme="dark"] .download-page-controls button:hover {
+  background: rgba(255, 255, 255, 0.08);
+}

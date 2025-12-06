@@ -1,0 +1,31 @@
+/* ==============================================
+   ZenSidebar - Base Styles
+   ============================================== */
+
+.zen-sidebar {
+  min-width: 180px;
+  max-width: 400px;
+  width: 220px;
+  height: 100vh;
+  max-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: rgba(26, 26, 28, 0.92);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  padding: 10px;
+  gap: 6px;
+  flex-shrink: 0;
+  border-radius: var(--radius);
+  animation: sidebarFadeIn 0.3s ease;
+  overflow: hidden;
+  position: relative;
+  z-index: 1000;
+  pointer-events: auto;
+}
+
+/* Smooth transitions for responsive changes */
+.zen-sidebar {
+  transition: padding 0.2s ease,
+              gap 0.2s ease;
+}

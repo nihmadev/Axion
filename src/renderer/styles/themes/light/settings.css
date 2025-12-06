@@ -1,0 +1,278 @@
+/* ============================================== 
+   Settings Page - Light Theme
+   ============================================== */
+
+.app[data-theme="light"] .settings-page {
+  background: #f0f2f5;
+}
+
+.app[data-theme="light"] .settings-page-header {
+  background: #fafbfc;
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+.app[data-theme="light"] .settings-page-header h1 {
+  color: #1e293b;
+}
+
+.app[data-theme="light"] .settings-nav {
+  background: rgba(0, 0, 0, 0.02);
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+.app[data-theme="light"] .settings-nav-item {
+  color: #64748b;
+}
+
+.app[data-theme="light"] .settings-nav-item:hover {
+  background: rgba(0, 0, 0, 0.04);
+  color: #1e293b;
+}
+
+.app[data-theme="light"] .settings-nav-item.active {
+  background: rgba(124, 58, 237, 0.08);
+  color: var(--accent, #7c3aed);
+}
+
+.app[data-theme="light"] .settings-page-section {
+  background: #fafbfc;
+  border-color: rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.app[data-theme="light"] .settings-page-section h2 {
+  color: #64748b;
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+.app[data-theme="light"] .settings-page-item {
+  border-color: rgba(0, 0, 0, 0.04);
+}
+
+.app[data-theme="light"] .settings-page-item-info label {
+  color: #1e293b;
+}
+
+.app[data-theme="light"] .settings-page-item-info span {
+  color: #64748b;
+}
+
+.app[data-theme="light"] .settings-page-item select {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.08);
+  color: #1e293b;
+}
+
+.app[data-theme="light"] .settings-toggle {
+  background: rgba(0, 0, 0, 0.12);
+}
+
+.app[data-theme="light"] .settings-toggle.active {
+  background: var(--accent, #7c3aed);
+}
+
+/* Theme selector in settings */
+.app[data-theme="light"] .theme-option {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.app[data-theme="light"] .theme-option:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.app[data-theme="light"] .theme-option span {
+  color: #64748b;
+}
+
+.app[data-theme="light"] .theme-option.active span {
+  color: var(--accent, #7c3aed);
+}
+
+/* Color picker */
+.app[data-theme="light"] .color-preset {
+  box-shadow: none;
+}
+
+.app[data-theme="light"] .color-preset:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.app[data-theme="light"] .color-preset.active {
+  border-color: rgba(255, 255, 255, 0.95);
+}
+
+/* Radius selector */
+.app[data-theme="light"] .radius-option {
+  background: rgba(0, 0, 0, 0.03);
+  color: #64748b;
+}
+
+.app[data-theme="light"] .radius-option:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.app[data-theme="light"] .radius-option.active {
+  background: rgba(124, 58, 237, 0.1);
+  color: var(--accent, #7c3aed);
+}
+
+.app[data-theme="light"] .radius-preview {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+/* Range input */
+.app[data-theme="light"] input[type="range"] {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.app[data-theme="light"] input[type="range"]::-webkit-slider-thumb {
+  background: var(--accent, #7c3aed);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Search engine selector */
+.app[data-theme="light"] .search-engine-option {
+  background: rgba(0, 0, 0, 0.03);
+  color: #475569;
+}
+
+.app[data-theme="light"] .search-engine-option:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.app[data-theme="light"] .search-engine-option.active {
+  background: rgba(124, 58, 237, 0.1);
+  border-color: var(--accent, #7c3aed);
+}
+
+/* Wallpaper presets */
+.app[data-theme="light"] .wallpaper-preset {
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+.app[data-theme="light"] .wallpaper-preset.active {
+  border-color: var(--accent, #7c3aed);
+}
+
+/* ============================================== 
+   Settings Page Additional - Light Theme
+   ============================================== */
+
+/* Position selector */
+.app[data-theme="light"] .position-option {
+  background: rgba(0, 0, 0, 0.03);
+  color: #64748b;
+}
+
+.app[data-theme="light"] .position-option:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.app[data-theme="light"] .position-option.active {
+  background: rgba(124, 58, 237, 0.1);
+}
+
+.app[data-theme="light"] .position-option span {
+  color: #64748b;
+}
+
+.app[data-theme="light"] .position-option.active span {
+  color: var(--accent, #7c3aed);
+}
+
+.app[data-theme="light"] .position-preview {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.app[data-theme="light"] .position-content {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+/* Tab style selector */
+.app[data-theme="light"] .tab-style-option {
+  background: rgba(0, 0, 0, 0.03);
+  color: #64748b;
+}
+
+.app[data-theme="light"] .tab-style-option:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.app[data-theme="light"] .tab-style-option.active {
+  background: rgba(124, 58, 237, 0.1);
+}
+
+.app[data-theme="light"] .tab-style-option span {
+  color: #64748b;
+}
+
+.app[data-theme="light"] .tab-style-option.active span {
+  color: var(--accent, #7c3aed);
+}
+
+.app[data-theme="light"] .tab-style-preview {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.app[data-theme="light"] .tab-preview-item {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/* About browser section */
+.app[data-theme="light"] .about-browser {
+  background: transparent;
+}
+
+.app[data-theme="light"] .about-logo {
+  background: rgba(124, 58, 237, 0.1);
+}
+
+.app[data-theme="light"] .about-info h3 {
+  color: #1e293b;
+}
+
+.app[data-theme="light"] .about-info p {
+  color: #64748b;
+}
+
+.app[data-theme="light"] .about-copyright {
+  color: #94a3b8 !important;
+}
+
+/* Color input custom */
+.app[data-theme="light"] .color-input-custom::-webkit-color-swatch {
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Settings scrollbar */
+.app[data-theme="light"] .settings-page-content::-webkit-scrollbar-thumb,
+.app[data-theme="light"] .settings-nav::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.app[data-theme="light"] .settings-page-content::-webkit-scrollbar-thumb:hover,
+.app[data-theme="light"] .settings-nav::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.18);
+}
+
+/* Sidebar style selector */
+.app[data-theme="light"] .sidebar-style-option {
+  background: rgba(0, 0, 0, 0.03);
+  color: #64748b;
+}
+
+.app[data-theme="light"] .sidebar-style-option:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.app[data-theme="light"] .sidebar-style-option.active {
+  background: rgba(124, 58, 237, 0.1);
+}
+
+.app[data-theme="light"] .sidebar-style-option span {
+  color: #64748b;
+}
+
+.app[data-theme="light"] .sidebar-style-option.active span {
+  color: var(--accent, #7c3aed);
+}

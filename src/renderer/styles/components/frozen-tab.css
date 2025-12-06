@@ -1,0 +1,46 @@
+/* ==============================================
+   Frozen Tab Placeholder
+   ============================================== */
+
+.frozen-tab-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background: var(--glass-bg);
+  color: var(--text-secondary);
+  gap: 20px;
+  animation: fadeIn 0.3s ease;
+}
+
+.frozen-tab-placeholder .frozen-icon {
+  font-size: 48px;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.05); opacity: 1; }
+}
+
+.frozen-tab-placeholder p {
+  font-size: 14px;
+  margin: 0;
+}
+
+.frozen-tab-placeholder button {
+  padding: 10px 24px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 13px;
+  transition: all var(--transition);
+}
+
+.frozen-tab-placeholder button:hover {
+  background: var(--accent-hover);
+  transform: translateY(-2px);
+}

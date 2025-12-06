@@ -1,0 +1,127 @@
+.settings-page {
+  width: 100%;
+  height: 100%;
+  background: var(--bg-primary, #1a1a1c);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  z-index: 500;
+}
+
+.settings-page-header {
+  padding: 20px 28px;
+  border-bottom: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+  background: var(--bg-secondary, #222224);
+  flex-shrink: 0;
+}
+
+.settings-page-header h1 {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 0;
+  color: var(--text-primary, #fff);
+}
+
+/* Layout with sidebar navigation */
+.settings-layout {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.settings-page-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px 32px;
+  min-width: 0;
+}
+
+.settings-page-section {
+  margin-bottom: 28px;
+  background: var(--bg-secondary, rgba(255, 255, 255, 0.03));
+  border-radius: 14px;
+  padding: 20px;
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.06));
+}
+
+.settings-page-section:last-child {
+  margin-bottom: 0;
+}
+
+.settings-page-section h2 {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary, rgba(255, 255, 255, 0.5));
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0 0 16px 0;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border, rgba(255, 255, 255, 0.08));
+}
+
+.settings-page-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border, rgba(255, 255, 255, 0.05));
+  gap: 16px;
+}
+
+.settings-page-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.settings-page-item:first-of-type {
+  padding-top: 0;
+}
+
+.settings-page-item.vertical {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.settings-page-item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.settings-page-item-info label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary, #fff);
+  margin-bottom: 3px;
+}
+
+.settings-page-item-info span {
+  font-size: 12px;
+  color: var(--text-secondary, rgba(255, 255, 255, 0.4));
+}
+
+/* Scrollbar */
+.settings-page-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.settings-page-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.settings-page-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.settings-page-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 700px) {
+  .settings-layout {
+    flex-direction: column;
+  }
+}

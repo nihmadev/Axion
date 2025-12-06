@@ -1,0 +1,96 @@
+/* ==============================================
+   ZenSidebar - Icon Picker
+   ============================================== */
+
+.zen-workspace-icon-picker {
+  min-width: 260px;
+  max-width: 260px;
+}
+
+.zen-workspace-icon-picker__header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 8px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.zen-workspace-icon-picker__back {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 16px;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+}
+
+.zen-workspace-icon-picker__back:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.zen-workspace-icon-picker__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  padding: 4px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.zen-workspace-icon-picker__item {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.6);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 12px;
+}
+
+.zen-workspace-icon-picker__item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(124, 58, 237, 0.4);
+  color: rgba(255, 255, 255, 0.95);
+  transform: scale(1.08);
+}
+
+.zen-workspace-icon-picker__item:active {
+  transform: scale(0.95);
+}
+
+.zen-workspace-icon-picker__item svg {
+  width: 20px;
+  height: 20px;
+}
+
+.zen-workspace-icon-picker__grid::-webkit-scrollbar {
+  width: 4px;
+}
+
+.zen-workspace-icon-picker__grid::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.zen-workspace-icon-picker__grid::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.zen-workspace-icon-picker__grid::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}

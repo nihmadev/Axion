@@ -1,0 +1,45 @@
+/* ==============================================
+   ZenSidebar - Search Bar
+   ============================================== */
+
+.zen-sidebar__search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin: 4px 0;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.zen-sidebar__search:focus-within {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(124, 58, 237, 0.4);
+}
+
+.zen-sidebar__search-icon {
+  color: rgba(255, 255, 255, 0.35);
+  flex-shrink: 0;
+  transition: color 0.2s ease;
+}
+
+.zen-sidebar__search:focus-within .zen-sidebar__search-icon {
+  color: rgba(124, 58, 237, 0.8);
+}
+
+.zen-sidebar__search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 12px;
+  width: 100%;
+}
+
+.zen-sidebar__search-input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}

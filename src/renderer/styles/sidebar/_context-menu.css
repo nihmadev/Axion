@@ -1,0 +1,78 @@
+/* ==============================================
+   ZenSidebar - Context Menu
+   ============================================== */
+
+/* Context menu overlay */
+.zen-workspace-context-menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100000;
+  background: transparent;
+}
+
+/* Context menu */
+.zen-workspace-context-menu {
+  position: fixed;
+  z-index: 100001;
+  background: rgba(30, 30, 32, 0.98);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 6px;
+  min-width: 200px;
+  max-width: 280px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  animation: contextMenuFadeIn 0.15s ease;
+  pointer-events: auto;
+}
+
+.zen-workspace-context-menu__item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 13px;
+  text-align: left;
+  border-radius: 8px;
+  transition: all 0.15s ease;
+}
+
+.zen-workspace-context-menu__item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+}
+
+.zen-workspace-context-menu__item svg {
+  flex-shrink: 0;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.zen-workspace-context-menu__item:hover svg {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.zen-workspace-context-menu__item--danger {
+  color: rgba(239, 68, 68, 0.9);
+}
+
+.zen-workspace-context-menu__item--danger:hover {
+  background: rgba(239, 68, 68, 0.15);
+  color: rgb(239, 68, 68);
+}
+
+.zen-workspace-context-menu__item--danger svg {
+  color: rgba(239, 68, 68, 0.7);
+}
+
+.zen-workspace-context-menu__item--danger:hover svg {
+  color: rgb(239, 68, 68);
+}

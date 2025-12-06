@@ -1,0 +1,191 @@
+/* ============================================== 
+   Sidebar - Light Theme
+   ============================================== */
+
+.app[data-theme="light"] .zen-sidebar {
+  background: rgba(250, 251, 252, 0.95);
+  border-color: rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+/* Sidebar tabs */
+.app[data-theme="light"] .zen-sidebar__tabs {
+  border-color: rgba(0, 0, 0, 0.04);
+}
+
+.app[data-theme="light"] .zen-sidebar__tab:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.app[data-theme="light"] .zen-sidebar__tab.is-active {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.app[data-theme="light"] .zen-sidebar__tab-icon {
+  color: #64748b;
+}
+
+.app[data-theme="light"] .zen-sidebar__tab-title {
+  color: #475569;
+}
+
+.app[data-theme="light"] .zen-sidebar__tab.is-active .zen-sidebar__tab-title {
+  color: #1e293b;
+}
+
+.app[data-theme="light"] .zen-sidebar__tab-close {
+  color: #94a3b8;
+}
+
+.app[data-theme="light"] .zen-sidebar__tab-close:hover {
+  background: rgba(0, 0, 0, 0.08);
+  color: #475569;
+}
+
+.app[data-theme="light"] .zen-sidebar__tab-spinner {
+  border-color: rgba(0, 0, 0, 0.1);
+  border-top-color: var(--accent, #7c3aed);
+}
+
+/* Sidebar new tab button */
+.app[data-theme="light"] .zen-sidebar__new-tab {
+  color: #64748b;
+}
+
+.app[data-theme="light"] .zen-sidebar__new-tab:hover {
+  background: rgba(0, 0, 0, 0.04);
+  color: #1e293b;
+}
+
+/* Sidebar search */
+.app[data-theme="light"] .zen-sidebar__search {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.app[data-theme="light"] .zen-sidebar__search:focus-within {
+  background: rgba(0, 0, 0, 0.06);
+  border-color: rgba(124, 58, 237, 0.4);
+}
+
+.app[data-theme="light"] .zen-sidebar__search-icon {
+  color: #94a3b8;
+}
+
+.app[data-theme="light"] .zen-sidebar__search:focus-within .zen-sidebar__search-icon {
+  color: var(--accent, #7c3aed);
+}
+
+.app[data-theme="light"] .zen-sidebar__search-input {
+  color: #1e293b;
+}
+
+.app[data-theme="light"] .zen-sidebar__search-input::placeholder {
+  color: #94a3b8;
+}
+
+/* Sidebar navigation */
+.app[data-theme="light"] .zen-sidebar__nav-btn {
+  color: #64748b;
+}
+
+.app[data-theme="light"] .zen-sidebar__nav-btn:hover:not(:disabled) {
+  background: rgba(0, 0, 0, 0.06);
+  color: #1e293b;
+}
+
+/* Sidebar workspaces */
+.app[data-theme="light"] .zen-sidebar__workspaces {
+  border-color: rgba(0, 0, 0, 0.04);
+}
+
+.app[data-theme="light"] .zen-sidebar__workspace-btn {
+  color: #475569;
+}
+
+.app[data-theme="light"] .zen-sidebar__workspace-btn:hover {
+  background: rgba(0, 0, 0, 0.04);
+  color: #1e293b;
+}
+
+.app[data-theme="light"] .zen-sidebar__workspace.is-active .zen-sidebar__workspace-btn {
+  background: rgba(0, 0, 0, 0.06);
+  color: #1e293b;
+}
+
+.app[data-theme="light"] .zen-sidebar__workspace-name {
+  color: #475569;
+}
+
+.app[data-theme="light"] .zen-sidebar__workspace-icon svg {
+  color: #64748b;
+}
+
+.app[data-theme="light"] .zen-sidebar__workspace-add {
+  color: #94a3b8;
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+.app[data-theme="light"] .zen-sidebar__workspace-add:hover {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.15);
+  color: #64748b;
+}
+
+/* Sidebar bottom toolbar */
+.app[data-theme="light"] .zen-sidebar__bottom {
+  border-color: rgba(0, 0, 0, 0.04);
+}
+
+.app[data-theme="light"] .zen-sidebar__bottom-btn {
+  color: #64748b;
+}
+
+.app[data-theme="light"] .zen-sidebar__bottom-btn:hover {
+  background: rgba(0, 0, 0, 0.06);
+  color: #1e293b;
+}
+
+.app[data-theme="light"] .zen-sidebar__bottom-btn--accent {
+  background: rgba(255, 180, 50, 0.12);
+  color: #d97706;
+}
+
+.app[data-theme="light"] .zen-sidebar__bottom-btn--accent:hover {
+  background: rgba(255, 180, 50, 0.2);
+}
+
+/* ============================================== 
+   Quick Sites in Sidebar - Light Theme
+   ============================================== */
+
+.app[data-theme="light"] .zen-sidebar__quick-sites {
+  border-color: rgba(0, 0, 0, 0.04);
+}
+
+.app[data-theme="light"] .zen-sidebar__quick-site {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.app[data-theme="light"] .zen-sidebar__quick-site:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.app[data-theme="light"] .zen-sidebar__quick-site-name {
+  color: #475569;
+}
+
+/* ============================================== 
+   Sidebar Quick Sites Section - Light Theme
+   ============================================== */
+
+.app[data-theme="light"] .zen-sidebar__section-title {
+  color: #94a3b8;
+}
+
+/* ============================================== 
+   Active Tab Indicator - Light Theme
+   ============================================== */
+
+.app[data-theme="light"] .zen-sidebar__tab.is-active::before {
+  background: linear-gradient(180deg, var(--accent, #7c3aed) 0%, #9333ea 100%);
+}

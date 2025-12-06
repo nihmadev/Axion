@@ -1,0 +1,38 @@
+/* About browser section */
+.about-browser {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: transparent;
+  border-radius: 12px;
+}
+
+.about-logo {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border-radius: 16px;
+}
+
+.about-info h3 {
+  margin: 0 0 4px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+}
+
+.about-info p {
+  margin: 0;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.about-copyright {
+  margin-top: 8px !important;
+  font-size: 11px !important;
+  color: rgba(255, 255, 255, 0.3) !important;
+}

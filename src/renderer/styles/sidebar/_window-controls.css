@@ -1,0 +1,50 @@
+/* ==============================================
+   ZenSidebar - Window Controls (macOS style)
+   ============================================== */
+
+.zen-sidebar__window-controls {
+  display: flex;
+  gap: 8px;
+  padding: 8px 6px;
+  -webkit-app-region: drag;
+  flex-shrink: 0;
+}
+
+.zen-window-btn {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  -webkit-app-region: no-drag;
+  position: relative;
+}
+
+.zen-window-btn::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+}
+
+.zen-window-btn--close {
+  background: #ff5f57;
+}
+
+.zen-window-btn--minimize {
+  background: #febc2e;
+}
+
+.zen-window-btn--maximize {
+  background: #28c840;
+}
+
+.zen-window-btn:hover {
+  filter: brightness(1.15);
+  transform: scale(1.15);
+}
+
+.zen-window-btn:active {
+  transform: scale(0.95);
+}

@@ -1,0 +1,31 @@
+/* ==============================================
+   Axion Browser - Main Stylesheet
+   ============================================== */
+
+/* Import global styles and variables */
+@import './global.css';
+@import './animations.css';
+
+/* Import layout styles */
+@import './layout/index.css';
+
+/* Import component styles */
+@import './components/address-bar.css';
+@import './components/tab-bar.css';
+@import './components/title-bar.css';
+@import './components/webview-container.css';
+@import './components/settings/index.css';
+@import './components/history-page.css';
+@import './components/downloads-page.css';
+@import './components/new-tab-modal.css';
+@import './components/import-dialog.css';
+@import './components/tab-search.css';
+@import './components/toast.css';
+@import './components/frozen-tab.css';
+@import './components/banners.css';
+
+/* Import sidebar styles */
+@import './sidebar/index.css';
+
+/* Import theme styles */
+@import './themes/index.css';

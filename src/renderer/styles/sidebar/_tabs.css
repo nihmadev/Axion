@@ -1,0 +1,547 @@
+/* ==============================================
+   ZenSidebar - Tabs List
+   ============================================== */
+
+.zen-sidebar__tabs {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 4px 0;
+  margin-top: 4px;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.zen-sidebar__tab {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  position: relative;
+}
+
+.zen-sidebar__tab:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.zen-sidebar__tab.is-active {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.zen-sidebar__tab.is-active::before {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 18px;
+  background: var(--workspace-accent, var(--accent, #7c3aed));
+  border-radius: 3px 0 0 3px;
+}
+
+.zen-sidebar__tab.is-frozen {
+  opacity: 0.5;
+}
+
+.zen-sidebar__tab.is-frozen .zen-sidebar__tab-icon::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  bottom: -2px;
+  right: -2px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2393c5fd' stroke-width='2'%3E%3Cline x1='12' y1='2' x2='12' y2='22'/%3E%3Cline x1='2' y1='12' x2='22' y2='12'/%3E%3Cline x1='4.93' y1='4.93' x2='19.07' y2='19.07'/%3E%3Cline x1='19.07' y1='4.93' x2='4.93' y2='19.07'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.zen-sidebar__tab-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.zen-sidebar__tab-icon img {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  object-fit: contain;
+}
+
+.zen-sidebar__tab-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-top-color: var(--workspace-accent, var(--accent, #7c3aed));
+  border-radius: 50%;
+  animation: zen-spin 0.8s linear infinite;
+}
+
+.zen-sidebar__tab-title {
+  flex: 1;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.8);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.zen-sidebar__tab.is-active .zen-sidebar__tab-title {
+  color: white;
+}
+
+.zen-sidebar__tab-close {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  color: rgba(255, 255, 255, 0.4);
+  opacity: 0;
+  transition: all 0.15s ease;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.zen-sidebar__tab:hover .zen-sidebar__tab-close {
+  opacity: 1;
+}
+
+.zen-sidebar__tab-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Tab close button always visible */
+.zen-sidebar__tab-close.always-visible {
+  opacity: 1;
+}
+
+/* Internal pages styling */
+.zen-sidebar__tab.is-internal .zen-sidebar__tab-icon {
+  color: var(--workspace-accent, var(--accent, #6366f1));
+}
+
+.zen-sidebar__tab.is-internal.is-active .zen-sidebar__tab-icon {
+  color: var(--workspace-accent, var(--accent, #6366f1));
+}
+
+/* New tab button */
+.zen-sidebar__new-tab {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 13px;
+  transition: all 0.2s ease;
+  margin-top: 4px;
+}
+
+.zen-sidebar__new-tab:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Active tab indicator position */
+.zen-sidebar--left .zen-sidebar__tab.is-active::before {
+  left: 0;
+  right: auto;
+  border-radius: 0 3px 3px 0;
+}
+
+.zen-sidebar--right .zen-sidebar__tab.is-active::before {
+  right: 0;
+  left: auto;
+  border-radius: 3px 0 0 3px;
+}
+
+.zen-sidebar__tab {
+  transition: all 0.2s ease;
+}
+
+
+/* ==============================================
+   Tab Preview - Miniature Window Style
+   ============================================== */
+
+.tab-preview {
+  background: rgba(24, 24, 28, 0.98);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.5),
+    0 4px 12px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(24px);
+  overflow: hidden;
+  width: 240px;
+  animation: tab-preview-slide 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+/* Анимация появления в зависимости от позиции сайдбара */
+.tab-preview[data-position="right"] {
+  animation-name: tab-preview-slide-left;
+}
+
+.tab-preview[data-position="left"] {
+  animation-name: tab-preview-slide-right;
+}
+
+@keyframes tab-preview-slide-left {
+  from {
+    opacity: 0;
+    transform: translateX(12px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes tab-preview-slide-right {
+  from {
+    opacity: 0;
+    transform: translateX(-12px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+/* Миниатюра страницы */
+.tab-preview__thumbnail {
+  position: relative;
+  width: 100%;
+  height: 140px;
+  background: linear-gradient(145deg, rgba(40, 40, 50, 1) 0%, rgba(30, 30, 38, 1) 100%);
+  overflow: hidden;
+}
+
+/* Внутренние страницы */
+.tab-preview__internal-page {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(145deg, 
+    rgba(var(--accent-rgb, 124, 58, 237), 0.15) 0%, 
+    rgba(var(--accent-rgb, 124, 58, 237), 0.05) 100%
+  );
+}
+
+.tab-preview__internal-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--workspace-accent, var(--accent, #7c3aed));
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+}
+
+.tab-preview__internal-icon svg {
+  width: 28px;
+  height: 28px;
+}
+
+.tab-preview__internal-name {
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Реальный скриншот страницы */
+.tab-preview__screenshot {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.tab-preview__screenshot-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.tab-preview__screenshot-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 6px 10px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+}
+
+.tab-preview__screenshot-overlay .tab-preview__browser-url {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+}
+
+/* Имитация окна браузера для сайтов */
+.tab-preview__site {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.tab-preview__browser-chrome {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  background: rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.tab-preview__browser-dots {
+  display: flex;
+  gap: 4px;
+}
+
+.tab-preview__browser-dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.tab-preview__browser-dots span:first-child {
+  background: rgba(255, 95, 87, 0.8);
+}
+
+.tab-preview__browser-dots span:nth-child(2) {
+  background: rgba(255, 189, 46, 0.8);
+}
+
+.tab-preview__browser-dots span:last-child {
+  background: rgba(40, 200, 64, 0.8);
+}
+
+.tab-preview__browser-url {
+  flex: 1;
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.06);
+  padding: 3px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tab-preview__site-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px;
+}
+
+.tab-preview__site-favicon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  object-fit: contain;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 4px;
+}
+
+.tab-preview__site-content svg {
+  width: 36px;
+  height: 36px;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.tab-preview__site-title {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.6);
+  text-align: center;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Статус бейджи */
+.tab-preview__status-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  gap: 4px;
+}
+
+.tab-preview__frozen {
+  font-size: 12px;
+}
+
+.tab-preview__loading {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-top-color: var(--workspace-accent, var(--accent, #7c3aed));
+  border-radius: 50%;
+  animation: zen-spin 0.8s linear infinite;
+}
+
+/* Информация о вкладке */
+.tab-preview__info {
+  padding: 10px 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.tab-preview__title {
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.95);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.4;
+}
+
+.tab-preview__url {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.45);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 2px;
+}
+
+/* Стрелка-указатель */
+.tab-preview__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border: 8px solid transparent;
+}
+
+.tab-preview[data-position="right"] .tab-preview__arrow {
+  right: -16px;
+  border-left-color: rgba(24, 24, 28, 0.98);
+}
+
+.tab-preview[data-position="left"] .tab-preview__arrow {
+  left: -16px;
+  border-right-color: rgba(24, 24, 28, 0.98);
+}
+
+/* Light theme support */
+[data-theme="light"] .tab-preview {
+  background: rgba(255, 255, 255, 0.98);
+  border-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.2),
+    0 4px 12px rgba(0, 0, 0, 0.1),
+    0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .tab-preview__thumbnail {
+  background: linear-gradient(145deg, rgba(245, 245, 250, 1) 0%, rgba(235, 235, 242, 1) 100%);
+}
+
+[data-theme="light"] .tab-preview__internal-page {
+  background: linear-gradient(145deg, 
+    rgba(var(--accent-rgb, 124, 58, 237), 0.1) 0%, 
+    rgba(var(--accent-rgb, 124, 58, 237), 0.03) 100%
+  );
+}
+
+[data-theme="light"] .tab-preview__internal-icon {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .tab-preview__internal-name {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="light"] .tab-preview__browser-chrome {
+  background: rgba(0, 0, 0, 0.06);
+  border-bottom-color: rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .tab-preview__browser-dots span {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .tab-preview__browser-url {
+  color: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .tab-preview__site-favicon {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+[data-theme="light"] .tab-preview__site-content svg {
+  color: rgba(0, 0, 0, 0.25);
+}
+
+[data-theme="light"] .tab-preview__site-title {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="light"] .tab-preview__info {
+  border-top-color: rgba(0, 0, 0, 0.06);
+  background: rgba(0, 0, 0, 0.03);
+}
+
+[data-theme="light"] .tab-preview__title {
+  color: rgba(0, 0, 0, 0.9);
+}
+
+[data-theme="light"] .tab-preview__url {
+  color: rgba(0, 0, 0, 0.45);
+}
+
+[data-theme="light"] .tab-preview[data-position="right"] .tab-preview__arrow {
+  border-left-color: rgba(255, 255, 255, 0.98);
+}
+
+[data-theme="light"] .tab-preview[data-position="left"] .tab-preview__arrow {
+  border-right-color: rgba(255, 255, 255, 0.98);
+}
+
+/* Light theme screenshot styles */
+[data-theme="light"] .tab-preview__screenshot-overlay {
+  background: linear-gradient(transparent, rgba(255, 255, 255, 0.9));
+}
+
+[data-theme="light"] .tab-preview__screenshot-overlay .tab-preview__browser-url {
+  background: rgba(255, 255, 255, 0.6);
+  color: rgba(0, 0, 0, 0.6);
+}

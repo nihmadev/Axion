@@ -1,0 +1,106 @@
+/* ============================================== 
+   Start Page - Light Theme
+   ============================================== */
+
+/* Clock widget */
+.app[data-theme="light"] .clock-time {
+  color: #1e293b;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.app[data-theme="light"] .clock-date {
+  color: #64748b;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+}
+
+.app[data-theme="light"] .search-box {
+  background: rgba(0, 0, 0, 0.25);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.app[data-theme="light"] .search-box:focus-within {
+  background: rgba(0, 0, 0, 0.4);
+  border-color: rgba(124, 58, 237, 0.5);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2), 0 0 0 3px rgba(124, 58, 237, 0.15);
+}
+
+.app[data-theme="light"] .search-icon {
+  color: #64748b;
+  filter: none;
+}
+
+.app[data-theme="light"] .search-input {
+  color: #1e293b;
+  text-shadow: none;
+}
+
+.app[data-theme="light"] .search-input::placeholder {
+  color: #94a3b8;
+  text-shadow: none;
+}
+
+/* Quick sites / Recent sites */
+.app[data-theme="light"] .recent-site-item {
+  background: rgba(255, 255, 255, 0.75);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+.app[data-theme="light"] .recent-site-item:hover {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+.app[data-theme="light"] .recent-site-name {
+  color: #475569;
+}
+
+.app[data-theme="light"] .recent-site-menu-btn {
+  background: rgba(0, 0, 0, 0.06);
+  color: #64748b;
+}
+
+.app[data-theme="light"] .recent-site-menu-btn:hover {
+  background: rgba(0, 0, 0, 0.1);
+  color: #1e293b;
+}
+
+.app[data-theme="light"] .recent-site-menu {
+  background: rgba(255, 255, 255, 0.98);
+  border-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.app[data-theme="light"] .recent-site-menu button {
+  color: #475569;
+}
+
+.app[data-theme="light"] .recent-site-menu button:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.app[data-theme="light"] .recent-site-rename-input {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: var(--accent);
+  color: #1e293b;
+}
+
+/* ============================================== 
+   Weather Widget - Light Theme
+   ============================================== */
+
+.app[data-theme="light"] .weather-widget {
+  background: rgba(255, 255, 255, 0.75);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+.app[data-theme="light"] .weather-temp {
+  color: #1e293b;
+}
+
+.app[data-theme="light"] .weather-desc {
+  color: #64748b;
+}
+
+.app[data-theme="light"] .weather-location {
+  color: #94a3b8;
+}

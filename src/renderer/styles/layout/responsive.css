@@ -1,0 +1,35 @@
+/* ==============================================
+   Responsive Design
+   ============================================== */
+
+@media (max-height: 800px) {
+  .browser-shell {
+    padding: 6px;
+    gap: 6px;
+  }
+}
+
+@media (max-height: 650px) {
+  .browser-shell {
+    padding: 4px;
+    gap: 4px;
+  }
+}
+
+@media (max-width: 900px) {
+  .browser-shell {
+    padding: 6px;
+    gap: 6px;
+  }
+}
+
+@media (max-width: 600px) {
+  .browser-shell {
+    padding: 4px;
+    gap: 4px;
+  }
+  
+  .app.app--compact .zen-sidebar {
+    width: 50px;
+  }
+}

@@ -1,0 +1,56 @@
+/* ==============================================
+   Banners (Error, Session, Update)
+   ============================================== */
+
+.load-error-banner,
+.session-restored-banner,
+.update-banner {
+  padding: 10px 20px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  animation: slideIn 0.3s ease;
+}
+
+.load-error-banner {
+  background: rgba(255, 95, 87, 0.9);
+  color: white;
+}
+
+.session-restored-banner {
+  background: rgba(40, 200, 64, 0.9);
+  color: white;
+  animation: slideIn 0.3s ease, fadeOut 0.5s ease 3s forwards;
+}
+
+.update-banner {
+  background: rgba(124, 58, 237, 0.9);
+  color: white;
+}
+
+.update-banner.update-ready {
+  background: rgba(40, 200, 64, 0.9);
+}
+
+.dismiss {
+  opacity: 0.7;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all var(--transition-fast);
+}
+
+.dismiss:hover {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+}

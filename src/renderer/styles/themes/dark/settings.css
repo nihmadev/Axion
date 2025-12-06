@@ -1,0 +1,278 @@
+/* ============================================== 
+   Settings Page - Dark Theme
+   ============================================== */
+
+.app[data-theme="dark"] .settings-page {
+  background: #1a1a1a;
+}
+
+.app[data-theme="dark"] .settings-page-header {
+  background: #252525;
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.app[data-theme="dark"] .settings-page-header h1 {
+  color: #e4e4e7;
+}
+
+.app[data-theme="dark"] .settings-nav {
+  background: rgba(255, 255, 255, 0.02);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.app[data-theme="dark"] .settings-nav-item {
+  color: #a1a1aa;
+}
+
+.app[data-theme="dark"] .settings-nav-item:hover {
+  background: rgba(255, 255, 255, 0.04);
+  color: #e4e4e7;
+}
+
+.app[data-theme="dark"] .settings-nav-item.active {
+  background: rgba(124, 58, 237, 0.08);
+  color: var(--accent, #7c3aed);
+}
+
+.app[data-theme="dark"] .settings-page-section {
+  background: #252525;
+  border-color: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.app[data-theme="dark"] .settings-page-section h2 {
+  color: #a1a1aa;
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.app[data-theme="dark"] .settings-page-item {
+  border-color: rgba(255, 255, 255, 0.04);
+}
+
+.app[data-theme="dark"] .settings-page-item-info label {
+  color: #e4e4e7;
+}
+
+.app[data-theme="dark"] .settings-page-item-info span {
+  color: #a1a1aa;
+}
+
+.app[data-theme="dark"] .settings-page-item select {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
+  color: #e4e4e7;
+}
+
+.app[data-theme="dark"] .settings-toggle {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.app[data-theme="dark"] .settings-toggle.active {
+  background: var(--accent, #7c3aed);
+}
+
+/* Theme selector in settings */
+.app[data-theme="dark"] .theme-option {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.app[data-theme="dark"] .theme-option:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.app[data-theme="dark"] .theme-option span {
+  color: #a1a1aa;
+}
+
+.app[data-theme="dark"] .theme-option.active span {
+  color: var(--accent, #7c3aed);
+}
+
+/* Color picker */
+.app[data-theme="dark"] .color-preset {
+  box-shadow: none;
+}
+
+.app[data-theme="dark"] .color-preset:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.app[data-theme="dark"] .color-preset.active {
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Radius selector */
+.app[data-theme="dark"] .radius-option {
+  background: rgba(255, 255, 255, 0.03);
+  color: #a1a1aa;
+}
+
+.app[data-theme="dark"] .radius-option:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.app[data-theme="dark"] .radius-option.active {
+  background: rgba(124, 58, 237, 0.1);
+  color: var(--accent, #7c3aed);
+}
+
+.app[data-theme="dark"] .radius-preview {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Range input */
+.app[data-theme="dark"] input[type="range"] {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.app[data-theme="dark"] input[type="range"]::-webkit-slider-thumb {
+  background: var(--accent, #7c3aed);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+/* Search engine selector */
+.app[data-theme="dark"] .search-engine-option {
+  background: rgba(255, 255, 255, 0.03);
+  color: #d4d4d8;
+}
+
+.app[data-theme="dark"] .search-engine-option:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.app[data-theme="dark"] .search-engine-option.active {
+  background: rgba(124, 58, 237, 0.1);
+  border-color: var(--accent, #7c3aed);
+}
+
+/* Wallpaper presets */
+.app[data-theme="dark"] .wallpaper-preset {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.app[data-theme="dark"] .wallpaper-preset.active {
+  border-color: var(--accent, #7c3aed);
+}
+
+/* ============================================== 
+   Settings Page Additional - Dark Theme
+   ============================================== */
+
+/* Position selector */
+.app[data-theme="dark"] .position-option {
+  background: rgba(255, 255, 255, 0.03);
+  color: #a1a1aa;
+}
+
+.app[data-theme="dark"] .position-option:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.app[data-theme="dark"] .position-option.active {
+  background: rgba(124, 58, 237, 0.1);
+}
+
+.app[data-theme="dark"] .position-option span {
+  color: #a1a1aa;
+}
+
+.app[data-theme="dark"] .position-option.active span {
+  color: var(--accent, #7c3aed);
+}
+
+.app[data-theme="dark"] .position-preview {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.app[data-theme="dark"] .position-content {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Tab style selector */
+.app[data-theme="dark"] .tab-style-option {
+  background: rgba(255, 255, 255, 0.03);
+  color: #a1a1aa;
+}
+
+.app[data-theme="dark"] .tab-style-option:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.app[data-theme="dark"] .tab-style-option.active {
+  background: rgba(124, 58, 237, 0.1);
+}
+
+.app[data-theme="dark"] .tab-style-option span {
+  color: #a1a1aa;
+}
+
+.app[data-theme="dark"] .tab-style-option.active span {
+  color: var(--accent, #7c3aed);
+}
+
+.app[data-theme="dark"] .tab-style-preview {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.app[data-theme="dark"] .tab-preview-item {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* About browser section */
+.app[data-theme="dark"] .about-browser {
+  background: transparent;
+}
+
+.app[data-theme="dark"] .about-logo {
+  background: transparent;
+}
+
+.app[data-theme="dark"] .about-info h3 {
+  color: #e4e4e7;
+}
+
+.app[data-theme="dark"] .about-info p {
+  color: #a1a1aa;
+}
+
+.app[data-theme="dark"] .about-copyright {
+  color: #71717a !important;
+}
+
+/* Color input custom */
+.app[data-theme="dark"] .color-input-custom::-webkit-color-swatch {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Settings scrollbar */
+.app[data-theme="dark"] .settings-page-content::-webkit-scrollbar-thumb,
+.app[data-theme="dark"] .settings-nav::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.app[data-theme="dark"] .settings-page-content::-webkit-scrollbar-thumb:hover,
+.app[data-theme="dark"] .settings-nav::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+/* Sidebar style selector */
+.app[data-theme="dark"] .sidebar-style-option {
+  background: rgba(255, 255, 255, 0.03);
+  color: #a1a1aa;
+}
+
+.app[data-theme="dark"] .sidebar-style-option:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.app[data-theme="dark"] .sidebar-style-option.active {
+  background: rgba(124, 58, 237, 0.1);
+}
+
+.app[data-theme="dark"] .sidebar-style-option span {
+  color: #a1a1aa;
+}
+
+.app[data-theme="dark"] .sidebar-style-option.active span {
+  color: var(--accent, #7c3aed);
+}

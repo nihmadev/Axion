@@ -1,0 +1,138 @@
+.address-bar {
+  height: 48px;
+  background: rgba(40, 40, 45, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  gap: 8px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  z-index: 100;
+}
+
+.nav-buttons {
+  display: none; /* Navigation moved to sidebar */
+}
+
+.home-btn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  color: rgba(255, 255, 255, 0.6);
+  transition: all var(--transition);
+  flex-shrink: 0;
+}
+
+.home-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.address-input-container {
+  flex: 1;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-sm);
+  padding: 0 12px;
+  gap: 8px;
+  transition: all var(--transition);
+  border: 1px solid transparent;
+}
+
+.input-wrapper {
+  flex: 1;
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.address-input-container:focus-within {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(124, 58, 237, 0.5);
+}
+
+.security-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.security-icon.secure {
+  color: var(--success);
+}
+
+.security-icon.insecure {
+  color: var(--warning);
+}
+
+.address-input {
+  flex: 1;
+  height: 100%;
+  font-size: 13px;
+  color: var(--text-primary);
+  background: transparent;
+}
+
+.address-input::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.autocomplete-text {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 13px;
+  pointer-events: none;
+  white-space: nowrap;
+  overflow: hidden;
+  z-index: 1;
+  display: flex;
+}
+
+.invisible-text {
+  color: transparent;
+}
+
+.completion-text {
+  color: rgba(124, 58, 237, 0.6);
+}
+
+.action-buttons {
+  display: flex;
+  gap: 4px;
+}
+
+.action-btn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  color: rgba(255, 255, 255, 0.5);
+  transition: all var(--transition);
+}
+
+.action-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.action-btn.bookmarked {
+  color: var(--accent);
+}
+
+.action-btn.bookmarked:hover {
+  color: var(--accent-hover);
+}

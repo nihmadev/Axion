@@ -1,0 +1,47 @@
+/* ============================================== 
+   Address Bar - Dark Theme
+   ============================================== */
+
+.app[data-theme="dark"] .address-bar {
+  background: rgba(37, 37, 37, 0.98);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.app[data-theme="dark"] .home-btn {
+  color: #a1a1aa;
+}
+
+.app[data-theme="dark"] .home-btn:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #e4e4e7;
+}
+
+.app[data-theme="dark"] .address-input-container {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.app[data-theme="dark"] .address-input-container:focus-within {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(124, 58, 237, 0.4);
+}
+
+.app[data-theme="dark"] .security-icon {
+  color: #71717a;
+}
+
+.app[data-theme="dark"] .address-input {
+  color: #e4e4e7;
+}
+
+.app[data-theme="dark"] .address-input::placeholder {
+  color: #71717a;
+}
+
+.app[data-theme="dark"] .action-btn {
+  color: #a1a1aa;
+}
+
+.app[data-theme="dark"] .action-btn:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #e4e4e7;
+}

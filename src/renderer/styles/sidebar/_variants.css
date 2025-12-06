@@ -1,0 +1,173 @@
+/* ==============================================
+   ZenSidebar - Position & Style Variants
+   ============================================== */
+
+/* Position variants */
+.zen-sidebar--right {
+  border-left: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.3);
+  order: 2;
+}
+
+.zen-sidebar--left {
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.3);
+  order: 0;
+}
+
+/* Style variants - Compact */
+.zen-sidebar--compact {
+  width: 60px;
+  padding: 8px;
+  gap: 4px;
+}
+
+.zen-sidebar--compact .zen-sidebar__tab {
+  padding: 8px 10px;
+}
+
+.zen-sidebar--compact .zen-sidebar__tab-title {
+  font-size: 12px;
+}
+
+.zen-sidebar--compact .zen-sidebar__workspace-btn {
+  padding: 6px 10px;
+  font-size: 12px;
+}
+
+.zen-sidebar--compact .zen-sidebar__search {
+  padding: 8px 10px;
+}
+
+.zen-sidebar--compact .zen-sidebar__quick-sites {
+  gap: 4px;
+}
+
+.zen-sidebar--compact .zen-sidebar__quick-site {
+  border-radius: 10px;
+}
+
+.zen-sidebar--compact .zen-sidebar__quick-site img {
+  width: 22px;
+  height: 22px;
+}
+
+/* Style variants - Minimal */
+.zen-sidebar--minimal {
+  width: 60px !important;
+  min-width: 60px;
+  max-width: 60px;
+  padding: 8px;
+  gap: 4px;
+}
+
+.zen-sidebar--minimal .zen-sidebar__search,
+.zen-sidebar--minimal .zen-sidebar__workspace-name,
+.zen-sidebar--minimal .zen-sidebar__tab-title,
+.zen-sidebar--minimal .zen-sidebar__new-tab span {
+  display: none;
+}
+
+.zen-sidebar--minimal .zen-sidebar__quick-sites {
+  display: none;
+}
+
+.zen-sidebar--minimal .zen-sidebar__tab,
+.zen-sidebar--minimal .zen-sidebar__workspace-btn {
+  justify-content: center;
+  padding: 10px;
+}
+
+.zen-sidebar--minimal .zen-sidebar__tab-close {
+  display: none;
+}
+
+.zen-sidebar--minimal .zen-sidebar__new-tab {
+  justify-content: center;
+  padding: 10px;
+}
+
+.zen-sidebar--minimal .zen-sidebar__bottom-btn {
+  width: 36px;
+  height: 36px;
+}
+
+/* Compact mode improvements */
+.zen-sidebar--compact .zen-sidebar__search,
+.zen-sidebar--compact .zen-sidebar__workspace-name,
+.zen-sidebar--compact .zen-sidebar__tab-title,
+.zen-sidebar--compact .zen-sidebar__new-tab span {
+  display: none;
+}
+
+.zen-sidebar--compact .zen-sidebar__quick-sites {
+  grid-template-columns: 1fr;
+  gap: 4px;
+}
+
+.zen-sidebar--compact .zen-sidebar__quick-site {
+  border-radius: 10px;
+}
+
+.zen-sidebar--compact .zen-sidebar__tab {
+  justify-content: center;
+  padding: 8px;
+}
+
+.zen-sidebar--compact .zen-sidebar__workspace-btn {
+  justify-content: center;
+  padding: 8px;
+}
+
+.zen-sidebar--compact .zen-sidebar__tab-close {
+  display: none;
+}
+
+.zen-sidebar--compact .zen-sidebar__new-tab {
+  justify-content: center;
+  padding: 8px;
+}
+
+.zen-sidebar--compact .zen-sidebar__bottom-btn {
+  width: 32px;
+  height: 32px;
+}
+
+/* Улучшенная анимация для компактного режима */
+.zen-sidebar--compact .zen-sidebar__workspace-icon,
+.zen-sidebar--compact .zen-sidebar__tab-icon {
+  transform: scale(1.1);
+}
+
+/* Tooltip для компактного режима */
+.zen-sidebar--compact .zen-sidebar__workspace-btn,
+.zen-sidebar--compact .zen-sidebar__tab {
+  position: relative;
+}
+
+.zen-sidebar--compact .zen-sidebar__workspace-btn::after,
+.zen-sidebar--compact .zen-sidebar__tab::after {
+  content: attr(title);
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-right: 12px;
+  padding: 6px 12px;
+  background: rgba(30, 30, 32, 0.98);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: white;
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 1000;
+}
+
+.zen-sidebar--compact .zen-sidebar__workspace-btn:hover::after,
+.zen-sidebar--compact .zen-sidebar__tab:hover::after {
+  opacity: 1;
+}

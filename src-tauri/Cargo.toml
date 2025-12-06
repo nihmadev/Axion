@@ -1,0 +1,50 @@
+[package]
+name = "Axion"
+version = "1.7.9"
+description = ""
+authors = ["nihmadev"]
+license = ""
+repository = ""
+edition = "2021"
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = ["devtools", "unstable"] }
+tauri-plugin-shell = "2.0"
+tauri-plugin-dialog = "2.0"
+tauri-plugin-opener = "2.0"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+tokio = { version = "1", features = ["full"] }
+reqwest = { version = "0.11", features = ["json", "stream"] }
+dirs = "5.0"
+uuid = { version = "1.0", features = ["v4"] }
+urlencoding = "2.1"
+futures-util = "0.3"
+chrono = "0.4"
+rand = "0.8"
+url = "2.5"
+webview2-com = "0.31"
+rusqlite = { version = "0.31", features = ["bundled"] }
+windows = { version = "0.58", features = [
+    "Win32_Foundation",
+    "Win32_UI_WindowsAndMessaging",
+    "Win32_System_Com",
+    "Win32_Graphics_Dwm"
+] }
+
+[target.'cfg(windows)'.dependencies]
+winapi = { version = "0.3", features = ["winuser", "dwmapi"] }
+
+[features]
+default = ["custom-protocol"]
+custom-protocol = ["tauri/custom-protocol"]
+
+[profile.release]
+panic = "abort"
+codegen-units = 1
+lto = true
+opt-level = "z"
+strip = false

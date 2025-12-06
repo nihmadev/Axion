@@ -1,0 +1,56 @@
+/* ============================================== 
+   Downloads Page - Light Theme
+   ============================================== */
+
+.app[data-theme="light"] .downloads-page {
+  background: #f0f2f5;
+}
+
+.app[data-theme="light"] .downloads-page-header {
+  background: #fafbfc;
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+.app[data-theme="light"] .downloads-page-header h1 {
+  color: #1e293b;
+}
+
+.app[data-theme="light"] .downloads-clear-btn {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.08);
+  color: #64748b;
+}
+
+.app[data-theme="light"] .downloads-clear-btn:hover {
+  background: rgba(0, 0, 0, 0.06);
+  color: #1e293b;
+}
+
+.app[data-theme="light"] .downloads-empty {
+  color: #94a3b8;
+}
+
+.app[data-theme="light"] .download-page-item {
+  background: #fafbfc;
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+.app[data-theme="light"] .download-page-filename {
+  color: #1e293b;
+}
+
+.app[data-theme="light"] .download-page-details {
+  color: #64748b;
+}
+
+.app[data-theme="light"] .download-page-progress {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.app[data-theme="light"] .download-page-controls button {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.app[data-theme="light"] .download-page-controls button:hover {
+  background: rgba(0, 0, 0, 0.08);
+}

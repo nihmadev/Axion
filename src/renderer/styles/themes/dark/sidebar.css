@@ -1,0 +1,191 @@
+/* ============================================== 
+   Sidebar - Dark Theme
+   ============================================== */
+
+.app[data-theme="dark"] .zen-sidebar {
+  background: rgba(37, 37, 37, 0.95);
+  border-color: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Sidebar tabs */
+.app[data-theme="dark"] .zen-sidebar__tabs {
+  border-color: rgba(255, 255, 255, 0.04);
+}
+
+.app[data-theme="dark"] .zen-sidebar__tab:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.app[data-theme="dark"] .zen-sidebar__tab.is-active {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.app[data-theme="dark"] .zen-sidebar__tab-icon {
+  color: #a1a1aa;
+}
+
+.app[data-theme="dark"] .zen-sidebar__tab-title {
+  color: #d4d4d8;
+}
+
+.app[data-theme="dark"] .zen-sidebar__tab.is-active .zen-sidebar__tab-title {
+  color: #e4e4e7;
+}
+
+.app[data-theme="dark"] .zen-sidebar__tab-close {
+  color: #71717a;
+}
+
+.app[data-theme="dark"] .zen-sidebar__tab-close:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #d4d4d8;
+}
+
+.app[data-theme="dark"] .zen-sidebar__tab-spinner {
+  border-color: rgba(255, 255, 255, 0.1);
+  border-top-color: var(--accent, #7c3aed);
+}
+
+/* Sidebar new tab button */
+.app[data-theme="dark"] .zen-sidebar__new-tab {
+  color: #a1a1aa;
+}
+
+.app[data-theme="dark"] .zen-sidebar__new-tab:hover {
+  background: rgba(255, 255, 255, 0.04);
+  color: #e4e4e7;
+}
+
+/* Sidebar search */
+.app[data-theme="dark"] .zen-sidebar__search {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.app[data-theme="dark"] .zen-sidebar__search:focus-within {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(124, 58, 237, 0.4);
+}
+
+.app[data-theme="dark"] .zen-sidebar__search-icon {
+  color: #71717a;
+}
+
+.app[data-theme="dark"] .zen-sidebar__search:focus-within .zen-sidebar__search-icon {
+  color: var(--accent, #7c3aed);
+}
+
+.app[data-theme="dark"] .zen-sidebar__search-input {
+  color: #e4e4e7;
+}
+
+.app[data-theme="dark"] .zen-sidebar__search-input::placeholder {
+  color: #71717a;
+}
+
+/* Sidebar navigation */
+.app[data-theme="dark"] .zen-sidebar__nav-btn {
+  color: #a1a1aa;
+}
+
+.app[data-theme="dark"] .zen-sidebar__nav-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.06);
+  color: #e4e4e7;
+}
+
+/* Sidebar workspaces */
+.app[data-theme="dark"] .zen-sidebar__workspaces {
+  border-color: rgba(255, 255, 255, 0.04);
+}
+
+.app[data-theme="dark"] .zen-sidebar__workspace-btn {
+  color: #d4d4d8;
+}
+
+.app[data-theme="dark"] .zen-sidebar__workspace-btn:hover {
+  background: rgba(255, 255, 255, 0.04);
+  color: #e4e4e7;
+}
+
+.app[data-theme="dark"] .zen-sidebar__workspace.is-active .zen-sidebar__workspace-btn {
+  background: rgba(255, 255, 255, 0.06);
+  color: #e4e4e7;
+}
+
+.app[data-theme="dark"] .zen-sidebar__workspace-name {
+  color: #d4d4d8;
+}
+
+.app[data-theme="dark"] .zen-sidebar__workspace-icon svg {
+  color: #a1a1aa;
+}
+
+.app[data-theme="dark"] .zen-sidebar__workspace-add {
+  color: #71717a;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.app[data-theme="dark"] .zen-sidebar__workspace-add:hover {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #a1a1aa;
+}
+
+/* Sidebar bottom toolbar */
+.app[data-theme="dark"] .zen-sidebar__bottom {
+  border-color: rgba(255, 255, 255, 0.04);
+}
+
+.app[data-theme="dark"] .zen-sidebar__bottom-btn {
+  color: #a1a1aa;
+}
+
+.app[data-theme="dark"] .zen-sidebar__bottom-btn:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #e4e4e7;
+}
+
+.app[data-theme="dark"] .zen-sidebar__bottom-btn--accent {
+  background: rgba(255, 180, 50, 0.12);
+  color: #fbbf24;
+}
+
+.app[data-theme="dark"] .zen-sidebar__bottom-btn--accent:hover {
+  background: rgba(255, 180, 50, 0.2);
+}
+
+/* ============================================== 
+   Quick Sites in Sidebar - Dark Theme
+   ============================================== */
+
+.app[data-theme="dark"] .zen-sidebar__quick-sites {
+  border-color: rgba(255, 255, 255, 0.04);
+}
+
+.app[data-theme="dark"] .zen-sidebar__quick-site {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.app[data-theme="dark"] .zen-sidebar__quick-site:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.app[data-theme="dark"] .zen-sidebar__quick-site-name {
+  color: #d4d4d8;
+}
+
+/* ============================================== 
+   Sidebar Quick Sites Section - Dark Theme
+   ============================================== */
+
+.app[data-theme="dark"] .zen-sidebar__section-title {
+  color: #71717a;
+}
+
+/* ============================================== 
+   Active Tab Indicator - Dark Theme
+   ============================================== */
+
+.app[data-theme="dark"] .zen-sidebar__tab.is-active::before {
+  background: linear-gradient(180deg, var(--accent, #7c3aed) 0%, #9333ea 100%);
+}

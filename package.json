@@ -1,0 +1,34 @@
+{
+  "name": "Axion",
+  "version": "1.7.9",
+  "description": "",
+  "scripts": {
+    "dev": "tauri dev",
+    "dev:renderer": "vite",
+    "build": "npm run build:renderer && tauri build",
+    "build:renderer": "vite build",
+    "build:msi": "npm run build:renderer && tauri build --bundles msi",
+    "build:nsis": "npm run build:renderer && tauri build --bundles nsis",
+    "build:exe": "npm run build:renderer && tauri build --bundles nsis",
+    "build:all": "npm run build:renderer && tauri build --bundles msi nsis",
+    "tauri": "tauri"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^2.0.0",
+    "@tauri-apps/plugin-shell": "^2.3.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "simple-icons": "^16.0.0",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.0.0",
+    "@types/node": "^20.10.0",
+    "@types/react": "^18.2.39",
+    "@types/react-dom": "^18.2.17",
+    "@types/uuid": "^9.0.6",
+    "@vitejs/plugin-react": "^4.2.0",
+    "typescript": "^5.3.2",
+    "vite": "^5.0.4"
+  }
+}

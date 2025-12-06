@@ -1,0 +1,4 @@
+/* TitleBar hidden - window controls moved to ZenSidebar */
+.title-bar {
+  display: none;
+}

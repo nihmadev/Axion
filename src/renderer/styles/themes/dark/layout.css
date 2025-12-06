@@ -1,0 +1,38 @@
+/* ============================================== 
+   Layout - Dark Theme
+   ============================================== */
+
+/* Overlay for dark theme - more dimming */
+.app[data-theme="dark"]::before {
+  background: rgba(0, 0, 0, var(--wallpaper-dim, 0.3));
+}
+
+.app[data-theme="dark"].modal-open::before {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+/* Main area */
+.app[data-theme="dark"] .main-area {
+  background: rgba(37, 37, 37, 0.92);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* ============================================== 
+   Webview Container - Dark Theme
+   ============================================== */
+
+.app[data-theme="dark"] .webview-container {
+  background: #252525;
+}
+
+.app[data-theme="dark"] .webview-loading {
+  background: rgba(37, 37, 37, 0.95);
+}
+
+.app[data-theme="dark"] .webview-error {
+  background: #252525;
+  color: #a1a1aa;
+}

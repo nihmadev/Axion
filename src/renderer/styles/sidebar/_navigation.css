@@ -1,0 +1,36 @@
+/* ==============================================
+   ZenSidebar - Navigation Buttons
+   ============================================== */
+
+.zen-sidebar__nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 4px 0;
+  flex-shrink: 0;
+}
+
+.zen-sidebar__nav-btn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.6);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.zen-sidebar__nav-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.zen-sidebar__nav-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}

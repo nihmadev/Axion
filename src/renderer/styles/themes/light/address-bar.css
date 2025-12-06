@@ -1,0 +1,47 @@
+/* ============================================== 
+   Address Bar - Light Theme
+   ============================================== */
+
+.app[data-theme="light"] .address-bar {
+  background: rgba(250, 251, 252, 0.98);
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+.app[data-theme="light"] .home-btn {
+  color: #64748b;
+}
+
+.app[data-theme="light"] .home-btn:hover {
+  background: rgba(0, 0, 0, 0.06);
+  color: #1e293b;
+}
+
+.app[data-theme="light"] .address-input-container {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.app[data-theme="light"] .address-input-container:focus-within {
+  background: rgba(0, 0, 0, 0.06);
+  border-color: rgba(124, 58, 237, 0.4);
+}
+
+.app[data-theme="light"] .security-icon {
+  color: #94a3b8;
+}
+
+.app[data-theme="light"] .address-input {
+  color: #1e293b;
+}
+
+.app[data-theme="light"] .address-input::placeholder {
+  color: #94a3b8;
+}
+
+.app[data-theme="light"] .action-btn {
+  color: #64748b;
+}
+
+.app[data-theme="light"] .action-btn:hover {
+  background: rgba(0, 0, 0, 0.06);
+  color: #1e293b;
+}

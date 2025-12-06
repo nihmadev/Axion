@@ -1,0 +1,48 @@
+/* ==============================================
+   ZenSidebar - Resize Handle
+   ============================================== */
+
+.zen-sidebar__resize-handle {
+  position: absolute;
+  top: 0;
+  width: 6px;
+  height: 100%;
+  cursor: ew-resize;
+  z-index: 1000;
+  transition: background 0.2s ease;
+}
+
+/* Position-specific resize handle */
+.zen-sidebar--right .zen-sidebar__resize-handle {
+  left: 0;
+}
+
+.zen-sidebar--left .zen-sidebar__resize-handle {
+  right: 0;
+}
+
+.zen-sidebar__resize-handle::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  background: transparent;
+  transition: background 0.2s ease;
+}
+
+.zen-sidebar--right .zen-sidebar__resize-handle::before {
+  left: 0;
+}
+
+.zen-sidebar--left .zen-sidebar__resize-handle::before {
+  right: 0;
+}
+
+.zen-sidebar__resize-handle:hover::before {
+  background: rgba(124, 58, 237, 0.5);
+}
+
+.zen-sidebar__resize-handle:active::before {
+  background: rgba(124, 58, 237, 0.8);
+}

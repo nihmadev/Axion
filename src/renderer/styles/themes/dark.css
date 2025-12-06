@@ -1,0 +1,13 @@
+/* ============================================== 
+   Dark Theme - Modern & Sleek
+   ============================================== */
+
+@import './dark/variables.css';
+@import './dark/layout.css';
+@import './dark/sidebar.css';
+@import './dark/address-bar.css';
+@import './dark/start-page.css';
+@import './dark/settings.css';
+@import './dark/history.css';
+@import './dark/downloads.css';
+@import './dark/components.css';

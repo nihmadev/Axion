@@ -1,0 +1,13 @@
+/* ============================================== 
+   Light Theme - Soft & Modern
+   ============================================== */
+
+@import './light/variables.css';
+@import './light/layout.css';
+@import './light/sidebar.css';
+@import './light/address-bar.css';
+@import './light/start-page.css';
+@import './light/settings.css';
+@import './light/history.css';
+@import './light/downloads.css';
+@import './light/components.css';

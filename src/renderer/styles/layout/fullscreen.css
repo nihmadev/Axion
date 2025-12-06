@@ -1,0 +1,26 @@
+/* ==============================================
+   Fullscreen & Compact Modes
+   ============================================== */
+
+/* Fullscreen mode */
+.app.app--fullscreen {
+  padding: 0;
+}
+
+.app.app--fullscreen .browser-shell {
+  padding: 0;
+  gap: 0;
+}
+
+.app.app--fullscreen .main-area {
+  border-radius: 0;
+}
+
+.app.app--fullscreen .zen-sidebar {
+  display: none;
+}
+
+/* Compact/Zen mode */
+.app.app--compact .zen-sidebar {
+  width: 60px;
+}
