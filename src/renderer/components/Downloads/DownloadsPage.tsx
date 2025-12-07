@@ -31,20 +31,39 @@ const DownloadsPage: React.FC<DownloadsPageProps> = ({ language }) => {
     };
     loadDownloads();
 
-    const handleDownloadUpdate = (download: Download) => {
+    const handleDownloadStarted = (download: Download) => {
       setDownloads(prev => {
-        const index = prev.findIndex(d => d.id === download.id);
-        if (index >= 0) {
-          const updated = [...prev];
-          updated[index] = download;
-          return updated;
-        }
+        const exists = prev.find(d => d.id === download.id);
+        if (exists) return prev;
         return [download, ...prev];
       });
     };
 
-    const cleanup = window.electronAPI.onDownloadUpdate(handleDownloadUpdate);
-    return () => cleanup();
+    const handleDownloadUpdate = (download: Partial<Download> & { id: string }) => {
+      setDownloads(prev => {
+        const index = prev.findIndex(d => d.id === download.id);
+        if (index >= 0) {
+          const updated = [...prev];
+          // Мержим обновление с существующими данными
+          updated[index] = { ...updated[index], ...download };
+          return updated;
+        }
+        // Если это новая загрузка, добавляем только если есть все поля
+        if ('filename' in download && 'url' in download) {
+          return [download as Download, ...prev];
+        }
+        return prev;
+      });
+    };
+
+    const cleanup1 = window.electronAPI.onDownloadStarted(handleDownloadStarted);
+    const cleanup2 = window.electronAPI.onDownloadUpdate(handleDownloadUpdate);
+    const cleanup3 = window.electronAPI.onDownloadProgress(handleDownloadUpdate);
+    return () => {
+      cleanup1();
+      cleanup2();
+      cleanup3();
+    };
   }, []);
 
   const cancelDownload = (id: string) => window.electronAPI.cancelDownload(id);
@@ -57,6 +76,7 @@ const DownloadsPage: React.FC<DownloadsPageProps> = ({ language }) => {
   };
 
   const formatBytes = (bytes: number) => {
+    if (bytes === undefined || bytes === null || !isFinite(bytes) || bytes < 0) return '';
     if (bytes === 0) return '0 B';
     const k = 1024;
     const sizes = ['B', 'KB', 'MB', 'GB'];
@@ -104,10 +124,16 @@ const DownloadsPage: React.FC<DownloadsPageProps> = ({ language }) => {
                     <div className="download-page-details">
                       {download.state === 'progressing' && (
                         <>
-                          <span>{formatBytes(download.receivedBytes)} / {formatBytes(download.totalBytes)}</span>
-                          <div className="download-page-progress">
-                            <div className="download-page-progress-fill" style={{ width: `${progress}%` }} />
-                          </div>
+                          <span>
+                            {formatBytes(download.receivedBytes) || '...'}
+                            {download.totalBytes > 0 ? ` / ${formatBytes(download.totalBytes)}` : ''}
+                            {download.speed && download.speed > 0 ? ` • ${formatBytes(download.speed)}/s` : ''}
+                          </span>
+                          {download.totalBytes > 0 && (
+                            <div className="download-page-progress">
+                              <div className="download-page-progress-fill" style={{ width: `${progress}%` }} />
+                            </div>
+                          )}
                         </>
                       )}
                       {download.state === 'completed' && (

@@ -359,6 +359,7 @@ declare global {
       getDownloads: () => Promise<Download[]>;
       onDownloadStarted: (callback: (download: Download) => void) => () => void;
       onDownloadUpdate: (callback: (download: Download) => void) => () => void;
+      onDownloadProgress: (callback: (download: Download) => void) => () => void;
       onDownloadCompleted: (callback: (download: Download) => void) => () => void;
       cancelDownload: (id: string) => Promise<void>;
       openDownload: (path: string) => Promise<void>;

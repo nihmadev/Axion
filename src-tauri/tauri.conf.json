@@ -40,6 +40,14 @@
       "icons/icon.ico"
     ],
     "targets": ["msi", "nsis"],
+    "fileAssociations": [
+      {
+        "ext": ["html", "htm"],
+        "name": "HTML Document",
+        "description": "HTML Document",
+        "role": "Viewer"
+      }
+    ],
     "windows": {
       "webviewInstallMode": {
         "type": "embedBootstrapper"

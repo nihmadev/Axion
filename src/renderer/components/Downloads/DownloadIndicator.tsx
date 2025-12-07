@@ -28,7 +28,7 @@ export interface ActiveDownload {
 
 interface DownloadIndicatorProps {
   // language prop no longer needed but kept for interface compatibility
-  language?: 'ru' | 'en';
+  language?: 'ru' | 'en' | 'fr' | 'de' | 'es'
 }
 
 const DownloadIndicator: React.FC<DownloadIndicatorProps> = () => {
@@ -107,14 +107,19 @@ const DownloadIndicator: React.FC<DownloadIndicatorProps> = () => {
       }, 5000);
     };
 
+    // download-progress содержит те же данные что и download-update, используем тот же обработчик
+    const handleDownloadProgress = handleDownloadUpdate;
+
     const cleanup1 = window.electronAPI.onDownloadStarted(handleDownloadStarted);
     const cleanup2 = window.electronAPI.onDownloadUpdate(handleDownloadUpdate);
     const cleanup3 = window.electronAPI.onDownloadCompleted(handleDownloadCompleted);
+    const cleanup4 = window.electronAPI.onDownloadProgress(handleDownloadProgress);
 
     return () => {
       cleanup1();
       cleanup2();
       cleanup3();
+      cleanup4();
     };
   }, []);
 

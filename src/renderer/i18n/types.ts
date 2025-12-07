@@ -299,4 +299,14 @@ export interface Translations {
     removeFromGroup: string;
     newGroup: string;
   };
+  // Autofill
+  autofill: {
+    savePassword: string;
+    save: string;
+    notNow: string;
+    neverForSite: string;
+    updatePassword: string;
+    passwordSaved: string;
+    fillPassword: string;
+  };
 }

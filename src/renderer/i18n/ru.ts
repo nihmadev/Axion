@@ -291,4 +291,13 @@ export const ru: Translations = {
     removeFromGroup: 'Убрать из группы',
     newGroup: 'Новая группа',
   },
+  autofill: {
+    savePassword: 'Сохранить пароль?',
+    save: 'Сохранить',
+    notNow: 'Не сейчас',
+    neverForSite: 'Никогда для этого сайта',
+    updatePassword: 'Обновить пароль?',
+    passwordSaved: 'Пароль сохранён',
+    fillPassword: 'Заполнить пароль',
+  },
 };

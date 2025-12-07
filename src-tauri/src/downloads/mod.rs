@@ -1,5 +1,5 @@
 mod types;
-mod utils;
+pub mod utils;
 mod storage;
 mod downloader;
 

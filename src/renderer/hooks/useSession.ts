@@ -96,6 +96,68 @@ export const useSession = ({
     initApp();
   }, []);
 
+  // Слушаем событие open-url для открытия файлов через "Открыть с помощью"
+  useEffect(() => {
+    const unlisten = window.electronAPI.onOpenUrl((url: string) => {
+      console.log('[Session] Received open-url event:', url);
+      
+      setWorkspaces(prev => {
+        if (prev.length === 0) return prev;
+        
+        // Находим активный workspace
+        const wsIndex = prev.findIndex(ws => ws.id === activeWorkspaceId) || 0;
+        const workspace = prev[wsIndex] || prev[0];
+        
+        // Проверяем, есть ли пустая вкладка (новая вкладка без URL)
+        const emptyTabIndex = workspace.tabs.findIndex(t => !t.url || t.url === '');
+        
+        if (emptyTabIndex !== -1) {
+          // Используем существующую пустую вкладку
+          const updatedTabs = [...workspace.tabs];
+          updatedTabs[emptyTabIndex] = {
+            ...updatedTabs[emptyTabIndex],
+            url,
+            title: url.split('/').pop() || 'Загрузка...',
+            isLoading: true,
+          };
+          
+          const updatedWorkspace = {
+            ...workspace,
+            tabs: updatedTabs,
+            activeTabId: updatedTabs[emptyTabIndex].id,
+          };
+          
+          const newWorkspaces = [...prev];
+          newWorkspaces[wsIndex !== -1 ? wsIndex : 0] = updatedWorkspace;
+          return newWorkspaces;
+        } else {
+          // Создаем новую вкладку
+          const newTab: Tab = {
+            id: uuidv4(),
+            url,
+            title: url.split('/').pop() || 'Загрузка...',
+            isLoading: true,
+            canGoBack: false,
+            canGoForward: false,
+            zoomLevel: 1,
+          };
+          
+          const updatedWorkspace = {
+            ...workspace,
+            tabs: [...workspace.tabs, newTab],
+            activeTabId: newTab.id,
+          };
+          
+          const newWorkspaces = [...prev];
+          newWorkspaces[wsIndex !== -1 ? wsIndex : 0] = updatedWorkspace;
+          return newWorkspaces;
+        }
+      });
+    });
+
+    return unlisten;
+  }, [activeWorkspaceId, setWorkspaces]);
+
   // Автосохранение сессии каждые 30 секунд и при закрытии
   useEffect(() => {
     if (workspaces.length === 0) return;

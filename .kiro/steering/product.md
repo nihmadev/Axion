@@ -1,6 +1,6 @@
 # Product Overview
 
-XOLO (Axion) is a lightweight, high-performance web browser for Windows that emphasizes workspace organization and customization.
+Axion is a lightweight, high-performance web browser for Windows that emphasizes workspace organization and customization.
 
 **Current Version**: 1.7.9
 

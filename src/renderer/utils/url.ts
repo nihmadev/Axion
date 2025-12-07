@@ -25,9 +25,16 @@ export const normalizeUrl = (input: string, searchEngine: Settings['searchEngine
     return s;
   }
 
-  // Если уже есть протокол
-  if (/^https?:\/\//i.test(s)) {
+  // Если уже есть протокол (http, https, file)
+  if (/^https?:\/\//i.test(s) || /^file:\/\/\//i.test(s)) {
     return s;
+  }
+
+  // Локальный путь к файлу (Windows: C:\path или /path)
+  if (/^[a-zA-Z]:[\\\/]/.test(s) || s.startsWith('/')) {
+    // Конвертируем путь в file:/// URL
+    const normalizedPath = s.replace(/\\/g, '/');
+    return 'file:///' + (normalizedPath.startsWith('/') ? normalizedPath.slice(1) : normalizedPath);
   }
 
   // Если похоже на домен (есть точка и нет пробелов)

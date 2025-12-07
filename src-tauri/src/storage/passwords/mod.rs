@@ -16,4 +16,4 @@ pub use vault::{
 };
 
 // Re-export password operations
-pub use operations::{add_password, delete_password, get_passwords, search_passwords, update_password};
+pub use operations::{add_password, delete_password, get_passwords, get_passwords_for_url, search_passwords, update_password};

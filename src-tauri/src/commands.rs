@@ -386,3 +386,8 @@ pub fn delete_vault() -> Result<bool, String> {
 pub fn get_remaining_attempts() -> Result<u32, String> {
     storage::get_remaining_attempts()
 }
+
+#[tauri::command]
+pub fn get_passwords_for_url(url: String) -> Result<Vec<storage::DecryptedPasswordEntry>, String> {
+    storage::get_passwords_for_url(url)
+}

@@ -129,16 +129,62 @@ pub async fn poll_webview_state(app: AppHandle, id: String) {
 /// Извлекает имя файла из URL для загрузки
 pub fn extract_filename_from_url(url: &str) -> String {
     if let Ok(parsed) = url::Url::parse(url) {
+        // Сначала проверяем query параметры на наличие имени файла
+        // Часто используется в URL типа ?filename=image.png или ?name=file.exe
+        for (key, value) in parsed.query_pairs() {
+            let key_lower = key.to_lowercase();
+            if key_lower == "filename" || key_lower == "name" || key_lower == "file" {
+                let decoded = urlencoding::decode(&value).unwrap_or_else(|_| value.clone());
+                if !decoded.is_empty() && decoded.contains('.') {
+                    return decoded.to_string();
+                }
+            }
+        }
+        
+        // Извлекаем из пути URL
         if let Some(segments) = parsed.path_segments() {
             if let Some(last) = segments.last() {
                 let decoded = urlencoding::decode(last).unwrap_or_else(|_| last.into());
                 if !decoded.is_empty() && decoded != "/" {
+                    // Убираем query string если она случайно попала
+                    let clean_name = decoded.split('?').next().unwrap_or(&decoded);
+                    
                     // Проверяем что это похоже на имя файла (есть расширение)
-                    if decoded.contains('.') {
-                        return decoded.to_string();
+                    if clean_name.contains('.') {
+                        return clean_name.to_string();
+                    }
+                    
+                    // Если нет расширения, пробуем определить по MIME типу из URL
+                    // или возвращаем имя как есть если оно не пустое
+                    if !clean_name.is_empty() {
+                        // Пробуем угадать расширение по известным паттернам в URL
+                        let url_lower = url.to_lowercase();
+                        let ext = if url_lower.contains("image") || url_lower.contains("/img/") || url_lower.contains("/photo") {
+                            ".jpg"
+                        } else if url_lower.contains("/video") {
+                            ".mp4"
+                        } else if url_lower.contains("/audio") || url_lower.contains("/music") {
+                            ".mp3"
+                        } else if url_lower.contains(".exe") || url_lower.contains("download") && url_lower.contains("windows") {
+                            ".exe"
+                        } else {
+                            ""
+                        };
+                        
+                        if !ext.is_empty() {
+                            return format!("{}{}", clean_name, ext);
+                        }
+                        
+                        return clean_name.to_string();
                     }
                 }
             }
+        }
+        
+        // Пробуем извлечь имя из домена если ничего не нашли
+        if let Some(host) = parsed.host_str() {
+            let domain = host.split('.').next().unwrap_or("download");
+            return format!("{}_{}.bin", domain, chrono::Utc::now().timestamp());
         }
     }
     

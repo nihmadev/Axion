@@ -13,3 +13,4 @@ export { useStartPageData } from './useStartPageData';
 export { useTabThumbnails } from './useTabThumbnails';
 export { useAppState } from './useAppState';
 export { useAppHandlers } from './useAppHandlers';
+export { useAutofill } from './useAutofill';

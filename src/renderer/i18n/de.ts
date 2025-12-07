@@ -291,4 +291,13 @@ export const de: Translations = {
     removeFromGroup: 'Aus Gruppe entfernen',
     newGroup: 'Neue Gruppe',
   },
+  autofill: {
+    savePassword: 'Passwort speichern?',
+    save: 'Speichern',
+    notNow: 'Nicht jetzt',
+    neverForSite: 'Nie für diese Website',
+    updatePassword: 'Passwort aktualisieren?',
+    passwordSaved: 'Passwort gespeichert',
+    fillPassword: 'Passwort ausfüllen',
+  },
 };

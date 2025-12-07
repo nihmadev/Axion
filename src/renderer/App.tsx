@@ -21,7 +21,9 @@ import {
   useTranslation,
   useAppState,
   useAppHandlers,
+  useAutofill,
 } from './hooks';
+import { AutofillPopup, SavePasswordPrompt } from './components/Autofill';
 import './styles/App.css';
 
 const App: React.FC = () => {
@@ -215,6 +217,16 @@ const App: React.FC = () => {
     captureInterval: 5000, // Обновление каждые 5 секунд
   });
 
+  // Автозаполнение паролей
+  const {
+    autofillRequest,
+    savePasswordRequest,
+    fillCredentials,
+    closeAutofillPopup,
+    closeSavePasswordPrompt,
+    markCredentialsSaved,
+  } = useAutofill({ activeTabId });
+
   // Вычисляемые значения
   const isBookmarked = useMemo(() => 
     activeTab ? bookmarks.some(b => b.url === activeTab.url) : false, 
@@ -385,6 +397,30 @@ const App: React.FC = () => {
         setHistory={setHistory}
         selectTabFromSearch={selectTabFromSearch}
       />
+
+      {/* Autofill Popup */}
+      {autofillRequest && (
+        <AutofillPopup
+          url={autofillRequest.url}
+          tabId={autofillRequest.tabId}
+          position={autofillRequest.position}
+          onClose={closeAutofillPopup}
+          onFill={fillCredentials}
+          t={t}
+        />
+      )}
+
+      {/* Save Password Prompt */}
+      {savePasswordRequest && (
+        <SavePasswordPrompt
+          url={savePasswordRequest.url}
+          username={savePasswordRequest.username}
+          password={savePasswordRequest.password}
+          onClose={closeSavePasswordPrompt}
+          onSaved={markCredentialsSaved}
+          t={t}
+        />
+      )}
 
     </div>
   );

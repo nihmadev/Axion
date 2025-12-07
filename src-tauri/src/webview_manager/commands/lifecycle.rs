@@ -8,6 +8,59 @@ use crate::webview_manager::polling::{poll_webview_state, extract_title_from_url
 use crate::webview_manager::CHROME_USER_AGENT;
 use crate::adblock;
 
+/// Получает имя файла из HTTP заголовков (Content-Disposition)
+fn get_filename_from_headers(url: &str) -> Option<String> {
+    // Используем блокирующий HTTP клиент для синхронного запроса
+    let client = reqwest::blocking::Client::builder()
+        .user_agent(CHROME_USER_AGENT)
+        .timeout(std::time::Duration::from_secs(5))
+        .build()
+        .ok()?;
+    
+    let response = client.head(url).send().ok()?;
+    let headers = response.headers();
+    
+    // Пробуем Content-Disposition
+    if let Some(cd) = headers.get("content-disposition") {
+        if let Ok(cd_str) = cd.to_str() {
+            // Парсим filename*=UTF-8''name.ext (RFC 5987)
+            if let Some(start) = cd_str.find("filename*=") {
+                let rest = &cd_str[start + 10..];
+                // Формат: UTF-8''encoded_name или просто encoded_name
+                let encoded = if let Some(pos) = rest.find("''") {
+                    &rest[pos + 2..]
+                } else {
+                    rest
+                };
+                let end = encoded.find(';').unwrap_or(encoded.len());
+                let encoded_name = encoded[..end].trim().trim_matches('"');
+                if let Ok(decoded) = urlencoding::decode(encoded_name) {
+                    if !decoded.is_empty() {
+                        return Some(decoded.to_string());
+                    }
+                }
+            }
+            
+            // Парсим filename="name.ext" или filename=name.ext
+            if let Some(start) = cd_str.find("filename=") {
+                let rest = &cd_str[start + 9..];
+                let filename = if rest.starts_with('"') {
+                    rest[1..].split('"').next().unwrap_or("")
+                } else {
+                    rest.split(';').next().unwrap_or("").trim()
+                };
+                if !filename.is_empty() {
+                    // Декодируем если закодировано
+                    let decoded = urlencoding::decode(filename).unwrap_or_else(|_| filename.into());
+                    return Some(decoded.to_string());
+                }
+            }
+        }
+    }
+    
+    None
+}
+
 /// Создание нового нативного WebView для вкладки (встроенного в главное окно)
 #[tauri::command]
 pub async fn create_webview(
@@ -174,8 +227,12 @@ pub async fn create_webview(
                         let downloads_dir = dirs::download_dir()
                             .unwrap_or_else(|| PathBuf::from("."));
                         
-                        // Извлекаем имя файла из URL
-                        let filename = extract_filename_from_url(&url_str);
+                        // Делаем синхронный HEAD запрос для получения Content-Disposition
+                        let filename = get_filename_from_headers(&url_str)
+                            .unwrap_or_else(|| extract_filename_from_url(&url_str));
+                        
+                        // Получаем уникальное имя файла
+                        let filename = crate::downloads::utils::get_unique_filename(&downloads_dir, &filename);
                         let save_path = downloads_dir.join(&filename);
                         
                         // Устанавливаем путь сохранения
@@ -202,25 +259,38 @@ pub async fn create_webview(
                         let _ = app_download.emit("download-started", &download);
                         let _ = app_download.emit("download-update", &download);
                         
+                        // Создаём структуру загрузки
+                        let dl = crate::downloads::Download {
+                            id: download_id.clone(),
+                            filename: filename.clone(),
+                            url: url_str.clone(),
+                            total_bytes: -1,
+                            received_bytes: 0,
+                            state: "progressing".to_string(),
+                            start_time: chrono::Utc::now().timestamp_millis(),
+                            save_path: Some(save_path.to_string_lossy().to_string()),
+                            speed: 0,
+                            mime_type: None,
+                        };
+                        
                         // Сохраняем информацию о загрузке для отслеживания завершения
                         // Используем URL как ключ для связи с событием Finished
                         {
                             let state = app_download.state::<crate::AppState>();
                             if let Ok(mut downloads) = state.downloads.lock() {
-                                downloads.insert(url_str.clone(), crate::downloads::Download {
-                                    id: download_id,
-                                    filename: filename.clone(),
-                                    url: url_str.clone(),
-                                    total_bytes: -1,
-                                    received_bytes: 0,
-                                    state: "progressing".to_string(),
-                                    start_time: chrono::Utc::now().timestamp_millis(),
-                                    save_path: Some(save_path.to_string_lossy().to_string()),
-                                    speed: 0,
-                                    mime_type: None,
-                                });
+                                downloads.insert(url_str.clone(), dl.clone());
                             };
                         }
+                        
+                        // Сохраняем в файл истории загрузок чтобы UI мог их видеть
+                        let dl_for_save = dl.clone();
+                        tauri::async_runtime::spawn(async move {
+                            if let Ok(mut downloads) = crate::downloads::get_downloads().await {
+                                // Добавляем в начало списка
+                                downloads.insert(0, dl_for_save);
+                                let _ = crate::downloads::save_downloads(downloads).await;
+                            }
+                        });
                         
                         true // Разрешаем загрузку
                     }
@@ -284,6 +354,17 @@ pub async fn create_webview(
         // Обработчик изменения title - срабатывает когда document.title меняется
         // Также используется как IPC канал для получения реальных URL/title/favicon от page_observer.js
         .on_document_title_changed(move |_webview, title| {
+            // Проверяем autofill IPC формат
+            // Формат: __AXION_AUTOFILL__:{"type":"...","data":{...}}
+            if let Some(json_str) = title.strip_prefix("__AXION_AUTOFILL__:") {
+                // Передаём autofill сообщение на фронтенд
+                let _ = app_title.emit("autofill-message", serde_json::json!({
+                    "id": tab_id_title.clone(),
+                    "message": json_str,
+                }));
+                return;
+            }
+            
             // Проверяем специальный IPC формат от page_observer.js
             // Формат: __AXION_IPC__:{"url":"...","title":"...","favicon":"..."}
             if let Some(json_str) = title.strip_prefix("__AXION_IPC__:") {

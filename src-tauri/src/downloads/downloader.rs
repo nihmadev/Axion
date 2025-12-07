@@ -92,7 +92,7 @@ pub async fn start_download(
             app_clone.clone(),
             download_id_clone.clone(),
             url_clone,
-            save_path_clone,
+            save_path_clone.clone(),
             total_bytes,
             &mut cancel_rx,
         ).await;
@@ -106,10 +106,10 @@ pub async fn start_download(
         }
         
         // Обновляем статус
-        let final_state = match result {
-            Ok(()) => "completed",
-            Err(ref e) if e.contains("cancelled") => "cancelled",
-            Err(_) => "interrupted",
+        let (final_state, final_bytes) = match &result {
+            Ok(bytes) => ("completed", *bytes),
+            Err(e) if e.contains("cancelled") => ("cancelled", 0),
+            Err(_) => ("interrupted", 0),
         };
         
         // Обновляем в истории
@@ -117,8 +117,13 @@ pub async fn start_download(
             if let Some(dl) = downloads.iter_mut().find(|d| d.id == download_id_clone) {
                 dl.state = final_state.to_string();
                 if final_state == "completed" {
-                    dl.received_bytes = dl.total_bytes;
+                    // Используем реальный размер скачанного файла
+                    dl.received_bytes = final_bytes;
+                    dl.total_bytes = final_bytes;
+                    dl.speed = 0; // Загрузка завершена, скорость 0
                 }
+                // Отправляем оба события для гарантии обновления UI
+                let _ = app_clone.emit("download-progress", dl.clone());
                 let _ = app_clone.emit("download-update", dl.clone());
                 let _ = app_clone.emit("download-completed", dl.clone());
             }
@@ -130,6 +135,7 @@ pub async fn start_download(
 }
 
 /// Загрузка файла с прогрессом
+/// Возвращает количество скачанных байт при успехе
 async fn download_file(
     app: AppHandle,
     download_id: String,
@@ -137,7 +143,7 @@ async fn download_file(
     save_path: PathBuf,
     total_bytes: i64,
     cancel_rx: &mut tokio::sync::watch::Receiver<bool>,
-) -> Result<(), String> {
+) -> Result<i64, String> {
     use tokio::io::AsyncWriteExt;
     use futures_util::StreamExt;
     
@@ -152,6 +158,29 @@ async fn download_file(
         return Err(format!("HTTP error: {}", response.status()));
     }
     
+    // Получаем Content-Length из GET ответа (более надёжно чем HEAD)
+    let actual_total_bytes = response.headers()
+        .get("content-length")
+        .and_then(|v| v.to_str().ok())
+        .and_then(|s| s.parse::<i64>().ok())
+        .unwrap_or(total_bytes);
+    
+    // Используем размер из GET если HEAD не вернул размер
+    let total_bytes = if total_bytes <= 0 && actual_total_bytes > 0 {
+        // Сразу обновляем UI с правильным размером
+        if let Ok(mut downloads) = get_downloads().await {
+            if let Some(dl) = downloads.iter_mut().find(|d| d.id == download_id) {
+                dl.total_bytes = actual_total_bytes;
+                let _ = app.emit("download-progress", dl.clone());
+                let _ = app.emit("download-update", dl.clone());
+                let _ = save_downloads(downloads.clone()).await;
+            }
+        }
+        actual_total_bytes
+    } else {
+        total_bytes
+    };
+    
     let mut file = tokio::fs::File::create(&save_path).await.map_err(|e| e.to_string())?;
     let mut stream = response.bytes_stream();
     
@@ -159,6 +188,9 @@ async fn download_file(
     let mut last_update = std::time::Instant::now();
     let mut last_bytes = 0i64;
     let update_interval = std::time::Duration::from_millis(250);
+    
+    // Отправляем первое обновление сразу после начала загрузки
+    let mut first_update_sent = false;
     
     while let Some(chunk_result) = stream.next().await {
         // Проверяем отмену
@@ -173,29 +205,37 @@ async fn download_file(
         
         // Отправляем обновление прогресса
         let now = std::time::Instant::now();
-        if now.duration_since(last_update) >= update_interval {
+        let should_update = !first_update_sent || now.duration_since(last_update) >= update_interval;
+        
+        if should_update {
             let elapsed = now.duration_since(last_update).as_secs_f64();
             let bytes_diff = received_bytes - last_bytes;
             let speed = if elapsed > 0.0 { (bytes_diff as f64 / elapsed) as i64 } else { 0 };
             
-            let update = serde_json::json!({
-                "id": download_id,
-                "receivedBytes": received_bytes,
-                "totalBytes": total_bytes,
-                "speed": speed,
-                "state": "progressing"
-            });
-            let _ = app.emit("download-progress", &update);
-            let _ = app.emit("download-update", &update);
+            // Используем received_bytes как totalBytes если размер неизвестен (-1)
+            let effective_total = if total_bytes > 0 { total_bytes } else { received_bytes };
+            
+            // Обновляем в истории загрузок
+            if let Ok(mut downloads) = get_downloads().await {
+                if let Some(dl) = downloads.iter_mut().find(|d| d.id == download_id) {
+                    dl.received_bytes = received_bytes;
+                    dl.total_bytes = effective_total;
+                    dl.speed = speed;
+                    let _ = app.emit("download-progress", dl.clone());
+                    let _ = app.emit("download-update", dl.clone());
+                    let _ = save_downloads(downloads.clone()).await;
+                }
+            }
             
             last_update = now;
             last_bytes = received_bytes;
+            first_update_sent = true;
         }
     }
     
     file.flush().await.map_err(|e| e.to_string())?;
     
-    Ok(())
+    Ok(received_bytes)
 }
 
 /// Отменить загрузку

@@ -8,7 +8,7 @@ mod webview_manager;
 mod scripts;
 mod adblock;
 
-use tauri::Manager;
+use tauri::{Manager, Emitter};
 use std::sync::Mutex;
 use webview_manager::WebViewManager;
 
@@ -18,10 +18,29 @@ pub struct AppState {
     pub download_manager: Mutex<downloads::DownloadManager>,
     pub webview_manager: Mutex<WebViewManager>,
     pub webview_bounds: Mutex<std::collections::HashMap<String, webview_manager::WebViewBounds>>,
+    pub startup_url: Mutex<Option<String>>,
 }
 
 
 fn main() {
+    // Получаем URL из аргументов командной строки (для "Открыть с помощью")
+    let args: Vec<String> = std::env::args().collect();
+    let startup_url = if args.len() > 1 {
+        let path = &args[1];
+        // Проверяем, что это путь к файлу, а не флаг
+        if !path.starts_with('-') && std::path::Path::new(path).exists() {
+            // Конвертируем путь в file:/// URL
+            let normalized = path.replace('\\', "/");
+            Some(format!("file:///{}", normalized.trim_start_matches('/')))
+        } else if path.starts_with("file:///") || path.starts_with("http://") || path.starts_with("https://") {
+            Some(path.clone())
+        } else {
+            None
+        }
+    } else {
+        None
+    };
+
     tauri::Builder::default()
         .plugin(tauri_plugin_shell::init())
         .plugin(tauri_plugin_dialog::init())
@@ -32,6 +51,7 @@ fn main() {
             download_manager: Mutex::new(downloads::DownloadManager::new()),
             webview_manager: Mutex::new(WebViewManager::new()),
             webview_bounds: Mutex::new(std::collections::HashMap::new()),
+            startup_url: Mutex::new(startup_url),
         })
         .invoke_handler(tauri::generate_handler![
             // Window commands
@@ -93,6 +113,7 @@ fn main() {
             commands::generate_password,
             commands::delete_vault,
             commands::get_remaining_attempts,
+            commands::get_passwords_for_url,
             // WebView2 commands - lifecycle
             webview_manager::commands::lifecycle::create_webview,
             webview_manager::commands::lifecycle::close_webview,
@@ -131,6 +152,17 @@ fn main() {
             let window = app.get_webview_window("main").unwrap();
             // Регистрируем горячие клавиши через JavaScript
             setup_keyboard_shortcuts(&window);
+            
+            // Отправляем startup URL если есть (для "Открыть с помощью")
+            let state = app.state::<AppState>();
+            if let Some(url) = state.startup_url.lock().unwrap().take() {
+                let window_clone = window.clone();
+                // Небольшая задержка чтобы фронтенд успел инициализироваться
+                std::thread::spawn(move || {
+                    std::thread::sleep(std::time::Duration::from_millis(500));
+                    let _ = window_clone.emit("open-url", url);
+                });
+            }
             
             // Инициализируем блокировщик рекламы в фоне
             tauri::async_runtime::spawn(async {

@@ -291,4 +291,13 @@ export const zhCN: Translations = {
     removeFromGroup: '从分组移除',
     newGroup: '新建分组',
   },
+  autofill: {
+    savePassword: '保存密码？',
+    save: '保存',
+    notNow: '暂不保存',
+    neverForSite: '永不保存此网站',
+    updatePassword: '更新密码？',
+    passwordSaved: '密码已保存',
+    fillPassword: '填充密码',
+  },
 };

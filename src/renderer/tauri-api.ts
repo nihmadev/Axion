@@ -175,6 +175,7 @@ export const electronAPI = {
     invoke<string>('generate_password', { length, includeSymbols }),
   deleteVault: () => invoke<boolean>('delete_vault'),
   getRemainingAttempts: () => invoke<number>('get_remaining_attempts'),
+  getPasswordsForUrl: (url: string) => invoke<any[]>('get_passwords_for_url', { url }),
 
   // WebView URL change listener
   onWebViewUrlChanged: (callback: (data: { id: string; url?: string; title?: string; favicon?: string; is_loading?: boolean }) => void) => {

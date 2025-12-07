@@ -15,9 +15,9 @@ pub use import::{detect_browsers, import_from_browser, DetectedBrowser, ImportRe
 pub use session::{clear_session, restore_session, save_session};
 pub use passwords::{
     add_password, change_master_password, create_vault, delete_password, delete_vault,
-    generate_password, get_passwords, get_remaining_attempts, is_vault_unlocked, lock_vault,
-    search_passwords, unlock_vault, update_password, vault_exists, DecryptedPasswordEntry,
-    PasswordEntry,
+    generate_password, get_passwords, get_passwords_for_url, get_remaining_attempts, 
+    is_vault_unlocked, lock_vault, search_passwords, unlock_vault, update_password, 
+    vault_exists, DecryptedPasswordEntry, PasswordEntry,
 };
 pub use settings::{get_settings, set_settings};
 

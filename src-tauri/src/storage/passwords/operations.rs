@@ -123,3 +123,56 @@ pub fn search_passwords(query: String) -> Result<Vec<DecryptedPasswordEntry>, St
         })
         .collect())
 }
+
+/// Get passwords for a specific URL (for autofill)
+/// Matches by domain/hostname
+pub fn get_passwords_for_url(url: String) -> Result<Vec<DecryptedPasswordEntry>, String> {
+    let passwords = get_passwords()?;
+    
+    // Extract hostname from the URL
+    let target_host = extract_hostname(&url);
+    if target_host.is_empty() {
+        return Ok(Vec::new());
+    }
+    
+    Ok(passwords
+        .into_iter()
+        .filter(|p| {
+            let stored_host = extract_hostname(&p.url);
+            hosts_match(&target_host, &stored_host)
+        })
+        .collect())
+}
+
+/// Extract hostname from URL
+fn extract_hostname(url: &str) -> String {
+    // Handle URLs without protocol
+    let url_with_protocol = if url.contains("://") {
+        url.to_string()
+    } else {
+        format!("https://{}", url)
+    };
+    
+    url::Url::parse(&url_with_protocol)
+        .map(|u| u.host_str().unwrap_or("").to_lowercase())
+        .unwrap_or_else(|_| {
+            // Fallback: try to extract domain manually
+            url.split('/').next()
+                .unwrap_or("")
+                .split(':').next()
+                .unwrap_or("")
+                .to_lowercase()
+        })
+}
+
+/// Check if two hosts match (handles www prefix)
+fn hosts_match(host1: &str, host2: &str) -> bool {
+    if host1.is_empty() || host2.is_empty() {
+        return false;
+    }
+    
+    let h1 = host1.strip_prefix("www.").unwrap_or(host1);
+    let h2 = host2.strip_prefix("www.").unwrap_or(host2);
+    
+    h1 == h2
+}
