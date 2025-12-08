@@ -1,4 +1,4 @@
-﻿export type Language = 'ru' | 'en' | 'es' | 'fr' | 'de' | 'zh-CN';
+﻿export type Language = 'ru' | 'en' | 'es' | 'fr' | 'de' | 'zh-CN' | 'pt' | 'ja';
 
 export interface Translations {
   
