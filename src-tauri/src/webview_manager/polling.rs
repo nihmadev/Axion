@@ -1,4 +1,4 @@
-
+п»ї
 use tauri::{AppHandle, Manager, Emitter};
 use crate::scripts::PAGE_OBSERVER_SCRIPT;
 use super::types::WebViewUpdateEvent;
@@ -183,8 +183,8 @@ pub fn extract_title_from_url(url: &str) -> String {
             "twitch.tv" => "Twitch".to_string(),
             "discord.com" => "Discord".to_string(),
             "telegram.org" | "web.telegram.org" => "Telegram".to_string(),
-            "vk.com" => "ВКонтакте".to_string(),
-            "yandex.ru" | "ya.ru" => "Яндекс".to_string(),
+            "vk.com" => "VKontakte".to_string(),
+            "yandex.ru" | "ya.ru" => "Yandex".to_string(),
             "mail.ru" => "Mail.ru".to_string(),
             _ => {
                 let domain_name = clean_host.split('.').next().unwrap_or(clean_host);

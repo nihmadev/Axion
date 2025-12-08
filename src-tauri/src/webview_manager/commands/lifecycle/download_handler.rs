@@ -1,10 +1,10 @@
-use tauri::{AppHandle, Emitter};
+use tauri::{AppHandle, Emitter, Manager};
 use tauri::webview::DownloadEvent;
 use std::path::PathBuf;
 use crate::webview_manager::polling::extract_filename_from_url;
 use super::utils::get_filename_from_headers;
 
-pub fn handle_download(app_download: AppHandle) -> impl Fn(&tauri::Webview, DownloadEvent) -> bool + Send + Sync + 'static {
+pub fn handle_download(app_download: AppHandle) -> impl Fn(tauri::Webview<tauri::Wry>, DownloadEvent) -> bool + Send + Sync + 'static {
     move |_webview, event| {
         match event {
             DownloadEvent::Requested { url, destination } => {

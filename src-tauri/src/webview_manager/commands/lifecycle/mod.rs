@@ -1,7 +1,4 @@
-mod create;
-mod close;
+pub mod create;
+pub mod close;
 mod download_handler;
 mod utils;
-
-pub use create::create_webview;
-pub use close::close_webview;

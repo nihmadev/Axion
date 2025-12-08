@@ -2,7 +2,7 @@ pub const READER_MODE_TEMPLATE_JS: &str = r#"
     const readerHTML = `
         ${READER_STYLES}
         <div class="axion-reader-overlay">
-            <button class="axion-reader-close" onclick="location.reload()" title="Выйти из режима чтения">
+            <button class="axion-reader-close" onclick="location.reload()" title="Exit Reader Mode">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M18 6L6 18M6 6l12 12"/>
                 </svg>
@@ -11,10 +11,10 @@ pub const READER_MODE_TEMPLATE_JS: &str = r#"
                 <header class="axion-reader-header">
                     <h1 class="axion-reader-title">${title}</h1>
                     <div class="axion-reader-meta">
-                        ${subreddit ? '<span><a href="https:
-                        ${author ? '<span>?? ' + author + '</span>' : ''}
-                        ${publishDate ? '<span>?? ' + publishDate + '</span>' : ''}
-                        <span>?? ${Math.ceil(mainContent.innerText.split(/\s+/).length / 200)} мин чтения</span>
+                        ${subreddit ? '<span><a href="https://reddit.com/r/' + subreddit + '">/r/' + subreddit + '</a></span>' : ''}
+                        ${author ? '<span>' + author + '</span>' : ''}
+                        ${publishDate ? '<span>' + publishDate + '</span>' : ''}
+                        <span>${Math.ceil(mainContent.innerText.split(/\s+/).length / 200)} min read</span>
                     </div>
                 </header>
                 <div class="axion-reader-content">

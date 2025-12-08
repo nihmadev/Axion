@@ -8,12 +8,12 @@ use adblock::request::Request;
 use std::sync::{Mutex, RwLock, LazyLock, atomic::{AtomicBool, AtomicU64, Ordering}};
 use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
-const EASYLIST_URL: &str = "https:
-const EASYPRIVACY_URL: &str = "https:
-const UBLOCK_FILTERS_URL: &str = "https:
-const UBLOCK_PRIVACY_URL: &str = "https:
-const UBLOCK_BADWARE_URL: &str = "https:
-const PETER_LOWE_URL: &str = "https:
+const EASYLIST_URL: &str = "https://easylist.to/easylist/easylist.txt";
+const EASYPRIVACY_URL: &str = "https://easylist.to/easylist/easyprivacy.txt";
+const UBLOCK_FILTERS_URL: &str = "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters.txt";
+const UBLOCK_PRIVACY_URL: &str = "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/privacy.txt";
+const UBLOCK_BADWARE_URL: &str = "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/badware.txt";
+const PETER_LOWE_URL: &str = "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=adblockplus&showintro=1&mimetype=plaintext";
 const FALLBACK_RULES: &str = r#"
 ||googlesyndication.com^
 ||googleadservices.com^
@@ -243,20 +243,20 @@ mod tests {
     #[test]
     fn test_basic_blocking() {
         assert!(should_block_url(
-            "https:
-            "https:
+            "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js",
+            "https://example.com",
             "script"
         ));
         
         assert!(should_block_url(
-            "https:
-            "https:
+            "https://www.google-analytics.com/analytics.js",
+            "https://example.com",
             "script"
         ));
         
         assert!(!should_block_url(
-            "https:
-            "https:
+            "https://example.com/page.html",
+            "https://example.com",
             "document"
         ));
     }

@@ -26,8 +26,8 @@ fn main() {
         let path = &args[1];
         if !path.starts_with('-') && std::path::Path::new(path).exists() {
             let normalized = path.replace('\\', "/");
-            Some(format!("file:
-        } else if path.starts_with("file:
+            Some(format!("file:///{}", normalized))
+        } else if path.starts_with("file://") || path.starts_with("http://") || path.starts_with("https://") {
             Some(path.clone())
         } else {
             None
@@ -99,8 +99,8 @@ fn main() {
             commands::delete_vault,
             commands::get_remaining_attempts,
             commands::get_passwords_for_url,
-            webview_manager::commands::lifecycle::create_webview,
-            webview_manager::commands::lifecycle::close_webview,
+            webview_manager::commands::lifecycle::create::create_webview,
+            webview_manager::commands::lifecycle::close::close_webview,
             webview_manager::commands::navigation::navigate_webview,
             webview_manager::commands::navigation::go_back,
             webview_manager::commands::navigation::go_forward,

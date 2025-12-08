@@ -137,10 +137,10 @@ pub fn get_passwords_for_url(url: String) -> Result<Vec<DecryptedPasswordEntry>,
 }
 
 fn extract_hostname(url: &str) -> String {
-    let url_with_protocol = if url.contains(":
+    let url_with_protocol = if url.contains("://") {
         url.to_string()
     } else {
-        format!("https:
+        format!("https://{}", url)
     };
     
     url::Url::parse(&url_with_protocol)

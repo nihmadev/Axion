@@ -63,5 +63,3 @@ r#"(function() {{
         CONTENT_CLEANUP_JS
     )
 }
-#[deprecated(note = "Use get_reader_mode_script() instead")]
-pub const READER_MODE_SCRIPT: &str = "";

@@ -32,7 +32,7 @@ const PIP_SCRIPT: &str = r#"
     
     if (videos.length === 0) {
         console.log('PiP: No videos found on page');
-        alert('Видео не найдено на странице');
+        alert('No videos found on this page');
         return { success: false, error: 'no_videos' };
     }
     
@@ -71,7 +71,7 @@ const PIP_SCRIPT: &str = r#"
     
     if (!targetVideo) {
         console.log('PiP: No suitable video found');
-        alert('Подходящее видео не найдено');
+        alert('No suitable video found');
         return { success: false, error: 'no_suitable_video' };
     }
     
@@ -79,7 +79,7 @@ const PIP_SCRIPT: &str = r#"
     
     if (!document.pictureInPictureEnabled) {
         console.log('PiP: Not supported by browser');
-        alert('Picture-in-Picture не поддерживается');
+        alert('Picture-in-Picture is not supported');
         return { success: false, error: 'not_supported' };
     }
     
@@ -117,10 +117,10 @@ const PIP_SCRIPT: &str = r#"
                 return { success: true, action: 'enter' };
             } catch (e2) {
                 console.error('PiP alternative method failed:', e2);
-                alert('Не удалось активировать Picture-in-Picture: ' + e2.message);
+                alert('Failed to activate Picture-in-Picture: ' + e2.message);
             }
         } else {
-            alert('Ошибка Picture-in-Picture: ' + e.message);
+            alert('Picture-in-Picture error: ' + e.message);
         }
         
         return { success: false, error: e.message };
