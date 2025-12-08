@@ -23,7 +23,7 @@
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
   --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6);
   
-  /* Glassmorphism */
+  
   --glass-bg: rgba(45, 45, 50, 0.75);
   --glass-border: rgba(255, 255, 255, 0.08);
   --glass-blur: 30px;
@@ -53,7 +53,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Scrollbar - minimal style */
+
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -93,7 +93,7 @@ a {
   text-decoration: none;
 }
 
-/* Animations */
+
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }

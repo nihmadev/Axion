@@ -27,7 +27,6 @@ export interface ActiveDownload {
 }
 
 interface DownloadIndicatorProps {
-  // language prop no longer needed but kept for interface compatibility
   language?: 'ru' | 'en' | 'fr' | 'de' | 'es'
 }
 
@@ -37,12 +36,12 @@ const DownloadIndicator: React.FC<DownloadIndicatorProps> = () => {
   const [animationPhase, setAnimationPhase] = useState<'idle' | 'flying' | 'landing'>('idle');
   const indicatorRef = useRef<HTMLDivElement>(null);
 
-  // Загружаем начальные загрузки
+  
   useEffect(() => {
     const loadDownloads = async () => {
       try {
         const saved = await window.electronAPI.getDownloads() as ActiveDownload[];
-        // Показываем только активные и недавно завершённые
+        
         const recent = saved.filter(d => 
           d.state === 'progressing' || 
           (d.state === 'completed' && Date.now() - d.startTime < 60000)
@@ -55,7 +54,7 @@ const DownloadIndicator: React.FC<DownloadIndicatorProps> = () => {
     loadDownloads();
   }, []);
 
-  // Подписываемся на события загрузок
+  
   useEffect(() => {
     const handleDownloadStarted = (download: ActiveDownload) => {
       setDownloads(prev => {
@@ -64,11 +63,11 @@ const DownloadIndicator: React.FC<DownloadIndicatorProps> = () => {
         return [download, ...prev];
       });
       
-      // Запускаем анимацию появления
+      
       setAnimatingDownload(download);
       setAnimationPhase('flying');
       
-      // Через 800ms завершаем анимацию
+      
       setTimeout(() => {
         setAnimationPhase('landing');
         setTimeout(() => {
@@ -101,13 +100,13 @@ const DownloadIndicator: React.FC<DownloadIndicatorProps> = () => {
         return prev;
       });
       
-      // Убираем завершённые через 5 секунд
+      
       setTimeout(() => {
         setDownloads(prev => prev.filter(d => d.id !== download.id || d.state === 'progressing'));
       }, 5000);
     };
 
-    // download-progress содержит те же данные что и download-update, используем тот же обработчик
+    
     const handleDownloadProgress = handleDownloadUpdate;
 
     const cleanup1 = window.electronAPI.onDownloadStarted(handleDownloadStarted);
@@ -135,11 +134,11 @@ const DownloadIndicator: React.FC<DownloadIndicatorProps> = () => {
       }, 0) / activeDownloads.length * 100
     : 0;
 
-  // Получаем иконку файла по MIME типу или расширению
+  
   const getFileIcon = (filename: string, mimeType?: string): React.ReactNode => {
     const ext = filename.split('.').pop()?.toLowerCase() || '';
     
-    // По MIME типу
+    
     if (mimeType) {
       if (mimeType.startsWith('image/')) return <ImageFileIcon size={20} />;
       if (mimeType.startsWith('video/')) return <VideoFileIcon size={20} />;
@@ -149,7 +148,7 @@ const DownloadIndicator: React.FC<DownloadIndicatorProps> = () => {
       if (mimeType.includes('executable') || mimeType.includes('x-msdownload')) return <ExecutableFileIcon size={20} />;
     }
     
-    // По расширению
+    
     const imageExts = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp'];
     const videoExts = ['mp4', 'mkv', 'avi', 'mov', 'wmv', 'webm'];
     const audioExts = ['mp3', 'wav', 'flac', 'ogg', 'm4a', 'aac'];
@@ -173,12 +172,12 @@ const DownloadIndicator: React.FC<DownloadIndicatorProps> = () => {
     return <DownloadFileIcon size={20} />;
   };
 
-  // Всегда показываем индикатор, но скрываем прогресс и счетчики когда нет загрузок
+  
   const showIndicator = true;
 
   return (
     <>
-      {/* Анимация летящего файла */}
+      {}
       {animatingDownload && animationPhase !== 'idle' && (
         <div 
           className={`download-flying-icon ${animationPhase}`}
@@ -198,7 +197,7 @@ const DownloadIndicator: React.FC<DownloadIndicatorProps> = () => {
         </div>
       )}
 
-      {/* Индикатор загрузок - всегда видим */}
+      {}
       {showIndicator && (
         <div 
           ref={indicatorRef}
@@ -211,7 +210,7 @@ const DownloadIndicator: React.FC<DownloadIndicatorProps> = () => {
               <line x1="12" y1="15" x2="12" y2="3"/>
             </svg>
             
-            {/* Круговой прогресс - только при активных загрузках */}
+            {}
             {activeDownloads.length > 0 && (
               <svg className="download-progress-ring" viewBox="0 0 36 36">
                 <circle
@@ -232,12 +231,12 @@ const DownloadIndicator: React.FC<DownloadIndicatorProps> = () => {
             )}
           </div>
           
-          {/* Счетчик активных загрузок */}
+          {}
           {activeDownloads.length > 0 && (
             <span className="download-count">{activeDownloads.length}</span>
           )}
           
-          {/* Значок завершения - только если есть завершенные и нет активных */}
+          {}
           {completedDownloads.length > 0 && activeDownloads.length === 0 && (
             <span className="download-complete-badge">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">

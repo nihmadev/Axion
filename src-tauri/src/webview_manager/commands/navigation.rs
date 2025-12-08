@@ -1,8 +1,5 @@
-//! Команды навигации WebView
-
 use tauri::{AppHandle, Manager};
 
-/// Навигация в WebView
 #[tauri::command]
 pub async fn navigate_webview(
     app: AppHandle,
@@ -17,7 +14,6 @@ pub async fn navigate_webview(
         webview.navigate(parsed_url)
             .map_err(|e| format!("Navigation failed: {}", e))?;
         
-        // Обновляем URL в менеджере
         let state = app.state::<crate::AppState>();
         if let Ok(mut manager) = state.webview_manager.lock() {
             manager.update_url(&id, url);
@@ -27,7 +23,6 @@ pub async fn navigate_webview(
     Ok(())
 }
 
-/// Назад
 #[tauri::command]
 pub async fn go_back(
     app: AppHandle,
@@ -36,7 +31,6 @@ pub async fn go_back(
     let webview_id = format!("webview_{}", id);
     
     if let Some(webview) = app.get_webview(&webview_id) {
-        // Выполняем JavaScript для навигации назад
         webview.eval("window.history.back()")
             .map_err(|e| format!("Failed to go back: {}", e))?;
         return Ok(true);
@@ -45,7 +39,6 @@ pub async fn go_back(
     Ok(false)
 }
 
-/// Вперёд
 #[tauri::command]
 pub async fn go_forward(
     app: AppHandle,
@@ -62,7 +55,6 @@ pub async fn go_forward(
     Ok(false)
 }
 
-/// Перезагрузка
 #[tauri::command]
 pub async fn reload_webview(
     app: AppHandle,
@@ -78,7 +70,6 @@ pub async fn reload_webview(
     Ok(())
 }
 
-/// Остановка загрузки
 #[tauri::command]
 pub async fn stop_webview(
     app: AppHandle,

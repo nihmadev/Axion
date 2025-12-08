@@ -1,6 +1,6 @@
-/* Дополнительные плавные анимации для Axion Browser */
 
-/* Плавное появление элементов */
+
+
 .animate-fade-in {
   animation: smoothFadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -16,7 +16,7 @@
   }
 }
 
-/* Плавное появление снизу */
+
 .animate-slide-up {
   animation: smoothSlideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -32,7 +32,7 @@
   }
 }
 
-/* Пульсация для важных элементов */
+
 .animate-pulse-glow {
   animation: pulseGlow 2s ease-in-out infinite;
 }
@@ -46,7 +46,7 @@
   }
 }
 
-/* Плавное вращение */
+
 .animate-spin-smooth {
   animation: spinSmooth 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
@@ -60,7 +60,7 @@
   }
 }
 
-/* Эффект волны при наведении */
+
 .hover-wave {
   position: relative;
   overflow: hidden;
@@ -84,7 +84,7 @@
   height: 300px;
 }
 
-/* Плавное масштабирование */
+
 .animate-scale-in {
   animation: scaleInSmooth 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -100,14 +100,14 @@
   }
 }
 
-/* Эффект свечения при фокусе */
+
 .focus-glow:focus {
   box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.15),
               0 0 20px rgba(124, 58, 237, 0.2);
   transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Плавное появление с размытием */
+
 .animate-blur-in {
   animation: blurInSmooth 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -125,7 +125,7 @@
   }
 }
 
-/* Эффект дрожания для ошибок */
+
 .animate-shake {
   animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97);
 }
@@ -142,7 +142,7 @@
   }
 }
 
-/* Плавное появление с поворотом */
+
 .animate-rotate-in {
   animation: rotateIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -158,7 +158,7 @@
   }
 }
 
-/* Эффект мерцания */
+
 .animate-shimmer {
   background: linear-gradient(
     90deg,
@@ -179,7 +179,7 @@
   }
 }
 
-/* Плавное исчезновение */
+
 .animate-fade-out {
   animation: smoothFadeOut 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
@@ -195,7 +195,7 @@
   }
 }
 
-/* Эффект подпрыгивания */
+
 .animate-bounce-in {
   animation: bounceIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
@@ -217,7 +217,7 @@
   }
 }
 
-/* Плавное появление слева направо */
+
 .animate-slide-right {
   animation: slideRight 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -233,7 +233,7 @@
   }
 }
 
-/* Эффект волны для загрузки */
+
 .loading-wave {
   position: relative;
   overflow: hidden;

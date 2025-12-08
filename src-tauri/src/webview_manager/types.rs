@@ -1,8 +1,5 @@
-//! Типы данных для WebView Manager
-
 use serde::{Deserialize, Serialize};
 
-/// Событие обновления WebView для фронтенда
 #[derive(Clone, Serialize)]
 pub struct WebViewUpdateEvent {
     pub id: String,
@@ -14,7 +11,6 @@ pub struct WebViewUpdateEvent {
     pub can_go_forward: Option<bool>,
 }
 
-/// Информация о WebView
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct WebViewInfo {
     pub id: String,
@@ -26,7 +22,6 @@ pub struct WebViewInfo {
     pub can_go_forward: bool,
 }
 
-/// Границы (позиция и размер) WebView
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct WebViewBounds {
     pub x: f64,

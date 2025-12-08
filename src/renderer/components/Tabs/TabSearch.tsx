@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+﻿import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Tab, Workspace } from '../../types';
 import { GlobeIcon, SnowflakeIcon } from '../ZenSidebar/icons';
 import '../../styles/components/tab-search.css';
@@ -21,7 +21,7 @@ const TabSearch: React.FC<TabSearchProps> = ({
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
 
-  // Собираем все вкладки из всех workspaces
+  
   const allTabs = useMemo(() => {
     const tabs: Array<{ tab: Tab; workspace: Workspace }> = [];
     for (const workspace of workspaces) {
@@ -32,7 +32,7 @@ const TabSearch: React.FC<TabSearchProps> = ({
     return tabs;
   }, [workspaces]);
 
-  // Фильтруем по запросу
+  
   const filteredTabs = useMemo(() => {
     if (!query.trim()) return allTabs;
     const q = query.toLowerCase();
@@ -50,7 +50,7 @@ const TabSearch: React.FC<TabSearchProps> = ({
     setSelectedIndex(0);
   }, [query]);
 
-  // Скролл к выбранному элементу
+  
   useEffect(() => {
     const list = listRef.current;
     if (!list) return;

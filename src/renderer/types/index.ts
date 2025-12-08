@@ -1,4 +1,4 @@
-export interface Tab {
+﻿export interface Tab {
   id: string;
   url: string;
   title: string;
@@ -10,15 +10,15 @@ export interface Tab {
   zoomLevel?: number;
   error?: TabError | null;
   isSecure?: boolean;
-  isFrozen?: boolean; // Вкладка заморожена для экономии памяти
-  lastActiveAt?: number; // Время последней активности
-  thumbnail?: string; // Base64 скриншот страницы для превью
-  thumbnailUpdatedAt?: number; // Время последнего обновления скриншота
-  isReaderMode?: boolean; // Режим чтения активен
-  groupId?: string; // ID группы вкладок
+  isFrozen?: boolean; 
+  lastActiveAt?: number; 
+  thumbnail?: string; 
+  thumbnailUpdatedAt?: number; 
+  isReaderMode?: boolean; 
+  groupId?: string; 
 }
 
-// Цвета для групп вкладок
+
 export const TAB_GROUP_COLORS = [
   { id: 'grey', color: '#5f6368', name: 'Серый' },
   { id: 'blue', color: '#1a73e8', name: 'Синий' },
@@ -37,22 +37,22 @@ export interface TabGroup {
   id: string;
   name: string;
   colorId: TabGroupColorId;
-  collapsed: boolean; // Свёрнута ли группа
+  collapsed: boolean; 
 }
 
 export type Language = 'ru' | 'en' | 'es' | 'fr' | 'de' | 'zh-CN';
 
-// Определяет системный язык пользователя
+
 export function getSystemLanguage(): Language {
   const browserLang = navigator.language;
   const supportedLanguages: Language[] = ['ru', 'en', 'es', 'fr', 'de', 'zh-CN'];
   
-  // Проверяем полный код языка (например, 'zh-CN')
+  
   if (supportedLanguages.includes(browserLang as Language)) {
     return browserLang as Language;
   }
   
-  // Проверяем только первую часть (например, 'zh')
+  
   const langPrefix = browserLang.split('-')[0].toLowerCase();
   if (langPrefix === 'zh') {
     return 'zh-CN';
@@ -63,11 +63,11 @@ export function getSystemLanguage(): Language {
     : 'en';
 }
 
-// Определяет системный формат времени (12h или 24h)
+
 export function getSystemTimeFormat(): '12h' | '24h' {
   const testDate = new Date(2000, 0, 1, 13, 0, 0);
   const formatted = testDate.toLocaleTimeString(navigator.language, { hour: 'numeric' });
-  // Если в строке есть AM/PM или время меньше 13, значит 12-часовой формат
+  
   return /am|pm/i.test(formatted) || parseInt(formatted) < 13 ? '12h' : '24h';
 }
 
@@ -80,7 +80,7 @@ export interface SplitView {
   enabled: boolean;
   leftTabId: string | null;
   rightTabId: string | null;
-  splitRatio: number; // 0.5 = 50/50, 0.3 = 30/70, etc.
+  splitRatio: number; 
 }
 
 export interface Workspace {
@@ -91,7 +91,7 @@ export interface Workspace {
   activeTabId: string;
   tabs: Tab[];
   splitView?: SplitView;
-  tabGroups?: TabGroup[]; // Группы вкладок внутри workspace
+  tabGroups?: TabGroup[]; 
 }
 
 export interface Bookmark {
@@ -111,17 +111,17 @@ export interface HistoryEntry {
 }
 
 export interface Settings {
-  // Поиск
+  
   searchEngine: 'google' | 'duckduckgo' | 'bing';
   
-  // Внешний вид
+  
   theme: 'dark' | 'light' | 'custom';
   accentColor: string;
   fontSize: number;
   fontFamily: 'system' | 'inter' | 'roboto' | 'jetbrains';
   borderRadius: 'none' | 'small' | 'medium' | 'large';
   
-  // Сайдбар
+  
   sidebarPosition: 'left' | 'right';
   sidebarStyle: 'default' | 'compact' | 'minimal';
   sidebarAutoHide: boolean;
@@ -129,14 +129,14 @@ export interface Settings {
   showSidebarWorkspaces: boolean;
   showSidebarNavigation: boolean;
   
-  // Вкладки
+  
   tabPosition: 'top' | 'bottom' | 'left' | 'right';
   tabStyle: 'default' | 'compact' | 'pills';
   showTabPreviews: boolean;
   showTabFavicons: boolean;
   tabCloseButton: 'hover' | 'always' | 'never';
   
-  // Стартовая страница
+  
   startPageBackground: string;
   wallpaperUrl: string;
   wallpaperBlur: number;
@@ -150,24 +150,24 @@ export interface Settings {
   showQuickSitesOnStartPage: boolean;
   quickSitesLayout: 'grid' | 'list' | 'compact';
   
-  // Приватность и безопасность
+  
   adBlockEnabled: boolean;
   trackingProtection: boolean;
   httpsOnly: boolean;
   clearDataOnExit: boolean;
   
-  // DNS-over-HTTPS
+  
   dohEnabled: boolean;
   dohProvider: 'cloudflare' | 'google' | 'quad9' | 'adguard' | 'custom';
   dohCustomUrl: string;
   
-  // Производительность
+  
   hardwareAcceleration: boolean;
   tabSuspension: boolean;
   tabSuspensionTimeout: number;
   preloadPages: boolean;
   
-  // Дополнительно
+  
   showBookmarksBar: boolean;
   readerModeEnabled: boolean;
   smoothScrolling: boolean;
@@ -192,20 +192,20 @@ export interface DetectedBrowser {
   available: boolean;
 }
 
-// Функция для создания дефолтных настроек с системными значениями
+
 export function createDefaultSettings(): Settings {
   return {
-    // Поиск
+    
     searchEngine: 'google',
     
-    // Внешний вид
+    
     theme: 'dark',
     accentColor: '#7c3aed',
     fontSize: 14,
     fontFamily: 'system',
     borderRadius: 'medium',
     
-    // Сайдбар
+    
     sidebarPosition: 'right',
     sidebarStyle: 'default',
     sidebarAutoHide: false,
@@ -213,14 +213,14 @@ export function createDefaultSettings(): Settings {
     showSidebarWorkspaces: true,
     showSidebarNavigation: true,
     
-    // Вкладки
+    
     tabPosition: 'top',
     tabStyle: 'default',
     showTabPreviews: true,
     showTabFavicons: true,
     tabCloseButton: 'hover',
     
-    // Стартовая страница
+    
     startPageBackground: 'gradient',
     wallpaperUrl: '/walpaper1.jpg',
     wallpaperBlur: 0,
@@ -229,29 +229,29 @@ export function createDefaultSettings(): Settings {
     showQuotes: false,
     showTodos: false,
     showClock: true,
-    clockFormat: getSystemTimeFormat(), // Берём из системы
+    clockFormat: getSystemTimeFormat(), 
     showSearchOnStartPage: true,
     showQuickSitesOnStartPage: true,
     quickSitesLayout: 'grid',
     
-    // Приватность и безопасность
+    
     adBlockEnabled: true,
     trackingProtection: true,
     httpsOnly: false,
     clearDataOnExit: false,
     
-    // DNS-over-HTTPS
+    
     dohEnabled: false,
     dohProvider: 'cloudflare',
     dohCustomUrl: '',
     
-    // Производительность
+    
     hardwareAcceleration: true,
     tabSuspension: true,
     tabSuspensionTimeout: 30,
     preloadPages: false,
     
-    // Дополнительно
+    
     showBookmarksBar: true,
     readerModeEnabled: false,
     smoothScrolling: true,
@@ -259,12 +259,12 @@ export function createDefaultSettings(): Settings {
     soundEnabled: true,
     notificationsEnabled: true,
     downloadPath: '',
-    language: getSystemLanguage(), // Берём из системы
+    language: getSystemLanguage(), 
     showWelcomeOnNextLaunch: false,
   };
 }
 
-// Для обратной совместимости - статический объект с fallback значениями
+
 export const defaultSettings: Settings = {
   searchEngine: 'google',
   theme: 'dark',
@@ -351,11 +351,11 @@ declare global {
       onOpenUrl: (callback: (url: string) => void) => () => void;
       exportBookmarks: (bookmarks: Bookmark[]) => Promise<boolean>;
       importBookmarks: () => Promise<Bookmark[] | null>;
-      // Memory management
+      
       freezeTab: (tabId: string) => Promise<boolean>;
       unfreezeTab: (tabId: string) => Promise<boolean>;
       isTabFrozen: (tabId: string) => Promise<boolean>;
-      // Downloads
+      
       getDownloads: () => Promise<Download[]>;
       onDownloadStarted: (callback: (download: Download) => void) => () => void;
       onDownloadUpdate: (callback: (download: Download) => void) => () => void;
@@ -365,24 +365,24 @@ declare global {
       openDownload: (path: string) => Promise<void>;
       showDownloadInFolder: (path: string) => Promise<void>;
       clearCompletedDownloads: () => Promise<void>;
-      // Browser import
+      
       importFromBrowser: (browser: 'chrome' | 'firefox' | 'edge' | 'zen') => Promise<{ bookmarks: Bookmark[], history: HistoryEntry[] } | null>;
       detectBrowsers: () => Promise<DetectedBrowser[]>;
-      // First launch
+      
       isFirstLaunch: () => Promise<boolean>;
       markInitialized: () => Promise<void>;
-      // Auto-update
+      
       checkForUpdates: () => Promise<void>;
       onUpdateAvailable: (callback: (info: any) => void) => () => void;
       onUpdateDownloaded: (callback: () => void) => () => void;
       installUpdate: () => Promise<void>;
-      // Session restore
+      
       saveSession: (sessionData: any) => Promise<boolean>;
       restoreSession: () => Promise<any | null>;
       clearSession: () => Promise<boolean>;
-      // Partition sessions
+      
       getPartitionSession: (partition: string) => Promise<boolean>;
-      // WebView2 commands
+      
       webViewGoBack: (id: string) => Promise<boolean>;
       webViewGoForward: (id: string) => Promise<boolean>;
       webViewReload: (id: string) => Promise<void>;

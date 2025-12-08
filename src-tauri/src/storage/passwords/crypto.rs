@@ -5,8 +5,6 @@ use aes_gcm::{
 use argon2::{password_hash::SaltString, Argon2, PasswordHasher};
 use base64::{engine::general_purpose::STANDARD as BASE64, Engine};
 use rand::RngCore;
-
-/// Derive a 256-bit key from master password using Argon2id
 pub fn derive_key(master_password: &str, salt: &[u8]) -> Result<[u8; 32], String> {
     let argon2 = Argon2::default();
     let salt_string = SaltString::encode_b64(salt).map_err(|e| e.to_string())?;
@@ -22,8 +20,6 @@ pub fn derive_key(master_password: &str, salt: &[u8]) -> Result<[u8; 32], String
     key.copy_from_slice(&hash_bytes[..32]);
     Ok(key)
 }
-
-/// Encrypt password using AES-256-GCM
 pub fn encrypt_password(password: &str, key: &[u8; 32]) -> Result<(String, String), String> {
     let cipher = Aes256Gcm::new_from_slice(key).map_err(|e| e.to_string())?;
 
@@ -37,8 +33,6 @@ pub fn encrypt_password(password: &str, key: &[u8; 32]) -> Result<(String, Strin
 
     Ok((BASE64.encode(&ciphertext), BASE64.encode(&nonce_bytes)))
 }
-
-/// Decrypt password using AES-256-GCM
 pub fn decrypt_password(encrypted: &str, nonce_b64: &str, key: &[u8; 32]) -> Result<String, String> {
     let cipher = Aes256Gcm::new_from_slice(key).map_err(|e| e.to_string())?;
 
@@ -52,8 +46,6 @@ pub fn decrypt_password(encrypted: &str, nonce_b64: &str, key: &[u8; 32]) -> Res
 
     String::from_utf8(plaintext).map_err(|e| e.to_string())
 }
-
-/// Generate a secure random password
 pub fn generate_password(length: usize, include_symbols: bool) -> String {
     let length = length.clamp(8, 128);
 

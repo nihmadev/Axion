@@ -1,4 +1,3 @@
-// Подмодули с частями скрипта
 mod unsupported_sites;
 mod site_detection;
 mod content_finder;
@@ -11,8 +10,6 @@ mod script;
 pub use script::get_reader_mode_script;
 
 use tauri::{AppHandle, Manager};
-
-/// Активация Reader Mode - убирает лишнее со страницы и показывает только контент
 #[tauri::command]
 pub async fn toggle_reader_mode(
     app: AppHandle,

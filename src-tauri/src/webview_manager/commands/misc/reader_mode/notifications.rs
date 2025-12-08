@@ -1,4 +1,3 @@
-/// JavaScript для отображения уведомлений
 pub const NOTIFICATION_STYLES_JS: &str = r#"
     <style>
         #axion-reader-notification {

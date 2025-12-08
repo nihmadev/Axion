@@ -1,4 +1,4 @@
-/* Quick sites / Recent sites */
+
 .recent-sites {
   width: 100%;
   max-width: min(600px, 95%);
@@ -13,7 +13,7 @@
   justify-content: center;
 }
 
-/* Quick sites layout variants */
+
 .recent-sites--list .recent-sites-grid {
   flex-direction: column;
   gap: 8px;
@@ -193,7 +193,7 @@
   max-width: 80px;
 }
 
-/* Rename input */
+
 .recent-site-rename-input {
   width: 80px;
   padding: 4px 8px;
@@ -210,7 +210,7 @@
   box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.3);
 }
 
-/* Responsive */
+
 @media (max-height: 800px) {
   .recent-sites-grid {
     gap: 12px;

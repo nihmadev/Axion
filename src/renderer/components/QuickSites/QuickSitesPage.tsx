@@ -3,16 +3,15 @@ import { useTranslation } from '../../hooks/useTranslation';
 import { Language } from '../../types';
 import '../../styles/components/quicksites-page.css';
 
-// Тип для QuickSite
+
 interface QuickSite {
   name: string;
   url: string;
 }
 
-// Предустановленные популярные сайты
+
 const POPULAR_SITES: QuickSite[] = [
   { name: 'Google', url: 'https://google.com' },
-  { name: 'Pornhub', url: 'https://pornhub.com' }, //idk
   { name: 'YouTube', url: 'https://youtube.com' },
   { name: 'Twitter', url: 'https://twitter.com' },
   { name: 'Reddit', url: 'https://reddit.com' },
@@ -23,7 +22,7 @@ const POPULAR_SITES: QuickSite[] = [
   { name: 'TikTok', url: 'https://tiktok.com' },
   { name: 'Discord', url: 'https://discord.com' },
   { name: 'Twitch', url: 'https://twitch.tv' },
-  { name: 'Spotify', url: 'https://spotify.com' },
+  { name: 'Spotify', url: 'https://open.spotify.com' },
   { name: 'Netflix', url: 'https://netflix.com' },
   { name: 'Amazon', url: 'https://amazon.com' },
   { name: 'Wikipedia', url: 'https://wikipedia.org' },
@@ -37,7 +36,7 @@ const POPULAR_SITES: QuickSite[] = [
   { name: 'Medium', url: 'https://medium.com' },
   { name: 'Stack Overflow', url: 'https://stackoverflow.com' },
   { name: 'VK', url: 'https://vk.com' },
-  { name: 'Яндекс', url: 'https://ya.ru' },
+  { name: 'Яндекс', url: 'https://yandex.ru' },
   { name: 'Mail.ru', url: 'https://mail.ru' },
   { name: 'Habr', url: 'https://habr.com' },
 ];
@@ -45,14 +44,14 @@ const POPULAR_SITES: QuickSite[] = [
 const QUICK_SITES_STORAGE_KEY = 'axion-quick-sites';
 const QUICK_SITES_CHANGE_EVENT = 'quick-sites-changed';
 
-// Дефолтные сайты (должны совпадать с ZenSidebar/constants.ts)
+
 const DEFAULT_QUICK_SITES: QuickSite[] = [
   { name: 'Google', url: 'https://google.com' },
   { name: 'Twitter', url: 'https://twitter.com' },
   { name: 'Opera', url: 'https://opera.com' },
   { name: 'Reddit', url: 'https://reddit.com' },
   { name: 'GitHub', url: 'https://github.com' },
-  { name: 'YouTube', url: 'https://youtube.com'},
+  { name: 'YouTube', url: 'https://youtube.com' },
 ];
 
 interface QuickSitesPageProps {
@@ -67,7 +66,7 @@ const QuickSitesPage: React.FC<QuickSitesPageProps> = ({ language, onNavigate })
   const [customName, setCustomName] = useState('');
   const [showCustomForm, setShowCustomForm] = useState(false);
   
-  // Загрузка сохраненных сайтов
+  
   const [savedSites, setSavedSites] = useState<QuickSite[]>(() => {
     try {
       const stored = localStorage.getItem(QUICK_SITES_STORAGE_KEY);
@@ -80,19 +79,19 @@ const QuickSitesPage: React.FC<QuickSitesPageProps> = ({ language, onNavigate })
     return DEFAULT_QUICK_SITES;
   });
 
-  // Сохранение в localStorage и отправка события синхронизации
+  
   const saveSites = useCallback((sites: QuickSite[]) => {
     try {
       localStorage.setItem(QUICK_SITES_STORAGE_KEY, JSON.stringify(sites));
       setSavedSites(sites);
-      // Dispatch custom event for same-window sync with sidebar
+      
       window.dispatchEvent(new CustomEvent(QUICK_SITES_CHANGE_EVENT, { detail: sites }));
     } catch (e) {
       console.error('Failed to save quick sites:', e);
     }
   }, []);
 
-  // Слушаем изменения от других компонентов (sidebar)
+  
   useEffect(() => {
     const handleQuickSitesChange = (e: CustomEvent<QuickSite[]>) => {
       setSavedSites(e.detail);
@@ -103,7 +102,7 @@ const QuickSitesPage: React.FC<QuickSitesPageProps> = ({ language, onNavigate })
         try {
           setSavedSites(JSON.parse(e.newValue));
         } catch {
-          // ignore
+          
         }
       }
     };
@@ -117,7 +116,7 @@ const QuickSitesPage: React.FC<QuickSitesPageProps> = ({ language, onNavigate })
     };
   }, []);
 
-  // Проверка, добавлен ли сайт
+  
   const isSiteAdded = useCallback((url: string) => {
     try {
       const hostname = new URL(url).hostname;
@@ -133,13 +132,13 @@ const QuickSitesPage: React.FC<QuickSitesPageProps> = ({ language, onNavigate })
     }
   }, [savedSites]);
 
-  // Добавить сайт
+  
   const addSite = useCallback((site: QuickSite) => {
     if (isSiteAdded(site.url)) return;
     saveSites([...savedSites, site]);
   }, [savedSites, saveSites, isSiteAdded]);
 
-  // Удалить сайт
+  
   const removeSite = useCallback((url: string) => {
     try {
       const hostname = new URL(url).hostname;
@@ -151,11 +150,11 @@ const QuickSitesPage: React.FC<QuickSitesPageProps> = ({ language, onNavigate })
         }
       }));
     } catch {
-      // ignore
+      
     }
   }, [savedSites, saveSites]);
 
-  // Добавить кастомный сайт
+  
   const handleAddCustomSite = () => {
     if (!customUrl.trim()) return;
     
@@ -165,7 +164,7 @@ const QuickSitesPage: React.FC<QuickSitesPageProps> = ({ language, onNavigate })
     }
 
     try {
-      new URL(url); // Проверка валидности
+      new URL(url); 
     } catch {
       return;
     }
@@ -187,17 +186,17 @@ const QuickSitesPage: React.FC<QuickSitesPageProps> = ({ language, onNavigate })
     setShowCustomForm(false);
   };
 
-  // Фильтрация популярных сайтов
+  
   const filteredPopularSites = POPULAR_SITES.filter(site =>
     site.name.toLowerCase().includes(searchFilter.toLowerCase()) ||
     site.url.toLowerCase().includes(searchFilter.toLowerCase())
   );
 
-  // Получить favicon URL
+  
   const getFaviconUrl = (url: string) => {
     try {
       const hostname = new URL(url).hostname;
-      return `https://www.google.com/s2/favicons?domain=${hostname}&sz=64`;
+      return `https://${hostname}/favicon.ico`;
     } catch {
       return '';
     }
@@ -209,7 +208,7 @@ const QuickSitesPage: React.FC<QuickSitesPageProps> = ({ language, onNavigate })
         <h1>{t.quickSitesPage.title}</h1>
       </div>
 
-      {/* Поиск и добавление */}
+      {}
       <div className="quicksites-page-actions">
         <div className="quicksites-search-box">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -234,7 +233,7 @@ const QuickSitesPage: React.FC<QuickSitesPageProps> = ({ language, onNavigate })
         </button>
       </div>
 
-      {/* Форма добавления кастомного сайта */}
+      {}
       {showCustomForm && (
         <div className="quicksites-custom-form">
           <div className="quicksites-custom-form-row">
@@ -263,7 +262,7 @@ const QuickSitesPage: React.FC<QuickSitesPageProps> = ({ language, onNavigate })
         </div>
       )}
 
-      {/* Добавленные сайты */}
+      {}
       {savedSites.length > 0 && (
         <div className="quicksites-section">
           <h2 className="quicksites-section-title">{t.quickSitesPage.addedSites}</h2>
@@ -308,7 +307,7 @@ const QuickSitesPage: React.FC<QuickSitesPageProps> = ({ language, onNavigate })
         </div>
       )}
 
-      {/* Популярные сайты */}
+      {}
       <div className="quicksites-section">
         <h2 className="quicksites-section-title">{t.quickSitesPage.popularSites}</h2>
         <div className="quicksites-grid">

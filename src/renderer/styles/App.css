@@ -1,15 +1,13 @@
-/* ==============================================
-   Axion Browser - Main Stylesheet
-   ============================================== */
 
-/* Import global styles and variables */
+
+
 @import './global.css';
 @import './animations.css';
 
-/* Import layout styles */
+
 @import './layout/index.css';
 
-/* Import component styles */
+
 @import './components/address-bar.css';
 @import './components/tab-bar.css';
 @import './components/title-bar.css';
@@ -25,8 +23,8 @@
 @import './components/banners.css';
 @import './components/split-view.css';
 
-/* Import sidebar styles */
+
 @import './sidebar/index.css';
 
-/* Import theme styles */
+
 @import './themes/index.css';

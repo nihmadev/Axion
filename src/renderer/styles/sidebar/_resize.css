@@ -1,6 +1,4 @@
-/* ==============================================
-   ZenSidebar - Resize Handle
-   ============================================== */
+
 
 .zen-sidebar__resize-handle {
   position: absolute;
@@ -12,7 +10,7 @@
   transition: background 0.2s ease;
 }
 
-/* Position-specific resize handle */
+
 .zen-sidebar--right .zen-sidebar__resize-handle {
   left: 0;
 }

@@ -1,8 +1,6 @@
-/* ============================================== 
-   Layout - Light Theme
-   ============================================== */
 
-/* Overlay for light theme - less dimming */
+
+
 .app[data-theme="light"]::before {
   background: rgba(255, 255, 255, var(--wallpaper-dim, 0.15));
 }
@@ -11,7 +9,7 @@
   background: rgba(255, 255, 255, 0.5);
 }
 
-/* Main area */
+
 .app[data-theme="light"] .main-area {
   background: rgba(250, 251, 252, 0.92);
   border-color: rgba(0, 0, 0, 0.08);
@@ -20,9 +18,7 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
-/* ============================================== 
-   Webview Container - Light Theme
-   ============================================== */
+
 
 .app[data-theme="light"] .webview-container {
   background: #fafbfc;

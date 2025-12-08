@@ -1,4 +1,4 @@
-/* Download Indicator */
+
 .download-indicator {
   position: relative;
   display: flex;
@@ -85,7 +85,7 @@
   justify-content: center;
 }
 
-/* Flying animation */
+
 .download-flying-icon {
   position: fixed;
   z-index: 10000;
@@ -139,7 +139,7 @@
   50% { transform: translate(-50%, -50%) scale(1.5); opacity: 0.1; }
 }
 
-/* Popup */
+
 .download-popup-overlay {
   position: fixed;
   inset: 0;

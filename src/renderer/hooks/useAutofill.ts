@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+﻿import { useState, useEffect, useCallback, useRef } from 'react';
 import { listen } from '@tauri-apps/api/event';
 import { invoke } from '@tauri-apps/api/core';
 
@@ -25,13 +25,13 @@ export function useAutofill({ activeTabId }: UseAutofillProps) {
   const injectedTabs = useRef<Set<string>>(new Set());
   const savedCredentials = useRef<Map<string, { username: string; password: string }>>(new Map());
 
-  // Inject autofill script into WebView
+  
   const injectAutofillScript = useCallback(async (tabId: string) => {
     if (injectedTabs.current.has(tabId)) return;
     
     try {
-      // Always inject script - it handles save password prompts even without vault
-      // Use inline script directly for reliability (fetch may fail in some contexts)
+      
+      
       await invoke('execute_script', { 
         id: tabId, 
         script: getInlineAutofillScript() 
@@ -43,7 +43,7 @@ export function useAutofill({ activeTabId }: UseAutofillProps) {
     }
   }, []);
 
-  // Fill credentials in WebView
+  
   const fillCredentials = useCallback(async (tabId: string, username: string, password: string) => {
     try {
       const script = `
@@ -57,7 +57,7 @@ export function useAutofill({ activeTabId }: UseAutofillProps) {
     }
   }, []);
 
-  // Handle autofill messages from WebView
+  
   useEffect(() => {
     const handleAutofillMessage = (event: any) => {
       const { id, message: jsonStr } = event.payload || {};
@@ -67,21 +67,21 @@ export function useAutofill({ activeTabId }: UseAutofillProps) {
         const message = JSON.parse(jsonStr);
         
         if (message.type === 'request_autofill') {
-          // Show autofill popup
+          
           setAutofillRequest({
             tabId: id,
             url: message.data.url,
             position: { x: window.innerWidth / 2 - 140, y: 100 },
           });
         } else if (message.type === 'credentials_submitted') {
-          // Check if we already saved these credentials recently
+          
           const key = `${message.data.url}:${message.data.username}`;
           const existing = savedCredentials.current.get(key);
           if (existing && existing.password === message.data.password) {
-            return; // Already saved
+            return; 
           }
           
-          // Show save password prompt
+          
           setSavePasswordRequest({
             tabId: id,
             url: message.data.url,
@@ -89,11 +89,11 @@ export function useAutofill({ activeTabId }: UseAutofillProps) {
             password: message.data.password,
           });
         } else if (message.type === 'form_detected') {
-          // Form detected, inject script if not already
+          
           injectAutofillScript(id);
         }
       } catch (err) {
-        // Not a valid autofill message
+        
       }
     };
 
@@ -104,10 +104,10 @@ export function useAutofill({ activeTabId }: UseAutofillProps) {
     };
   }, [injectAutofillScript]);
 
-  // Inject script when tab becomes active
+  
   useEffect(() => {
     if (activeTabId) {
-      // Delay injection to ensure WebView is ready
+      
       const timer = setTimeout(() => {
         injectAutofillScript(activeTabId);
       }, 1000);
@@ -115,17 +115,17 @@ export function useAutofill({ activeTabId }: UseAutofillProps) {
     }
   }, [activeTabId, injectAutofillScript]);
 
-  // Close autofill popup
+  
   const closeAutofillPopup = useCallback(() => {
     setAutofillRequest(null);
   }, []);
 
-  // Close save password prompt
+  
   const closeSavePasswordPrompt = useCallback(() => {
     setSavePasswordRequest(null);
   }, []);
 
-  // Mark credentials as saved
+  
   const markCredentialsSaved = useCallback(() => {
     if (savePasswordRequest) {
       const key = `${savePasswordRequest.url}:${savePasswordRequest.username}`;
@@ -137,7 +137,7 @@ export function useAutofill({ activeTabId }: UseAutofillProps) {
     setSavePasswordRequest(null);
   }, [savePasswordRequest]);
 
-  // Clear injected tabs cache when tab is closed
+  
   const clearTabCache = useCallback((tabId: string) => {
     injectedTabs.current.delete(tabId);
   }, []);
@@ -154,7 +154,7 @@ export function useAutofill({ activeTabId }: UseAutofillProps) {
   };
 }
 
-// Inline autofill script (fallback)
+
 function getInlineAutofillScript(): string {
   return `
 (function() {
@@ -259,7 +259,7 @@ function getInlineAutofillScript(): string {
 
     function captureCredentials(form) {
         const passwordFields = form.querySelectorAll('input[type="password"]');
-        const passwordField = passwordFields[0]; // First password field (not confirm)
+        const passwordField = passwordFields[0]; 
         if (!passwordField || !passwordField.value) return null;
         const usernameField = findUsernameField(passwordField);
         if (!usernameField || !usernameField.value) return null;

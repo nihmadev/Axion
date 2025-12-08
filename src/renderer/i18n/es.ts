@@ -1,4 +1,4 @@
-import type { Translations } from './types';
+﻿import type { Translations } from './types';
 
 export const es: Translations = {
   settings: {
@@ -13,7 +13,7 @@ export const es: Translations = {
       performance: 'Rendimiento',
       advanced: 'Avanzado',
     },
-    // Appearance
+    
     search: 'Búsqueda',
     searchEngine: 'Motor de búsqueda',
     searchEngineDesc: 'Elige el motor de búsqueda para la barra de direcciones',
@@ -36,7 +36,7 @@ export const es: Translations = {
     radiusLarge: 'Grande',
     animations: 'Animaciones',
     animationsDesc: 'Habilitar animaciones fluidas de la interfaz',
-    // Sidebar
+    
     position: 'Posición',
     sidebarPosition: 'Posición de la barra lateral',
     sidebarPositionDesc: 'Elige el lado de la pantalla para la barra lateral',
@@ -56,7 +56,7 @@ export const es: Translations = {
     workspacesDesc: 'Mostrar lista de espacios de trabajo',
     navigation: 'Navegación',
     navigationDesc: 'Mostrar botones de navegación',
-    // Tabs
+    
     tabsAppearance: 'Apariencia de pestañas',
     tabStyle: 'Estilo de pestañas',
     tabStyleDesc: 'Elige la apariencia de las pestañas',
@@ -72,7 +72,7 @@ export const es: Translations = {
     closeNever: 'Nunca',
     tabPreviews: 'Vista previa de pestañas',
     tabPreviewsDesc: 'Mostrar miniaturas al pasar el cursor',
-    // Start page
+    
     background: 'Fondo',
     wallpaper: 'Fondo de pantalla',
     wallpaperDesc: 'Elige la imagen de fondo',
@@ -96,7 +96,7 @@ export const es: Translations = {
     viewGrid: 'Cuadrícula',
     viewList: 'Lista',
     viewCompact: 'Compacto',
-    // Privacy
+    
     protection: 'Protección',
     adBlock: 'Bloqueador de anuncios',
     adBlockDesc: 'Bloquear anuncios y rastreadores',
@@ -107,7 +107,7 @@ export const es: Translations = {
     data: 'Datos',
     clearOnExit: 'Limpiar al salir',
     clearOnExitDesc: 'Eliminar historial y caché al cerrar el navegador',
-    // DNS-over-HTTPS
+    
     dnsOverHttps: 'DNS-over-HTTPS',
     dohEnabled: 'Habilitar DoH',
     dohEnabledDesc: 'Cifrar consultas DNS para mayor privacidad',
@@ -120,7 +120,7 @@ export const es: Translations = {
     dohProviderQuad9: 'Quad9 (9.9.9.9)',
     dohProviderAdguard: 'AdGuard DNS',
     dohProviderCustom: 'Servidor personalizado',
-    // Performance
+    
     acceleration: 'Aceleración',
     hardwareAcceleration: 'Aceleración por hardware',
     hardwareAccelerationDesc: 'Usar GPU para renderizado',
@@ -133,7 +133,7 @@ export const es: Translations = {
     tabSuspensionDesc: 'Descargar pestañas inactivas de la memoria',
     suspensionTimeout: 'Tiempo de suspensión',
     suspensionTimeoutDesc: 'minutos',
-    // Advanced
+    
     interface: 'Interfaz',
     bookmarksBar: 'Barra de marcadores',
     bookmarksBarDesc: 'Mostrar barra de marcadores',

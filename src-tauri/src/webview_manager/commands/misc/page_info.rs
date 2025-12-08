@@ -1,9 +1,6 @@
-//! Команды обновления информации о странице
 
 use tauri::{AppHandle, Manager, Emitter};
 use crate::webview_manager::types::WebViewUpdateEvent;
-
-/// Обновить информацию о странице (вызывается из JavaScript в WebView)
 #[tauri::command]
 pub async fn update_page_info(
     app: AppHandle,
@@ -12,7 +9,6 @@ pub async fn update_page_info(
     title: String,
     favicon: Option<String>,
 ) -> Result<(), String> {
-    // Обновляем в менеджере
     {
         let state = app.state::<crate::AppState>();
         if let Ok(mut manager) = state.webview_manager.lock() {
@@ -24,7 +20,6 @@ pub async fn update_page_info(
         };
     }
     
-    // Отправляем событие
     let _ = app.emit("webview-url-changed", WebViewUpdateEvent {
         id,
         url: Some(url),

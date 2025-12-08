@@ -1,7 +1,5 @@
-// Workspace icons
 export { WORKSPACE_ICONS } from './workspaceIcons';
 
-// Navigation icons
 export {
   BackIcon,
   ForwardIcon,
@@ -12,7 +10,6 @@ export {
   CloseIcon,
 } from './navigationIcons';
 
-// Sidebar icons
 export {
   SettingsIcon,
   ProfileIcon,
@@ -25,7 +22,6 @@ export {
   ColorPickerIcon,
 } from './sidebarIcons';
 
-// Tab icons
 export {
   HistoryTabIcon,
   DownloadsTabIcon,
@@ -34,7 +30,6 @@ export {
   QuickSitesTabIcon,
 } from './tabIcons';
 
-// Window control icons
 export {
   MinusIcon,
   MaximizeIcon,
@@ -44,7 +39,6 @@ export {
   SquareIcon,
 } from './windowIcons';
 
-// File type icons
 export {
   ImageFileIcon,
   VideoFileIcon,
@@ -58,7 +52,6 @@ export {
   DownloadFileIcon,
 } from './fileIcons';
 
-// Weather icons
 export {
   SunIcon,
   CloudSunIcon,
@@ -70,7 +63,6 @@ export {
   CloudLightningIcon,
 } from './weatherIcons';
 
-// Browser icons
 export {
   ChromeIcon,
   EdgeIcon,
@@ -78,7 +70,6 @@ export {
   ZenBrowserIcon,
 } from './browserIcons';
 
-// Notification/toast icons
 export {
   CheckCircleIcon,
   AlertTriangleIcon,
@@ -86,7 +77,6 @@ export {
   InfoIcon,
 } from './notificationIcons';
 
-// Miscellaneous icons
 export {
   SnowflakeIcon,
   FolderIcon,

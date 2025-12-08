@@ -16,9 +16,7 @@ export const useTabMemory = ({
 }: UseTabMemoryOptions) => {
   
   const freezeTab = useCallback((tabId: string) => {
-    // Удаляем WebView из фронтенд кэша
     removeWebViewFromCache(tabId);
-    // Вызываем бэкенд для закрытия нативного WebView
     window.electronAPI.freezeTab(tabId);
     setWorkspaces(prev => prev.map(ws => ({
       ...ws,
@@ -34,7 +32,6 @@ export const useTabMemory = ({
     })));
   }, [setWorkspaces]);
 
-  // Автоматическая заморозка неактивных вкладок для экономии памяти
   useEffect(() => {
     const checkAndFreezeTabs = () => {
       const now = Date.now();
@@ -46,12 +43,10 @@ export const useTabMemory = ({
         }))
       );
       
-      // Сортируем по времени последней активности
       const sortedTabs = allTabs
         .filter(t => t.url && !t.isFrozen && !t.isActive)
         .sort((a, b) => (a.lastActiveAt || 0) - (b.lastActiveAt || 0));
       
-      // Замораживаем вкладки старше TAB_FREEZE_TIMEOUT или если превышен лимит
       for (const tab of sortedTabs) {
         const inactiveTime = now - (tab.lastActiveAt || 0);
         const activeTabsCount = allTabs.filter(t => !t.isFrozen && t.url).length;
@@ -62,7 +57,7 @@ export const useTabMemory = ({
       }
     };
 
-    const interval = setInterval(checkAndFreezeTabs, 60000); // Проверяем каждую минуту
+    const interval = setInterval(checkAndFreezeTabs, 60000);
     return () => clearInterval(interval);
   }, [workspaces, activeWorkspaceId, freezeTab]);
 

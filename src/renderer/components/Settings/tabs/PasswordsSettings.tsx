@@ -25,19 +25,19 @@ export const PasswordsSettings: React.FC<SettingsTabProps> = ({ t }) => {
   const [showChangePassword, setShowChangePassword] = useState(false);
   const [visiblePasswords, setVisiblePasswords] = useState<Set<string>>(new Set());
 
-  // New password form
+  
   const [newUrl, setNewUrl] = useState('');
   const [newUsername, setNewUsername] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [generatedLength, setGeneratedLength] = useState(16);
   const [includeSymbols, setIncludeSymbols] = useState(true);
 
-  // Change password form
+  
   const [oldMasterPassword, setOldMasterPassword] = useState('');
   const [newMasterPassword, setNewMasterPassword] = useState('');
   const [confirmNewMasterPassword, setConfirmNewMasterPassword] = useState('');
 
-  // Check vault state on mount
+  
   useEffect(() => {
     checkVaultState();
   }, []);
@@ -100,7 +100,7 @@ export const PasswordsSettings: React.FC<SettingsTabProps> = ({ t }) => {
       loadPasswords();
     } catch (err: any) {
       const errorMessage = err.toString();
-      // Check if vault was deleted due to too many attempts
+      
       if (errorMessage.includes('deleted')) {
         setVaultState('no-vault');
         setError(t.passwords?.vaultDeleted || 'Vault has been deleted due to too many failed attempts.');
@@ -234,7 +234,7 @@ export const PasswordsSettings: React.FC<SettingsTabProps> = ({ t }) => {
     setNewPassword('');
   };
 
-  // Render based on vault state
+  
   if (vaultState === 'loading') {
     return (
       <div className="passwords-loading">
@@ -315,7 +315,7 @@ export const PasswordsSettings: React.FC<SettingsTabProps> = ({ t }) => {
     );
   }
 
-  // Unlocked state - show password list
+  
   return (
     <div className="passwords-manager">
       <div className="passwords-header">
@@ -368,7 +368,7 @@ export const PasswordsSettings: React.FC<SettingsTabProps> = ({ t }) => {
             <div key={password.id} className="password-item">
               <div className="password-item-icon">
                 <img 
-                  src={`https://www.google.com/s2/favicons?domain=${new URL(password.url.startsWith('http') ? password.url : `https://${password.url}`).hostname}&sz=32`}
+                  src={`https://${new URL(password.url).hostname}/favicon.ico`}
                   alt=""
                   onError={(e) => {
                     (e.target as HTMLImageElement).style.display = 'none';
@@ -379,7 +379,7 @@ export const PasswordsSettings: React.FC<SettingsTabProps> = ({ t }) => {
                 <div className="password-item-url">{password.url}</div>
                 <div className="password-item-username">{password.username}</div>
                 <div className="password-item-password">
-                  {visiblePasswords.has(password.id) ? password.password : '••••••••'}
+                  {visiblePasswords.has(password.id) ? password.password : '��������'}
                 </div>
               </div>
               <div className="password-item-actions">
@@ -446,7 +446,7 @@ export const PasswordsSettings: React.FC<SettingsTabProps> = ({ t }) => {
         )}
       </div>
 
-      {/* Add/Edit Modal */}
+      {}
       {(showAddModal || editingPassword) && (
         <div className="passwords-modal-overlay" onClick={() => { setShowAddModal(false); setEditingPassword(null); resetForm(); }}>
           <div className="passwords-modal" onClick={(e) => e.stopPropagation()}>
@@ -521,7 +521,7 @@ export const PasswordsSettings: React.FC<SettingsTabProps> = ({ t }) => {
         </div>
       )}
 
-      {/* Change Master Password Modal */}
+      {}
       {showChangePassword && (
         <div className="passwords-modal-overlay" onClick={() => setShowChangePassword(false)}>
           <div className="passwords-modal" onClick={(e) => e.stopPropagation()}>

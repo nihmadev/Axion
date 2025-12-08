@@ -3,7 +3,7 @@
 @import '../components/weather-widget.css';
 @import '../components/clock-widget.css';
 
-/* Start page main layout */
+
 .start-page {
   position: relative;
   height: 100%;
@@ -26,50 +26,50 @@
   z-index: 1;
 }
 
-/* Position content above overlay */
+
 .start-page > *:not(.start-page-overlay) {
   position: relative;
   z-index: 2;
 }
 
-/* Search container wrapper - центрирует контейнер */
+
 .search-container-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-  pointer-events: none; /* чтобы не мешал кликам */
+  pointer-events: none; 
 }
 
 .search-container-wrapper > * {
   pointer-events: auto;
 }
 
-/* Search container positioning */
+
 .start-page .search-container {
-  min-width: 600px;     /* минимальная ширина */
-  max-width: 900px;     /* опционально, как у тебя */
+  min-width: 600px;     
+  max-width: 900px;     
   display: flex;
   flex-direction: column;
   gap: 20px;
   margin-bottom: 40px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   
-  /* Важно: выравнивание внутри — по центру */
+  
   margin-left: auto;
   margin-right: auto;
 }
 
-/* Clock widget positioning */
+
 .start-page .clock-widget {
   text-align: center;
   margin-bottom: 32px;
   animation: fadeIn 0.5s ease;
 }
 
-/* Weather widget positioning - inherits base styles from weather-widget.css */
 
-/* Recent sites positioning */
+
+
 .start-page .recent-sites {
   width: 100%;
   max-width: min(800px, 95%);
@@ -78,7 +78,7 @@
   margin-top: 20px;
 }
 
-/* Responsive adjustments */
+
 @media (max-height: 900px) {
   .start-page .search-container {
     margin-bottom: 32px;

@@ -15,12 +15,12 @@ export const QuickSites: React.FC<QuickSitesProps> = ({ onSiteClick, onOpenQuick
     toggleEditMode,
   } = useQuickSites();
 
-  // Открыть страницу управления быстрыми сайтами
+  
   const handleOpenQuickSitesPage = () => {
     if (onOpenQuickSitesPage) {
       onOpenQuickSitesPage();
     } else {
-      // Fallback: navigate to quicksites page
+      
       onSiteClick(INTERNAL_URLS.quicksites);
     }
   };
@@ -60,11 +60,11 @@ export const QuickSites: React.FC<QuickSitesProps> = ({ onSiteClick, onOpenQuick
   return (
     <>
       <div className={`zen-sidebar__quick-sites ${isEditMode ? 'zen-sidebar__quick-sites--edit-mode' : ''}`}>
-        {/* Edit mode toggle button */}
+        {}
         <button 
           className={`zen-sidebar__quick-sites-edit-btn ${isEditMode ? 'zen-sidebar__quick-sites-edit-btn--active' : ''}`}
           onClick={toggleEditMode}
-          title={isEditMode ? 'Готово' : 'Редактировать'}
+          title={isEditMode ? '������' : '�������������'}
         >
           {isEditMode ? (
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
@@ -77,7 +77,7 @@ export const QuickSites: React.FC<QuickSitesProps> = ({ onSiteClick, onOpenQuick
           )}
         </button>
 
-        {/* Sites grid */}
+        {}
         {sites.map((site, idx) => (
           <div
             key={`${site.url}-${idx}`}
@@ -93,7 +93,7 @@ export const QuickSites: React.FC<QuickSitesProps> = ({ onSiteClick, onOpenQuick
               title={site.name}
             >
               <img 
-                src={`https://www.google.com/s2/favicons?domain=${new URL(site.url).hostname}&sz=32`} 
+                src={`https://${new URL(site.url).hostname}/favicon.ico`}
                 alt={site.name}
                 onError={(e) => {
                   e.currentTarget.style.display = 'none';
@@ -101,12 +101,12 @@ export const QuickSites: React.FC<QuickSitesProps> = ({ onSiteClick, onOpenQuick
               />
             </button>
             
-            {/* Remove button */}
+            {}
             {isEditMode && (
               <button 
                 className="zen-sidebar__quick-site-remove"
                 onClick={(e) => handleRemove(e, idx)}
-                title="Удалить"
+                title="�������"
               >
                 <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
                   <path d="M1 1L7 7M1 7L7 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
@@ -116,12 +116,12 @@ export const QuickSites: React.FC<QuickSitesProps> = ({ onSiteClick, onOpenQuick
           </div>
         ))}
 
-        {/* Add new site button - opens QuickSites page */}
+        {}
         <div className="zen-sidebar__quick-site-wrapper">
           <button
             className="zen-sidebar__quick-site zen-sidebar__quick-site--add"
             onClick={handleOpenQuickSitesPage}
-            title="Управление быстрыми сайтами"
+            title="���������� �������� �������"
           >
             <div className="zen-sidebar__quick-site-add-icon">
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none">

@@ -1,4 +1,4 @@
-import React, { useRef, useMemo } from 'react';
+﻿import React, { useRef, useMemo } from 'react';
 import { ZenSidebarProps } from './types';
 import { DEFAULT_SIDEBAR_WIDTH } from './constants';
 import { useWorkspaceEdit, useContextMenu, useSidebarResize } from './hooks';
@@ -52,7 +52,7 @@ const ZenSidebar: React.FC<ZenSidebarProps> = ({
   splitView,
   onCloseSplitView,
   language,
-  // Tab Groups
+  
   tabGroups,
   onCreateTabGroup,
   onToggleTabGroupCollapsed,
@@ -64,13 +64,13 @@ const ZenSidebar: React.FC<ZenSidebarProps> = ({
 }) => {
   const sidebarRef = useRef<HTMLDivElement>(null);
   
-  // Get active workspace accent color
+  
   const activeWorkspaceColor = useMemo(() => {
     const activeWs = workspaces.find(ws => ws.id === activeWorkspaceId);
     return activeWs?.color;
   }, [workspaces, activeWorkspaceId]);
   
-  // Custom hooks
+  
   const workspaceEdit = useWorkspaceEdit();
   const contextMenu = useContextMenu(sidebarRef);
   const { startResizing } = useSidebarResize(position, onSidebarWidthChange);
@@ -87,7 +87,7 @@ const ZenSidebar: React.FC<ZenSidebarProps> = ({
     `zen-sidebar--${style}`,
   ].join(' ');
 
-  // Определяем ширину в зависимости от стиля
+  
   const getSidebarWidth = () => {
     if (style === 'minimal') return '56px';
     return `${sidebarWidth}px`;

@@ -1,19 +1,12 @@
-// Axion Page Observer Script
-// Отслеживает изменения URL, title и favicon на странице
-// и отправляет их в Rust через специальный title-based IPC
 
 (function() {
-    // Избегаем повторной инициализации
     if (window.__AXION_OBSERVER_INITIALIZED__) return 'already_initialized';
     window.__AXION_OBSERVER_INITIALIZED__ = true;
     
-    // Флаг для предотвращения рекурсии при изменении title
     let isSendingData = false;
     let pendingSend = null;
     
-    // Функция для получения favicon
     function getFavicon() {
-        // Приоритет: apple-touch-icon > icon > shortcut icon > default
         const selectors = [
             'link[rel="apple-touch-icon"]',
             'link[rel="apple-touch-icon-precomposed"]',
@@ -33,7 +26,6 @@
             }
         }
         
-        // Fallback: /favicon.ico
         try {
             return new URL('/favicon.ico', window.location.origin).href;
         } catch {
@@ -41,7 +33,6 @@
         }
     }
     
-    // Функция для получения Open Graph данных
     function getOpenGraphData() {
         const ogTitle = document.querySelector('meta[property="og:title"]');
         const ogImage = document.querySelector('meta[property="og:image"]');
@@ -54,9 +45,7 @@
         };
     }
     
-    // Функция для получения лучшего title
     function getBestTitle() {
-        // Приоритет: document.title > og:title > og:site_name > hostname
         const docTitle = document.title?.trim();
         if (docTitle && docTitle.length > 0) {
             return docTitle;
@@ -78,34 +67,25 @@
     let lastFavicon = '';
     let lastSentData = '';
     
-    // Отправляет данные в Rust через специальный title
-    // Формат: __AXION_IPC__:{"url":"...","title":"...","favicon":"..."}
     function sendToRust(url, title, favicon) {
         const data = JSON.stringify({ url, title, favicon });
         
-        // Не отправляем если данные не изменились
         if (data === lastSentData) return;
         lastSentData = data;
         
-        // Если уже отправляем - откладываем
         if (isSendingData) {
             pendingSend = { url, title, favicon };
             return;
         }
         
-        // Используем title как IPC канал
         isSendingData = true;
         const originalTitle = document.title;
         document.title = '__AXION_IPC__:' + data;
         
-        // Восстанавливаем оригинальный title через setTimeout
-        // Используем 50ms чтобы гарантировать что Tauri успеет получить событие
-        // on_document_title_changed работает синхронно, но нужно время на доставку
         setTimeout(() => {
-            document.title = originalTitle || title; // Используем реальный title если original пустой
+            document.title = originalTitle || title;
             isSendingData = false;
             
-            // Если были отложенные обновления, отправляем их
             if (pendingSend) {
                 const pending = pendingSend;
                 pendingSend = null;
@@ -115,7 +95,6 @@
     }
     
     function updatePageInfo() {
-        // Игнорируем изменения во время отправки данных
         if (isSendingData) {
             return;
         }
@@ -124,7 +103,6 @@
         const currentTitle = getBestTitle();
         const currentFavicon = getFavicon();
         
-        // Проверяем изменения
         const urlChanged = currentUrl !== lastUrl;
         const titleChanged = currentTitle !== lastTitle;
         const faviconChanged = currentFavicon !== lastFavicon;
@@ -134,7 +112,6 @@
             lastTitle = currentTitle;
             lastFavicon = currentFavicon;
             
-            // Сохраняем в глобальную переменную для чтения из Rust
             window.__AXION_PAGE_INFO__ = {
                 url: currentUrl,
                 title: currentTitle,
@@ -147,12 +124,10 @@
                 }
             };
             
-            // Отправляем данные в Rust
             sendToRust(currentUrl, currentTitle, currentFavicon);
         }
     }
     
-    // Отслеживаем изменения title через MutationObserver
     const titleObserver = new MutationObserver(updatePageInfo);
     
     function observeTitle() {
@@ -166,7 +141,6 @@
         }
     }
     
-    // Отслеживаем изменения favicon
     const headObserver = new MutationObserver((mutations) => {
         for (const mutation of mutations) {
             if (mutation.type === 'childList') {
@@ -188,7 +162,6 @@
         }
     }
     
-    // Перехватываем History API
     const originalPushState = history.pushState;
     const originalReplaceState = history.replaceState;
     
@@ -202,18 +175,15 @@
         setTimeout(updatePageInfo, 0);
     };
     
-    // События навигации
     window.addEventListener('popstate', () => setTimeout(updatePageInfo, 0));
     window.addEventListener('hashchange', updatePageInfo);
     
-    // Событие загрузки
     window.addEventListener('load', () => {
         observeTitle();
         observeHead();
         updatePageInfo();
     });
     
-    // Событие DOMContentLoaded
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => {
             observeTitle();
@@ -225,22 +195,16 @@
         observeHead();
     }
     
-    // Периодическая проверка как fallback (для SPA)
-    // Увеличен интервал до 1 секунды для экономии памяти
     setInterval(updatePageInfo, 1000);
     
-    // Отслеживаем клики по ссылкам (SPA часто навигируются через click)
     document.addEventListener('click', (e) => {
-        // Проверяем после небольшой задержки (дать время на навигацию)
         setTimeout(updatePageInfo, 150);
     }, true);
     
-    // Отслеживаем submit форм
     document.addEventListener('submit', () => {
         setTimeout(updatePageInfo, 200);
     }, true);
     
-    // Начальное обновление
     updatePageInfo();
     setTimeout(updatePageInfo, 300);
     

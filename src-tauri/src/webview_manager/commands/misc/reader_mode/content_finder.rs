@@ -1,6 +1,4 @@
-/// JavaScript для поиска основного контента на странице
 pub const CONTENT_FINDER_JS: &str = r#"
-    // Функция для подсчёта текстовой плотности элемента
     function getTextDensity(el) {
         const text = el.innerText || '';
         const links = el.querySelectorAll('a');
@@ -11,12 +9,10 @@ pub const CONTENT_FINDER_JS: &str = r#"
         return (textLength - linkTextLength) / textLength;
     }
     
-    // Функция для поиска основного контента с сайт-специфичными селекторами
     function findMainContent() {
         let selectors = [];
         let minTextLength = 500;
         
-        // Сайт-специфичные селекторы
         if (isReddit) {
             selectors = [
                 '[data-testid="post-container"]',
@@ -25,9 +21,9 @@ pub const CONTENT_FINDER_JS: &str = r#"
                 '.thing .usertext-body',
                 '.expando .usertext-body',
                 'shreddit-post',
-                '.md'  // Markdown контент на Reddit
+                '.md'
             ];
-            minTextLength = 100; // Reddit посты могут быть короткими
+            minTextLength = 100;
         } else if (isHackerNews) {
             selectors = [
                 '.fatitem',
@@ -54,7 +50,6 @@ pub const CONTENT_FINDER_JS: &str = r#"
                 '#bodyContent'
             ];
         } else {
-            // Общие селекторы для статей
             selectors = [
                 'article',
                 '[role="main"]',
@@ -81,7 +76,6 @@ pub const CONTENT_FINDER_JS: &str = r#"
             }
         }
         
-        // Fallback: ищем элемент с наибольшим количеством текста
         const candidates = document.querySelectorAll('div, section');
         let bestElement = null;
         let bestScore = 0;
@@ -91,14 +85,12 @@ pub const CONTENT_FINDER_JS: &str = r#"
             const paragraphs = el.querySelectorAll('p');
             const density = getTextDensity(el);
             
-            // Адаптивные пороги в зависимости от сайта
             const minLen = isReddit || isHackerNews ? 100 : 500;
             const minParagraphs = isReddit || isHackerNews ? 1 : 2;
             
             if (text.length < minLen || text.length > 100000) return;
             if (paragraphs.length < minParagraphs) return;
             
-            // Считаем score на основе количества параграфов и плотности текста
             const score = paragraphs.length * density * (text.length / 1000);
             
             if (score > bestScore) {

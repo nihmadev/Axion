@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+﻿import { useState, useCallback } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Bookmark, Workspace, HistoryEntry } from '../types';
 
@@ -15,8 +15,8 @@ export const useBookmarks = ({ workspaces, activeWorkspaceId }: UseBookmarksOpti
     const tab = activeWorkspace?.tabs.find(t => t.id === activeWorkspace.activeTabId);
     if (!tab) return;
     
-    // Получаем реальную информацию о странице из WebView менеджера
-    // Это гарантирует актуальный URL даже после SPA-навигации
+    
+    
     let url = tab.url;
     let title = tab.title;
     let favicon = tab.favicon;
@@ -29,7 +29,7 @@ export const useBookmarks = ({ workspaces, activeWorkspaceId }: UseBookmarksOpti
         favicon = realInfo.favicon || favicon;
       }
     } catch (e) {
-      // Fallback на данные из tab если не удалось получить из WebView
+      
       console.warn('Failed to get real page info, using tab data:', e);
     }
     
@@ -56,17 +56,17 @@ export const useBookmarks = ({ workspaces, activeWorkspaceId }: UseBookmarksOpti
     setShowImportDialog(false);
     const result = await window.electronAPI.importFromBrowser(browser);
     if (result) {
-      // Объединяем закладки
+      
       const mergedBookmarks = [...bookmarks, ...result.bookmarks.filter(
         imported => !bookmarks.some(b => b.url === imported.url)
       )];
       setBookmarks(mergedBookmarks);
       window.electronAPI.setBookmarks(mergedBookmarks);
       
-      // Объединяем историю
+      
       const mergedHistory = [...result.history, ...history];
       setHistory(mergedHistory.slice(0, 500));
-      // History is managed via addHistory, not setHistory
+      
       
       alert(`Импортировано: ${result.bookmarks.length} закладок и ${result.history.length} записей истории`);
     } else {

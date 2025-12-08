@@ -1,6 +1,4 @@
-/* ==============================================
-   Split View -> Two pages side by side
-   ============================================== */
+
 
 .split-view-container {
   display: flex;
@@ -11,7 +9,7 @@
   background: var(--bg-primary, #1a1a1a);
 }
 
-/* Split View Panels */
+
 .split-view-panel {
   display: flex;
   flex-direction: column;
@@ -30,7 +28,7 @@
   border-left: none;
 }
 
-/* Panel Header */
+
 .split-view-header {
   display: flex;
   align-items: center;
@@ -82,7 +80,7 @@
   color: var(--text-primary, #fff);
 }
 
-/* Panel Content */
+
 .split-view-content {
   flex: 1;
   position: relative;
@@ -95,7 +93,7 @@
   flex: 1;
 }
 
-/* Divider */
+
 .split-view-divider {
   width: 6px;
   height: 100%;
@@ -128,7 +126,7 @@
   background: var(--text-primary, #fff);
 }
 
-/* Split View Button in AddressBar */
+
 .split-view-btn.active {
   color: var(--accent, #7c3aed);
   background: rgba(124, 58, 237, 0.15);
@@ -138,7 +136,7 @@
   background: rgba(124, 58, 237, 0.25);
 }
 
-/* Prevent text selection while dragging */
+
 .split-view-container.dragging {
   user-select: none;
 }
@@ -151,7 +149,7 @@
   pointer-events: auto;
 }
 
-/* Responsive adjustments */
+
 @media (max-width: 800px) {
   .split-view-panel {
     min-width: 150px;

@@ -23,7 +23,7 @@
   color: var(--text-primary, #fff);
 }
 
-/* Layout with sidebar navigation */
+
 .settings-layout {
   display: flex;
   flex: 1;
@@ -102,7 +102,7 @@
   color: var(--text-secondary, rgba(255, 255, 255, 0.4));
 }
 
-/* Scrollbar */
+
 .settings-page-content::-webkit-scrollbar {
   width: 6px;
 }

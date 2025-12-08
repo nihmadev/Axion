@@ -1,8 +1,8 @@
-import React from 'react';
+﻿import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import './tauri-api'; // Инициализация Tauri API
-// Стили импортируются через App.tsx -> App.css
+import './tauri-api'; 
+
 
 const rootElement = document.getElementById('root');
 if (rootElement) {

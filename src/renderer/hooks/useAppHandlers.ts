@@ -1,4 +1,4 @@
-import { useCallback, useMemo, RefObject } from 'react';
+﻿import { useCallback, useMemo, RefObject } from 'react';
 import { Settings, HistoryEntry, Bookmark, Tab } from '../types';
 import { extractSearchQueries } from '../utils/url';
 import { electronAPI } from '../tauri-api';
@@ -39,7 +39,7 @@ export const useAppHandlers = ({
   setHistory,
 }: UseAppHandlersProps) => {
   
-  // Вспомогательные функции
+  
   const toggleFullscreen = useCallback(() => {
     window.electronAPI.fullscreen();
   }, []);
@@ -75,14 +75,14 @@ export const useAppHandlers = ({
     createNewTab(query);
   }, [createNewTab]);
 
-  // Picture-in-Picture для видео
+  
   const handlePip = useCallback(() => {
     if (activeTabId) {
       electronAPI.togglePip(activeTabId).catch(console.error);
     }
   }, [activeTabId]);
 
-  // Reader Mode - режим чтения
+  
   const handleReaderMode = useCallback(() => {
     if (activeTabId) {
       electronAPI.toggleReaderMode(activeTabId).catch(console.error);
@@ -90,30 +90,30 @@ export const useAppHandlers = ({
     }
   }, [activeTabId, activeTab?.isReaderMode, updateTab]);
 
-  // Обработчик импорта для WelcomePage
+  
   const handleWelcomeImport = useCallback(async (browser: 'chrome' | 'firefox' | 'edge' | 'zen') => {
     const result = await window.electronAPI.importFromBrowser(browser);
     if (result) {
-      // Объединяем закладки
+      
       const mergedBookmarks = [...bookmarks, ...result.bookmarks.filter(
         (imported: { url: string }) => !bookmarks.some(b => b.url === imported.url)
       )];
       setBookmarks(mergedBookmarks);
       window.electronAPI.setBookmarks(mergedBookmarks);
       
-      // Объединяем историю
+      
       const mergedHistory = [...result.history, ...history];
       setHistory(mergedHistory.slice(0, 500));
     }
   }, [bookmarks, history, setBookmarks, setHistory]);
 
-  // Обработчик завершения WelcomePage с выбранным акцентным цветом
+  
   const handleWelcomeComplete = useCallback((accentColor: string) => {
     updateSettings({ accentColor });
     setShowWelcome(false);
   }, [updateSettings, setShowWelcome]);
 
-  // Вычисляемые значения
+  
   const recentSearches = useMemo(() => extractSearchQueries(history), [history]);
 
   return {

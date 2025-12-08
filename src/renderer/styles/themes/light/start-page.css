@@ -1,8 +1,6 @@
-/* ============================================== 
-   Start Page - Light Theme
-   ============================================== */
 
-/* Clock widget */
+
+
 .app[data-theme="light"] .clock-time {
   color: #1e293b;
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
@@ -39,7 +37,7 @@
   text-shadow: none;
 }
 
-/* Quick sites / Recent sites */
+
 .app[data-theme="light"] .recent-site-item {
   background: rgba(255, 255, 255, 0.75);
   border-color: rgba(0, 0, 0, 0.08);
@@ -84,9 +82,7 @@
   color: #1e293b;
 }
 
-/* ============================================== 
-   Weather Widget - Light Theme
-   ============================================== */
+
 
 .app[data-theme="light"] .weather-widget {
   background: rgba(255, 255, 255, 0.75);

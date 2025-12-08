@@ -2,7 +2,7 @@ import React from 'react';
 import { SettingsTabProps } from '../types';
 import { Toggle, Select, SettingItem } from '../SettingsComponents';
 
-// DoH провайдеры с их URL
+
 const DOH_PROVIDERS = {
   cloudflare: 'https://cloudflare-dns.com/dns-query',
   google: 'https://dns.google/dns-query',
@@ -48,7 +48,7 @@ export const PrivacySettings: React.FC<SettingsTabProps> = ({ settings, onUpdate
               ]}
               onChange={(v) => onUpdate({ 
                 dohProvider: v as typeof settings.dohProvider,
-                // Автоматически устанавливаем URL для выбранного провайдера
+                
                 dohCustomUrl: v === 'custom' ? settings.dohCustomUrl : DOH_PROVIDERS[v as keyof typeof DOH_PROVIDERS]
               })}
             />
@@ -61,16 +61,15 @@ export const PrivacySettings: React.FC<SettingsTabProps> = ({ settings, onUpdate
                 className="settings-input"
                 value={settings.dohCustomUrl}
                 onChange={(e) => onUpdate({ dohCustomUrl: e.target.value })}
-                placeholder="https://dns.example.com/dns-query"
+                placeholder="https://example.com/dns-query"
               />
             </SettingItem>
           )}
 
           {settings.dohProvider !== 'custom' && (
-            <div className="doh-provider-info">
-              <span className="doh-url-label">URL:</span>
+            <SettingItem label="URL" description="">
               <code className="doh-url">{DOH_PROVIDERS[settings.dohProvider]}</code>
-            </div>
+            </SettingItem>
           )}
         </>
       )}

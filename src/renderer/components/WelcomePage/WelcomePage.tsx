@@ -89,7 +89,7 @@ const WelcomePage: React.FC<WelcomePageProps> = ({ onComplete, onImport, languag
 
   return (
     <div className="welcome-page">
-      {/* Mac-style window controls */}
+      {}
       <div className="welcome-window-controls">
         <button 
           className="window-control-btn close" 
@@ -109,10 +109,10 @@ const WelcomePage: React.FC<WelcomePageProps> = ({ onComplete, onImport, languag
       </div>
 
       <div className={`welcome-slider ${isTransitioning ? 'transitioning' : ''}`}>
-        {/* Page 1: Features + Import (Two-column layout) */}
+        {}
         <div className={`welcome-slide ${currentPage === 0 ? 'active' : 'hidden'}`}>
           <div className="welcome-content welcome-content-split">
-            {/* Left column: Logo */}
+            {}
             <div className="welcome-column welcome-column-left">
               <div className="welcome-header welcome-header-centered">
                 <div className="welcome-logo welcome-logo-large">
@@ -122,7 +122,7 @@ const WelcomePage: React.FC<WelcomePageProps> = ({ onComplete, onImport, languag
               </div>
             </div>
 
-            {/* Right column: Import */}
+            {}
             <div className="welcome-column welcome-column-right">
               <div className="welcome-import">
                 <h2>{t.welcome.importData}</h2>
@@ -178,7 +178,7 @@ const WelcomePage: React.FC<WelcomePageProps> = ({ onComplete, onImport, languag
           </div>
         </div>
 
-        {/* Page 2: Accent Color Selection */}
+        {}
         <div className={`welcome-slide ${currentPage === 1 ? 'active' : 'hidden'}`}>
           <div className="welcome-content accent-page">
             <div className="welcome-header">

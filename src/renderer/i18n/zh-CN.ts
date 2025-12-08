@@ -1,4 +1,4 @@
-import type { Translations } from './types';
+﻿import type { Translations } from './types';
 
 export const zhCN: Translations = {
   settings: {
@@ -13,7 +13,7 @@ export const zhCN: Translations = {
       performance: '性能',
       advanced: '高级',
     },
-    // Appearance
+    
     search: '搜索',
     searchEngine: '搜索引擎',
     searchEngineDesc: '选择地址栏使用的搜索引擎',
@@ -36,7 +36,7 @@ export const zhCN: Translations = {
     radiusLarge: '大',
     animations: '动画',
     animationsDesc: '启用平滑界面动画',
-    // Sidebar
+    
     position: '位置',
     sidebarPosition: '侧边栏位置',
     sidebarPositionDesc: '选择侧边栏显示位置',
@@ -56,7 +56,7 @@ export const zhCN: Translations = {
     workspacesDesc: '显示工作区列表',
     navigation: '导航',
     navigationDesc: '显示导航按钮',
-    // Tabs
+    
     tabsAppearance: '标签页外观',
     tabStyle: '标签页样式',
     tabStyleDesc: '选择标签页外观',
@@ -72,7 +72,7 @@ export const zhCN: Translations = {
     closeNever: '从不',
     tabPreviews: '标签页预览',
     tabPreviewsDesc: '悬停时显示缩略图',
-    // Start page
+    
     background: '背景',
     wallpaper: '壁纸',
     wallpaperDesc: '选择背景图片',
@@ -96,7 +96,7 @@ export const zhCN: Translations = {
     viewGrid: '网格',
     viewList: '列表',
     viewCompact: '紧凑',
-    // Privacy
+    
     protection: '保护',
     adBlock: '广告拦截',
     adBlockDesc: '拦截广告和追踪器',
@@ -107,7 +107,7 @@ export const zhCN: Translations = {
     data: '数据',
     clearOnExit: '退出时清除',
     clearOnExitDesc: '关闭浏览器时删除历史记录和缓存',
-    // DNS-over-HTTPS
+    
     dnsOverHttps: 'DNS-over-HTTPS',
     dohEnabled: '启用DoH',
     dohEnabledDesc: '加密DNS查询以增强隐私',
@@ -120,7 +120,7 @@ export const zhCN: Translations = {
     dohProviderQuad9: 'Quad9 (9.9.9.9)',
     dohProviderAdguard: 'AdGuard DNS',
     dohProviderCustom: '自定义服务器',
-    // Performance
+    
     acceleration: '加速',
     hardwareAcceleration: '硬件加速',
     hardwareAccelerationDesc: '使用GPU进行渲染',
@@ -133,7 +133,7 @@ export const zhCN: Translations = {
     tabSuspensionDesc: '从内存中卸载不活动的标签页',
     suspensionTimeout: '挂起超时',
     suspensionTimeoutDesc: '分钟',
-    // Advanced
+    
     interface: '界面',
     bookmarksBar: '书签栏',
     bookmarksBarDesc: '显示书签栏',

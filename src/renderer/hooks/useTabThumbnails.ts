@@ -8,10 +8,10 @@ interface UseTabThumbnailsProps {
   activeWorkspaceId: string;
   activeTabId: string;
   updateTab: (tabId: string, updates: Partial<Tab>) => void;
-  captureInterval?: number; // Интервал захвата в мс (по умолчанию 5 секунд)
+  captureInterval?: number; 
 }
 
-// Генерируем скрипт для захвата скриншота
+
 const createCaptureScript = (tabId: string) => `
 (async function() {
   try {
@@ -25,18 +25,18 @@ const createCaptureScript = (tabId: string) => `
     canvas.width = thumbWidth;
     canvas.height = thumbHeight;
     
-    // Градиентный фон
+    
     const gradient = ctx.createLinearGradient(0, 0, thumbWidth, thumbHeight);
     gradient.addColorStop(0, '#1a1a2e');
     gradient.addColorStop(1, '#16213e');
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, thumbWidth, thumbHeight);
     
-    // Пытаемся получить favicon
+    
     const faviconLink = document.querySelector('link[rel*="icon"]');
     const faviconUrl = faviconLink?.href || '';
     
-    // Рисуем информацию о странице
+    
     ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
     ctx.font = 'bold 13px -apple-system, BlinkMacSystemFont, sans-serif';
     ctx.textAlign = 'center';
@@ -49,7 +49,7 @@ const createCaptureScript = (tabId: string) => `
     ctx.font = '11px -apple-system, BlinkMacSystemFont, sans-serif';
     ctx.fillText(window.location.hostname, thumbWidth/2, thumbHeight/2 + 30);
     
-    // Отправляем результат через Tauri
+    
     const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
     window.__TAURI__.event.emit('thumbnail-captured', { 
       tabId: '${tabId}', 
@@ -76,7 +76,7 @@ export const useTabThumbnails = ({
   const lastCaptureRef = useRef<Map<string, number>>(new Map());
   const captureTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Слушаем события захвата скриншотов
+  
   useEffect(() => {
     const unlisten = listen<ThumbnailEvent>('thumbnail-captured', (event) => {
       const { tabId, thumbnail } = event.payload;
@@ -94,17 +94,17 @@ export const useTabThumbnails = ({
     };
   }, [updateTab]);
 
-  // Функция захвата скриншота для конкретной вкладки
+  
   const captureTabThumbnail = useCallback(async (tabId: string) => {
     try {
-      // Проверяем, не слишком ли часто захватываем
+      
       const lastCapture = lastCaptureRef.current.get(tabId) || 0;
       const now = Date.now();
       if (now - lastCapture < 2000) {
         return;
       }
 
-      // Выполняем скрипт захвата в webview
+      
       const script = createCaptureScript(tabId);
       await invoke('execute_script', { id: tabId, script });
     } catch (error) {
@@ -112,24 +112,24 @@ export const useTabThumbnails = ({
     }
   }, []);
 
-  // Захват скриншота активной вкладки при переключении или периодически
+  
   useEffect(() => {
     if (!activeTabId) return;
 
     const activeWorkspace = workspaces.find(w => w.id === activeWorkspaceId);
     const activeTab = activeWorkspace?.tabs.find(t => t.id === activeTabId);
     
-    // Не захватываем для внутренних страниц или загружающихся
-    if (!activeTab || !activeTab.url || activeTab.url.startsWith('axion://') || activeTab.isLoading) {
+    
+    if (!activeTab || !activeTab.url || activeTab.url.startsWith('axion://')) {
       return;
     }
 
-    // Захватываем сразу при переключении (с задержкой для загрузки)
+    
     const initialCapture = setTimeout(() => {
       captureTabThumbnail(activeTabId);
     }, 1500);
 
-    // Периодический захват для обновления превью
+    
     captureTimeoutRef.current = setInterval(() => {
       captureTabThumbnail(activeTabId);
     }, captureInterval);
@@ -142,13 +142,13 @@ export const useTabThumbnails = ({
     };
   }, [activeTabId, activeWorkspaceId, workspaces, captureTabThumbnail, captureInterval]);
 
-  // Функция для принудительного захвата всех вкладок
+  
   const forceCaptureAll = useCallback(() => {
     const activeWorkspace = workspaces.find(w => w.id === activeWorkspaceId);
     if (!activeWorkspace) return;
 
     activeWorkspace.tabs.forEach(tab => {
-      if (tab.url && !tab.url.startsWith('axion://') && !tab.isLoading && !tab.isFrozen) {
+      if (tab.url && !tab.url.startsWith('axion://')) {
         captureTabThumbnail(tab.id);
       }
     });

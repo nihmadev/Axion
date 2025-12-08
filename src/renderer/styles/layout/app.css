@@ -1,6 +1,4 @@
-/* ==============================================
-   App Layout - Core Structure
-   ============================================== */
+
 
 .app {
   height: 100%;
@@ -15,32 +13,32 @@
   overflow: hidden;
   position: relative;
   
-  /* Dynamic border radius based on settings */
+  
   --radius-none: 0px;
   --radius-small: 6px;
   --radius-medium: 12px;
   --radius-large: 18px;
 }
 
-/* Border radius variants */
+
 .app[data-radius="none"] { --radius: var(--radius-none); --radius-sm: 0px; }
 .app[data-radius="small"] { --radius: var(--radius-small); --radius-sm: 4px; }
 .app[data-radius="medium"] { --radius: var(--radius-medium); --radius-sm: 8px; }
 .app[data-radius="large"] { --radius: var(--radius-large); --radius-sm: 12px; }
 
-/* Font family variants */
+
 .app[data-font="system"] { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
 .app[data-font="inter"] { font-family: 'Inter', -apple-system, sans-serif; }
 .app[data-font="roboto"] { font-family: 'Roboto', -apple-system, sans-serif; }
 .app[data-font="jetbrains"] { font-family: 'JetBrains Mono', monospace; }
 
-/* Animations disabled */
+
 .app[data-animations="false"] * {
   animation-duration: 0s !important;
   transition-duration: 0s !important;
 }
 
-/* Block scroll when modal or sidebar is open */
+
 .app.modal-open {
   overflow: hidden !important;
 }
@@ -56,7 +54,7 @@
   z-index: 0;
 }
 
-/* When modal/history/downloads is open - slightly dim background */
+
 .app.modal-open::before {
   background: rgba(0, 0, 0, 0.35);
 }
@@ -75,7 +73,7 @@
   min-height: 0;
 }
 
-/* Main area order based on sidebar position */
+
 .app[data-sidebar-position="left"] .main-area {
   order: 1;
 }
@@ -110,7 +108,7 @@
   min-height: 0;
 }
 
-/* Hide title bar - we use sidebar controls now */
+
 .title-bar {
   display: none;
 }

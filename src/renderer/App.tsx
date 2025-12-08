@@ -27,7 +27,7 @@ import { AutofillPopup, SavePasswordPrompt } from './components/Autofill';
 import './styles/App.css';
 
 const App: React.FC = () => {
-  // Базовые состояния из хука
+  
   const {
     settings,
     setSettings,
@@ -54,7 +54,7 @@ const App: React.FC = () => {
   
   const t = useTranslation(settings.language);
   
-  // Состояния для StartPage сайтов
+  
   const {
     hiddenSites,
     renamedSites,
@@ -63,7 +63,7 @@ const App: React.FC = () => {
     handleRenameSite
   } = useStartPageData();
 
-  // Хуки для управления данными
+  
   const { history, setHistory, addToHistory, clearHistory } = useHistory();
   
   const {
@@ -91,7 +91,7 @@ const App: React.FC = () => {
     setSplitViewTab,
     setSplitRatio,
     closeSplitView,
-    // Tab Groups
+    
     tabGroups,
     createTabGroup,
     addTabToGroup,
@@ -138,7 +138,7 @@ const App: React.FC = () => {
     activeWorkspaceId,
   });
 
-  // Сессия и восстановление
+  
   useSession({
     workspaces,
     activeWorkspaceId,
@@ -150,7 +150,7 @@ const App: React.FC = () => {
     setSidebarWidth,
   });
 
-  // Обработчики из хука
+  
   const {
     toggleFullscreen,
     printPage,
@@ -181,7 +181,7 @@ const App: React.FC = () => {
     setHistory,
   });
 
-  // Шорткаты
+  
   useShortcuts({
     createNewTab,
     closeTab,
@@ -208,16 +208,16 @@ const App: React.FC = () => {
     isModalOpen,
   });
 
-  // Захват скриншотов для превью вкладок
+  
   useTabThumbnails({
     workspaces,
     activeWorkspaceId,
     activeTabId,
     updateTab,
-    captureInterval: 5000, // Обновление каждые 5 секунд
+    captureInterval: 5000, 
   });
 
-  // Автозаполнение паролей
+  
   const {
     autofillRequest,
     savePasswordRequest,
@@ -227,18 +227,18 @@ const App: React.FC = () => {
     markCredentialsSaved,
   } = useAutofill({ activeTabId });
 
-  // Вычисляемые значения
+  
   const isBookmarked = useMemo(() => 
     activeTab ? bookmarks.some(b => b.url === activeTab.url) : false, 
     [activeTab, bookmarks]
   );
 
-  // Показываем пустой экран пока проверяем первый запуск
+  
   if (!welcomeChecked) {
     return <div className="app" style={{ background: '#000' }} />;
   }
 
-  // Показываем WelcomePage при первом запуске
+  
   if (showWelcome) {
     return (
       <WelcomePage
@@ -355,7 +355,7 @@ const App: React.FC = () => {
           onSearch={handleSearch}
           sidebarWidth={sidebarWidth}
           onSidebarWidthChange={handleSidebarWidthChange}
-          // Customization from settings
+          
           position={settings.sidebarPosition}
           style={settings.sidebarStyle}
           showQuickSites={settings.showSidebarQuickSites}
@@ -367,7 +367,7 @@ const App: React.FC = () => {
           splitView={splitView}
           onCloseSplitView={closeSplitView}
           language={settings.language}
-          // Tab Groups
+          
           tabGroups={tabGroups}
           onCreateTabGroup={createTabGroup}
           onToggleTabGroupCollapsed={toggleTabGroupCollapsed}
@@ -398,7 +398,7 @@ const App: React.FC = () => {
         selectTabFromSearch={selectTabFromSearch}
       />
 
-      {/* Autofill Popup */}
+      {}
       {autofillRequest && (
         <AutofillPopup
           url={autofillRequest.url}
@@ -410,7 +410,7 @@ const App: React.FC = () => {
         />
       )}
 
-      {/* Save Password Prompt */}
+      {}
       {savePasswordRequest && (
         <SavePasswordPrompt
           url={savePasswordRequest.url}

@@ -1,7 +1,6 @@
 use tauri::{Window, Manager};
 use crate::{AppState, storage, downloads};
 
-// Window commands
 #[tauri::command]
 pub async fn window_minimize(window: Window) -> Result<(), String> {
     window.minimize().map_err(|e| e.to_string())
@@ -34,7 +33,6 @@ pub async fn is_fullscreen(window: Window) -> Result<bool, String> {
     window.is_fullscreen().map_err(|e| e.to_string())
 }
 
-// Settings commands
 #[tauri::command]
 pub async fn get_settings() -> Result<serde_json::Value, String> {
     storage::get_settings().await
@@ -45,7 +43,6 @@ pub async fn set_settings(settings: serde_json::Value) -> Result<(), String> {
     storage::set_settings(settings).await
 }
 
-// Bookmarks commands
 #[tauri::command]
 pub async fn get_bookmarks() -> Result<Vec<storage::Bookmark>, String> {
     storage::get_bookmarks().await
@@ -56,7 +53,6 @@ pub async fn set_bookmarks(bookmarks: Vec<storage::Bookmark>) -> Result<(), Stri
     storage::set_bookmarks(bookmarks).await
 }
 
-// History commands
 #[tauri::command]
 pub async fn get_history() -> Result<Vec<storage::HistoryEntry>, String> {
     storage::get_history().await
@@ -77,7 +73,6 @@ pub async fn set_history(history: Vec<storage::HistoryEntry>) -> Result<(), Stri
     storage::set_history(history).await
 }
 
-// External commands
 #[tauri::command]
 pub async fn open_external(app: tauri::AppHandle, url: String) -> Result<(), String> {
     use tauri_plugin_opener::OpenerExt;
@@ -115,7 +110,6 @@ pub async fn show_error(app: tauri::AppHandle, title: String, message: String) -
     Ok(())
 }
 
-// Export/Import bookmarks
 #[tauri::command]
 pub async fn export_bookmarks(app: tauri::AppHandle, bookmarks: Vec<storage::Bookmark>) -> Result<bool, String> {
     use tauri_plugin_dialog::DialogExt;
@@ -163,25 +157,19 @@ pub async fn import_bookmarks(app: tauri::AppHandle) -> Result<Option<Vec<storag
     }
 }
 
-// Tab freezing commands
 #[tauri::command]
 pub async fn freeze_tab(app: tauri::AppHandle, state: tauri::State<'_, AppState>, tab_id: String) -> Result<bool, String> {
-    // Добавляем в список замороженных
     {
         let mut frozen_tabs = state.frozen_tabs.lock().map_err(|e| e.to_string())?;
         frozen_tabs.insert(tab_id.clone());
     }
     
-    // Закрываем нативный WebView для освобождения памяти
     let webview_id = format!("webview_{}", tab_id);
     if let Some(webview) = app.get_webview(&webview_id) {
-        // Сначала скрываем
         let _ = webview.hide();
-        // Затем закрываем для освобождения памяти
         let _ = webview.close();
     }
     
-    // Удаляем из менеджера WebView
     {
         let mut manager = state.webview_manager.lock().map_err(|e| e.to_string())?;
         manager.remove(&tab_id);
@@ -194,7 +182,6 @@ pub async fn freeze_tab(app: tauri::AppHandle, state: tauri::State<'_, AppState>
 pub async fn unfreeze_tab(state: tauri::State<'_, AppState>, tab_id: String) -> Result<bool, String> {
     let mut frozen_tabs = state.frozen_tabs.lock().map_err(|e| e.to_string())?;
     frozen_tabs.remove(&tab_id);
-    // WebView будет пересоздан при активации вкладки через create_webview
     Ok(true)
 }
 
@@ -204,7 +191,6 @@ pub async fn is_tab_frozen(state: tauri::State<'_, AppState>, tab_id: String) ->
     Ok(frozen_tabs.contains(&tab_id))
 }
 
-// Downloads commands
 #[tauri::command]
 pub async fn get_downloads() -> Result<Vec<downloads::Download>, String> {
     downloads::get_downloads().await
@@ -274,7 +260,6 @@ pub async fn get_downloads_folder() -> Result<String, String> {
         .ok_or_else(|| "Could not find downloads directory".to_string())
 }
 
-// Browser import
 #[tauri::command]
 pub async fn import_from_browser(browser: String) -> Result<Option<storage::ImportResult>, String> {
     storage::import_from_browser(&browser).await
@@ -285,7 +270,6 @@ pub async fn detect_browsers() -> Result<Vec<storage::DetectedBrowser>, String> 
     storage::detect_browsers().await
 }
 
-// First launch detection
 #[tauri::command]
 pub async fn is_first_launch() -> Result<bool, String> {
     let data_dir = storage::get_data_dir()?;
@@ -300,7 +284,6 @@ pub async fn mark_initialized() -> Result<(), String> {
     std::fs::write(&marker_file, "1").map_err(|e| e.to_string())
 }
 
-// Session commands
 #[tauri::command]
 pub async fn save_session(session_data: serde_json::Value) -> Result<bool, String> {
     storage::save_session(session_data).await
@@ -316,7 +299,6 @@ pub async fn clear_session() -> Result<bool, String> {
     storage::clear_session().await
 }
 
-// Password manager commands
 #[tauri::command]
 pub fn vault_exists() -> Result<bool, String> {
     storage::vault_exists()

@@ -1,5 +1,3 @@
-/// JavaScript для активации Reader Mode - извлекает основной контент и убирает лишнее
-/// Скрипт собирается из модулей во время выполнения
 pub fn get_reader_mode_script() -> String {
     use super::unsupported_sites::UNSUPPORTED_SITES_JS;
     use super::site_detection::SITE_DETECTION_JS;
@@ -11,9 +9,7 @@ pub fn get_reader_mode_script() -> String {
 
     format!(
 r#"(function() {{
-    // Проверяем, активен ли уже Reader Mode
     if (document.body.classList.contains('axion-reader-mode')) {{
-        // Выходим из Reader Mode - перезагружаем страницу
         location.reload();
         return {{ success: true, action: 'exit' }};
     }}
@@ -67,8 +63,5 @@ r#"(function() {{
         CONTENT_CLEANUP_JS
     )
 }
-
-/// Константа для обратной совместимости (deprecated)
-/// Используйте get_reader_mode_script() вместо этого
 #[deprecated(note = "Use get_reader_mode_script() instead")]
 pub const READER_MODE_SCRIPT: &str = "";

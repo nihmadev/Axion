@@ -107,12 +107,12 @@ const NewTabModal: React.FC<NewTabModalProps> = ({ recentQueries, onSubmit, onCl
   const handleSubmit = (query?: string) => {
     const value = query ?? input.trim();
     if (value) {
-      // Проверяем, является ли это URL
+      
       const isUrl = /^(https?:\/\/|www\.|[a-zA-Z0-9-]+\.[a-zA-Z]{2,})/.test(value);
       if (isUrl) {
         onSubmit(value);
       } else {
-        // Используем выбранную поисковую систему
+        
         const engine = searchEngines[searchEngine];
         onSubmit(engine.url + encodeURIComponent(value));
       }
@@ -202,7 +202,7 @@ const NewTabModal: React.FC<NewTabModalProps> = ({ recentQueries, onSubmit, onCl
             ref={inputRef}
             type="text"
             className="new-tab-modal__input"
-            placeholder={`Поиск в ${searchEngines[searchEngine].name} или URL...`}
+            placeholder={`����� � ${searchEngines[searchEngine].name} ��� URL...`}
             value={input}
             onChange={(e) => {
               setInput(e.target.value);

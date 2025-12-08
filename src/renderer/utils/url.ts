@@ -1,9 +1,6 @@
 import { INTERNAL_URLS, SEARCH_ENGINES } from '../constants';
 import { Settings } from '../types';
 
-/**
- * Получение заголовка для внутренних страниц
- */
 export const getInternalPageTitle = (url: string): string => {
   switch (url) {
     case INTERNAL_URLS.history: return 'История';
@@ -13,49 +10,34 @@ export const getInternalPageTitle = (url: string): string => {
   }
 };
 
-/**
- * Нормализация URL или поискового запроса
- */
 export const normalizeUrl = (input: string, searchEngine: Settings['searchEngine']): string => {
   let s = input.trim();
   if (!s) return '';
 
-  // Внутренние URL браузера
   if (s.startsWith('axion://')) {
     return s;
   }
 
-  // Если уже есть протокол (http, https, file)
-  if (/^https?:\/\//i.test(s) || /^file:\/\/\//i.test(s)) {
+  if (/^https?:\/\//.test(s)) {
     return s;
   }
 
-  // Локальный путь к файлу (Windows: C:\path или /path)
   if (/^[a-zA-Z]:[\\\/]/.test(s) || s.startsWith('/')) {
-    // Конвертируем путь в file:/// URL
     const normalizedPath = s.replace(/\\/g, '/');
-    return 'file:///' + (normalizedPath.startsWith('/') ? normalizedPath.slice(1) : normalizedPath);
+    return 'file:///' + normalizedPath;
   }
 
-  // Если похоже на домен (есть точка и нет пробелов)
   if (s.includes('.') && !s.includes(' ')) {
     return 'https://' + s;
   }
 
-  // Иначе это поисковый запрос
   return SEARCH_ENGINES[searchEngine] + encodeURIComponent(s);
 };
 
-/**
- * Проверка, является ли URL внутренним
- */
 export const isInternalUrl = (url: string): boolean => {
   return url.startsWith('axion://');
 };
 
-/**
- * Извлечение поисковых запросов из истории
- */
 export const extractSearchQueries = (history: { url: string }[]): string[] => {
   const results: string[] = [];
   

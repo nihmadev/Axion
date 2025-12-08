@@ -12,20 +12,20 @@ import {
 } from '../icons';
 import { useTranslation } from '../../../hooks/useTranslation';
 
-// Predefined accent colors for workspaces
+
 const WORKSPACE_COLORS = [
-  '#7c3aed', // Purple (default)
-  '#ef4444', // Red
-  '#f97316', // Orange
-  '#eab308', // Yellow
-  '#22c55e', // Green
-  '#14b8a6', // Teal
-  '#3b82f6', // Blue
-  '#8b5cf6', // Violet
-  '#ec4899', // Pink
-  '#6366f1', // Indigo
-  '#06b6d4', // Cyan
-  '#84cc16', // Lime //TODO add more colors
+  '#7c3aed', 
+  '#ef4444', 
+  '#f97316', 
+  '#eab308', 
+  '#22c55e', 
+  '#14b8a6', 
+  '#3b82f6', 
+  '#8b5cf6', 
+  '#ec4899', 
+  '#6366f1', 
+  '#06b6d4', 
+  '#84cc16', 
 ];
 
 interface WorkspaceListProps {
@@ -38,7 +38,7 @@ interface WorkspaceListProps {
   onWorkspaceRename?: (id: string, name: string) => void;
   onWorkspaceIconChange?: (id: string, icon: string) => void;
   onWorkspaceColorChange?: (id: string, color: string | undefined) => void;
-  // Edit state
+  
   editingWorkspaceId: string | null;
   editingName: string;
   setEditingName: (name: string) => void;
@@ -46,7 +46,7 @@ interface WorkspaceListProps {
   onStartRename: (id: string, name: string) => void;
   onFinishRename: () => void;
   onCancelRename: () => void;
-  // Context menu state
+  
   contextMenuWorkspace: ContextMenuPosition | null;
   showIconPicker: boolean;
   setShowIconPicker: (show: boolean) => void;
@@ -163,7 +163,7 @@ export const WorkspaceList: React.FC<WorkspaceListProps> = ({
         <PlusIcon />
       </button>
       
-      {/* Context menu - rendered via portal */}
+      {}
       {contextMenuWorkspace && createPortal(
         <>
           <div 
@@ -204,7 +204,7 @@ export const WorkspaceList: React.FC<WorkspaceListProps> = ({
                     onClick={() => handleColorSelect(undefined)}
                     title="Reset"
                   >
-                    ✕
+                    ?
                   </button>
                 </div>
               </div>

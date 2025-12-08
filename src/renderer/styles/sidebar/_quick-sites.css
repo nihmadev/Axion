@@ -1,6 +1,4 @@
-/* ==============================================
-   ZenSidebar - Quick Sites Grid
-   ============================================== */
+
 
 .zen-sidebar__quick-sites {
   display: grid;
@@ -11,7 +9,7 @@
   position: relative;
 }
 
-/* Edit mode button */
+
 .zen-sidebar__quick-sites-edit-btn {
   position: absolute;
   top: -6px;
@@ -47,12 +45,12 @@
   color: white;
 }
 
-/* Site wrapper for positioning remove button */
+
 .zen-sidebar__quick-site-wrapper {
   position: relative;
 }
 
-/* Wiggle animation for edit mode */
+
 @keyframes wiggle {
   0%, 100% { transform: rotate(-2deg); }
   50% { transform: rotate(2deg); }
@@ -62,7 +60,7 @@
   animation: wiggle 0.3s ease-in-out infinite;
 }
 
-/* Remove button */
+
 .zen-sidebar__quick-site-remove {
   position: absolute;
   top: -6px;
@@ -141,7 +139,7 @@
   object-fit: contain;
 }
 
-/* Add button */
+
 .zen-sidebar__quick-site--add {
   background: transparent;
   border: 2px dashed rgba(255, 255, 255, 0.15);
@@ -189,9 +187,7 @@
   transition: all 0.2s ease;
 }
 
-/* ==============================================
-   Add Site Modal
-   ============================================== */
+
 
 .quick-sites-modal-overlay {
   position: fixed;
@@ -433,9 +429,7 @@
   color: white;
 }
 
-/* ==============================================
-   Toast Notification
-   ============================================== */
+
 
 .quick-sites-toast {
   position: absolute;

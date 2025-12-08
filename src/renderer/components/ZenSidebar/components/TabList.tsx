@@ -29,7 +29,7 @@ interface TabListProps {
   splitView?: SplitView;
   onCloseSplitView?: () => void;
   language: 'ru' | 'en' | 'es' | 'fr' | 'de' | 'zh-CN';
-  // Tab Groups
+  
   tabGroups?: TabGroup[];
   onCreateTabGroup?: (name: string, colorId: TabGroupColorId, tabIds: string[]) => void;
   onToggleTabGroupCollapsed?: (groupId: string) => void;
@@ -41,7 +41,7 @@ interface TabListProps {
 }
 
 const getInternalIcon = (url?: string) => {
-  if (!url) return <HomeTabIcon />; // StartPage
+  if (!url) return <HomeTabIcon />; 
   if (url === 'axion://history') return <HistoryTabIcon />;
   if (url === 'axion://downloads') return <DownloadsTabIcon />;
   if (url === 'axion://settings') return <SettingsTabIcon />;
@@ -72,7 +72,7 @@ export const TabList: React.FC<TabListProps> = ({
   splitView,
   onCloseSplitView,
   language,
-  // Tab Groups
+  
   tabGroups = [],
   onCreateTabGroup,
   onToggleTabGroupCollapsed,
@@ -102,18 +102,18 @@ export const TabList: React.FC<TabListProps> = ({
   const handleTabMouseEnter = useCallback((tab: Tab, element: HTMLDivElement) => {
     if (!showTabPreviews) return;
     
-    // Очищаем предыдущий таймаут
+    
     if (hoverTimeoutRef.current) {
       clearTimeout(hoverTimeoutRef.current);
     }
     
-    // Задержка перед показом превью (200ms)
+    
     hoverTimeoutRef.current = setTimeout(() => {
       const rect = element.getBoundingClientRect();
       const sidebarRect = element.closest('.zen-sidebar')?.getBoundingClientRect();
       
       if (sidebarRect) {
-        // Позиционируем превью сбоку от сайдбара с отступом
+        
         const gap = 12;
         
         setPreviewPosition({
@@ -136,13 +136,13 @@ export const TabList: React.FC<TabListProps> = ({
     setHoveredTab(null);
   }, []);
 
-  // Tab context menu for groups
+  
   const handleTabContextMenu = useCallback((e: React.MouseEvent, tabId: string) => {
     e.preventDefault();
     setContextMenuTab({ tabId, x: e.clientX, y: e.clientY });
   }, []);
 
-  // Close context menu on click outside
+  
   React.useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (contextMenuRef.current && !contextMenuRef.current.contains(e.target as Node)) {
@@ -155,7 +155,7 @@ export const TabList: React.FC<TabListProps> = ({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [contextMenuTab]);
 
-  // Group tabs by groupId
+  
   const { groupedTabs, ungroupedTabs } = useMemo(() => {
     const grouped: Record<string, Tab[]> = {};
     const ungrouped: Tab[] = [];
@@ -184,17 +184,17 @@ export const TabList: React.FC<TabListProps> = ({
     return TAB_GROUP_COLORS.find(c => c.id === group?.colorId)?.color || '#5f6368';
   };
 
-  // Определяем, активен ли split view и какие вкладки в нём
+  
   const isSplitViewActive = splitView?.enabled && splitView.leftTabId && splitView.rightTabId;
   const leftTab = isSplitViewActive ? tabs.find(t => t.id === splitView.leftTabId) : null;
   const rightTab = isSplitViewActive ? tabs.find(t => t.id === splitView.rightTabId) : null;
 
-  // Фильтруем вкладки - если split view активен, скрываем обе вкладки из обычного списка
+  
   const filteredUngroupedTabs = isSplitViewActive 
     ? ungroupedTabs.filter(tab => tab.id !== splitView.leftTabId && tab.id !== splitView.rightTabId)
     : ungroupedTabs;
 
-  // Render a single tab item
+  
   const renderTab = (tab: Tab, inGroup = false) => {
     const isInternalPage = !tab.url || tab.url?.startsWith('axion://');
     const groupColor = tab.groupId ? getGroupColor(tab.groupId) : undefined;
@@ -249,7 +249,7 @@ export const TabList: React.FC<TabListProps> = ({
 
   return (
     <div className="zen-sidebar__tabs">
-      {/* Split View объединённая вкладка */}
+      {}
       {isSplitViewActive && leftTab && rightTab && (
         <div
           className="zen-sidebar__tab zen-sidebar__tab--split-view is-active"
@@ -272,7 +272,7 @@ export const TabList: React.FC<TabListProps> = ({
               </div>
               {style !== 'minimal' && (
                 <span className="split-view-combined__title">
-                  {(!leftTab.url || leftTab.url?.startsWith('axion://')) 
+                  {(!leftTab.url || leftTab.url?.startsWith('axion://'))
                     ? (getInternalPageName(leftTab.url, t) || leftTab.title || t.common.newTab) 
                     : (leftTab.title || t.common.newTab)}
                 </span>
@@ -297,7 +297,7 @@ export const TabList: React.FC<TabListProps> = ({
               </div>
               {style !== 'minimal' && (
                 <span className="split-view-combined__title">
-                  {(!rightTab.url || rightTab.url?.startsWith('axion://')) 
+                  {(!rightTab.url || rightTab.url?.startsWith('axion://'))
                     ? (getInternalPageName(rightTab.url, t) || rightTab.title || t.common.newTab) 
                     : (rightTab.title || t.common.newTab)}
                 </span>
@@ -317,7 +317,7 @@ export const TabList: React.FC<TabListProps> = ({
         </div>
       )}
 
-      {/* Tab Groups */}
+      {}
       {tabGroups.map(group => {
         const tabsInGroup = groupedTabs[group.id] || [];
         if (tabsInGroup.length === 0) return null;
@@ -349,7 +349,7 @@ export const TabList: React.FC<TabListProps> = ({
         );
       })}
 
-      {/* Ungrouped tabs */}
+      {}
       {filteredUngroupedTabs.map(tab => renderTab(tab))}
       
       <button className="zen-sidebar__new-tab" onClick={onNewTab} title={t.common.newTab}>
@@ -357,7 +357,7 @@ export const TabList: React.FC<TabListProps> = ({
         <span>{t.common.newTab}</span>
       </button>
 
-      {/* Tab Preview Tooltip */}
+      {}
       {hoveredTab && showTabPreviews && (
         <TabPreview
           tab={hoveredTab}
@@ -367,14 +367,14 @@ export const TabList: React.FC<TabListProps> = ({
         />
       )}
 
-      {/* Tab Context Menu */}
+      {}
       {contextMenuTab && (
         <div
           ref={contextMenuRef}
           className="tab-group__menu"
           style={{ left: contextMenuTab.x, top: contextMenuTab.y }}
         >
-          {/* Add to existing group */}
+          {}
           {tabGroups.length > 0 && (
             <>
               {tabGroups.map(group => (
@@ -401,7 +401,7 @@ export const TabList: React.FC<TabListProps> = ({
             </>
           )}
           
-          {/* Create new group */}
+          {}
           <div
             className="tab-group__menu-item"
             onClick={() => {
@@ -413,7 +413,7 @@ export const TabList: React.FC<TabListProps> = ({
             {t.tabGroups.newGroup}
           </div>
           
-          {/* Remove from group */}
+          {}
           {tabs.find(tab => tab.id === contextMenuTab.tabId)?.groupId && (
             <div
               className="tab-group__menu-item"
@@ -428,7 +428,7 @@ export const TabList: React.FC<TabListProps> = ({
         </div>
       )}
 
-      {/* Create Group Modal */}
+      {}
       {showCreateGroupModal && (
         <CreateTabGroupModal
           onClose={() => {

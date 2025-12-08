@@ -79,7 +79,7 @@ export const AutofillPopup: React.FC<AutofillPopupProps> = ({
     onClose();
   }, [tabId, onFill, onClose]);
 
-  // Close on click outside
+  
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
@@ -97,7 +97,7 @@ export const AutofillPopup: React.FC<AutofillPopupProps> = ({
     };
   }, [onClose]);
 
-  // Close on Escape
+  
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -183,7 +183,7 @@ export const AutofillPopup: React.FC<AutofillPopupProps> = ({
           >
             <div className="autofill-item-icon">
               <img
-                src={`https://www.google.com/s2/favicons?domain=${new URL(entry.url.startsWith('http') ? entry.url : `https://${entry.url}`).hostname}&sz=32`}
+                src={`https://${new URL(entry.url).hostname}/favicon.ico`}
                 alt=""
                 onError={(e) => {
                   (e.target as HTMLImageElement).style.display = 'none';

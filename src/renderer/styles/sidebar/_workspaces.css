@@ -1,6 +1,4 @@
-/* ==============================================
-   ZenSidebar - Workspaces
-   ============================================== */
+
 
 .zen-sidebar__workspaces {
   display: flex;
@@ -67,7 +65,7 @@
   outline: none;
 }
 
-/* Workspace add button */
+
 .zen-sidebar__workspace-add {
   width: 100%;
   display: flex;
@@ -91,7 +89,7 @@
   color: rgba(255, 255, 255, 0.7);
 }
 
-/* Workspace icon styling */
+
 .zen-sidebar__workspace-icon svg {
   width: 16px;
   height: 16px;
@@ -103,7 +101,7 @@
   color: var(--workspace-accent, var(--accent, #7c3aed));
 }
 
-/* Workspace with custom color - subtle indicator */
+
 .zen-sidebar__workspace[style*="--workspace-accent"] .zen-sidebar__workspace-btn {
   border-left: 3px solid var(--workspace-accent);
   padding-left: 7px;

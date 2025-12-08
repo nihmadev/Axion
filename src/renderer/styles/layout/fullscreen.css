@@ -1,8 +1,6 @@
-/* ==============================================
-   Fullscreen & Compact Modes
-   ============================================== */
 
-/* Fullscreen mode */
+
+
 .app.app--fullscreen {
   padding: 0;
 }
@@ -20,7 +18,7 @@
   display: none;
 }
 
-/* Compact/Zen mode */
+
 .app.app--compact .zen-sidebar {
   width: 60px;
 }

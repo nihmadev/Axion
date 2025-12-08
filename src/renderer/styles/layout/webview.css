@@ -1,6 +1,4 @@
-/* ==============================================
-   Webview Area & Wrapper
-   ============================================== */
+
 
 .webview-area {
   flex: 1;
@@ -33,7 +31,7 @@
   display: none;
 }
 
-/* Hide webview-wrapper when modal is open to prevent errors from showing under blur */
+
 .app.modal-open .webview-wrapper {
   opacity: 0 !important;
   visibility: hidden !important;

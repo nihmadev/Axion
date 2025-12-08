@@ -10,7 +10,7 @@
   isolation: isolate;
 }
 
-/* Loading Progress Bar */
+
 .loading-progress {
   position: absolute;
   top: 0;
@@ -40,7 +40,7 @@
   z-index: 1;
 }
 
-/* Find Bar */
+
 .find-bar {
   display: flex;
   align-items: center;
@@ -86,7 +86,7 @@
   background: var(--bg-hover, #3d3d3d);
 }
 
-/* Context Menu */
+
 .context-menu {
   position: absolute;
   background: var(--bg-secondary, #2d2d2d);
@@ -120,7 +120,7 @@
   margin: 4px 0;
 }
 
-/* Error Page */
+
 .webview-error {
   display: flex;
   flex-direction: column;

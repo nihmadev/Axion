@@ -67,8 +67,8 @@ export const useShortcuts = ({
     const cleanupFullscreen = window.electronAPI.onFullscreenChange(setIsFullscreen);
     const cleanupOpenUrl = window.electronAPI.onOpenUrl((url: string) => createNewTab(url));
 
-    // Обработка изменения URL в WebView (от polling через Tauri API)
-    // Теперь polling отправляет URL, title и favicon вместе
+    
+    
     const cleanupWebViewUrlChanged = window.electronAPI.onWebViewUrlChanged?.((data: { 
       id: string; 
       url?: string; 
@@ -78,11 +78,11 @@ export const useShortcuts = ({
     }) => {
       if (!data.url || data.url === 'about:blank') return;
       
-      // Обновляем глобальный кэш URL чтобы WebView2Container не делал повторную навигацию
-      // Это критично - иначе обновление tab.url вызовет navigate_webview на тот же URL
+      
+      
       updateWebViewLastUrl(data.id, data.url);
 
-      // Используем title из события, или извлекаем из URL
+      
       let pageTitle = data.title;
       if (!pageTitle || pageTitle.trim() === '') {
         try {
@@ -93,12 +93,12 @@ export const useShortcuts = ({
         }
       }
 
-      // Используем favicon из события или получаем через Google API
+      
       let favicon = data.favicon;
       if (!favicon) {
         try {
           const urlObj = new URL(data.url);
-          favicon = `https://www.google.com/s2/favicons?domain=${urlObj.hostname}&sz=32`;
+          favicon = `https://${urlObj.hostname}/favicon.ico`;
         } catch {
           favicon = undefined;
         }
@@ -108,12 +108,12 @@ export const useShortcuts = ({
         ...ws,
         tabs: ws.tabs.map((t: any) => {
           if (t.id === data.id) {
-            // Проверяем изменились ли данные
+            
             const urlChanged = t.url !== data.url;
             const titleChanged = t.title !== pageTitle;
             const faviconChanged = favicon && t.favicon !== favicon;
             
-            // Если ничего не изменилось - не обновляем
+            
             if (!urlChanged && !titleChanged && !faviconChanged) return t;
             
             return {
@@ -129,7 +129,7 @@ export const useShortcuts = ({
         })
       })));
       
-      // Добавляем в историю при изменении URL
+      
       if (!data.url.startsWith('about:')) {
         addToHistory({
           url: data.url,

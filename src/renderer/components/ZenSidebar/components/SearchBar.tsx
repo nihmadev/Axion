@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+﻿import React, { useState, useRef } from 'react';
 import { SearchIcon } from '../icons';
 
 interface SearchBarProps {
@@ -21,7 +21,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
   };
 
   const handleSearchClick = () => {
-    // В minimal режиме клик по иконке фокусирует input
+    
     inputRef.current?.focus();
   };
 

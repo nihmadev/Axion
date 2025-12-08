@@ -1,4 +1,4 @@
-import { Tab, Workspace, Language, SplitView, TabGroup, TabGroupColorId } from '../../types';
+﻿import { Tab, Workspace, Language, SplitView, TabGroup, TabGroupColorId } from '../../types';
 
 export interface ZenSidebarProps {
   workspaces: Workspace[];
@@ -20,7 +20,7 @@ export interface ZenSidebarProps {
   onShowDownloads: () => void;
   onShowSettings?: () => void;
   
-  // Navigation
+  
   canGoBack?: boolean;
   canGoForward?: boolean;
   isLoading?: boolean;
@@ -29,14 +29,14 @@ export interface ZenSidebarProps {
   onReload?: () => void;
   onStop?: () => void;
   
-  // Search
+  
   onSearch?: (query: string) => void;
   
-  // Resizable
+  
   sidebarWidth?: number;
   onSidebarWidthChange?: (width: number) => void;
   
-  // Customization
+  
   position?: 'left' | 'right';
   style?: 'default' | 'compact' | 'minimal';
   showQuickSites?: boolean;
@@ -46,11 +46,11 @@ export interface ZenSidebarProps {
   showTabFavicons?: boolean;
   showTabPreviews?: boolean;
   
-  // Split View
+  
   splitView?: SplitView;
   onCloseSplitView?: () => void;
   
-  // Tab Groups
+  
   tabGroups?: TabGroup[];
   onCreateTabGroup?: (name: string, colorId: TabGroupColorId, tabIds: string[]) => void;
   onToggleTabGroupCollapsed?: (groupId: string) => void;
@@ -60,7 +60,7 @@ export interface ZenSidebarProps {
   onAddTabToGroup?: (tabId: string, groupId: string) => void;
   onRemoveTabFromGroup?: (tabId: string) => void;
   
-  // Localization
+  
   language: Language;
 }
 

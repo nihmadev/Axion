@@ -1,6 +1,4 @@
-/* ==============================================
-   ZenSidebar - Base Styles
-   ============================================== */
+
 
 .zen-sidebar {
   min-width: 180px;
@@ -24,7 +22,7 @@
   pointer-events: auto;
 }
 
-/* Smooth transitions for responsive changes */
+
 .zen-sidebar {
   transition: padding 0.2s ease,
               gap 0.2s ease;

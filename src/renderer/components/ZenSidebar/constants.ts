@@ -9,20 +9,20 @@ export const DEFAULT_QUICK_SITES: QuickSite[] = [
   { name: 'YouTube', url: 'https://youtube.com', color: '#ff0000' },
 ];
 
-// Предустановленные цвета для выбора
+
 export const PRESET_COLORS = [
-  '#4285f4', // Google Blue
-  '#1da1f2', // Twitter Blue
-  '#ff1b2d', // Opera Red
-  '#ff4500', // Reddit Orange
-  '#6e5494', // GitHub Purple
-  '#ff0000', // YouTube Red
-  '#25D366', // WhatsApp Green
-  '#0077B5', // LinkedIn Blue
-  '#E4405F', // Instagram Pink
-  '#FF6900', // Firefox Orange
-  '#7289DA', // Discord Purple
-  '#1DB954', // Spotify Green
+  '#4285f4', 
+  '#1da1f2', 
+  '#ff1b2d', 
+  '#ff4500', 
+  '#6e5494', 
+  '#ff0000', 
+  '#25D366', 
+  '#0077B5', 
+  '#E4405F', 
+  '#FF6900', 
+  '#7289DA', 
+  '#1DB954', 
 ];
 
 export const MIN_SIDEBAR_WIDTH = 180;

@@ -1,6 +1,4 @@
-/* ============================================== 
-   Sidebar - Dark Theme
-   ============================================== */
+
 
 .app[data-theme="dark"] .zen-sidebar {
   background: rgba(37, 37, 37, 0.95);
@@ -8,7 +6,7 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 
-/* Sidebar tabs */
+
 .app[data-theme="dark"] .zen-sidebar__tabs {
   border-color: rgba(255, 255, 255, 0.04);
 }
@@ -47,7 +45,7 @@
   border-top-color: var(--accent, #7c3aed);
 }
 
-/* Sidebar new tab button */
+
 .app[data-theme="dark"] .zen-sidebar__new-tab {
   color: #a1a1aa;
 }
@@ -57,7 +55,7 @@
   color: #e4e4e7;
 }
 
-/* Sidebar search */
+
 .app[data-theme="dark"] .zen-sidebar__search {
   background: rgba(255, 255, 255, 0.04);
 }
@@ -83,7 +81,7 @@
   color: #71717a;
 }
 
-/* Sidebar navigation */
+
 .app[data-theme="dark"] .zen-sidebar__nav-btn {
   color: #a1a1aa;
 }
@@ -93,7 +91,7 @@
   color: #e4e4e7;
 }
 
-/* Sidebar workspaces */
+
 .app[data-theme="dark"] .zen-sidebar__workspaces {
   border-color: rgba(255, 255, 255, 0.04);
 }
@@ -131,7 +129,7 @@
   color: #a1a1aa;
 }
 
-/* Sidebar bottom toolbar */
+
 .app[data-theme="dark"] .zen-sidebar__bottom {
   border-color: rgba(255, 255, 255, 0.04);
 }
@@ -154,9 +152,7 @@
   background: rgba(255, 180, 50, 0.2);
 }
 
-/* ============================================== 
-   Quick Sites in Sidebar - Dark Theme
-   ============================================== */
+
 
 .app[data-theme="dark"] .zen-sidebar__quick-sites {
   border-color: rgba(255, 255, 255, 0.04);
@@ -174,17 +170,13 @@
   color: #d4d4d8;
 }
 
-/* ============================================== 
-   Sidebar Quick Sites Section - Dark Theme
-   ============================================== */
+
 
 .app[data-theme="dark"] .zen-sidebar__section-title {
   color: #71717a;
 }
 
-/* ============================================== 
-   Active Tab Indicator - Dark Theme
-   ============================================== */
+
 
 .app[data-theme="dark"] .zen-sidebar__tab.is-active::before {
   background: linear-gradient(180deg, var(--accent, #7c3aed) 0%, #9333ea 100%);

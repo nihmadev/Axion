@@ -1,8 +1,8 @@
-import { useState, useRef, useEffect } from 'react';
+﻿import { useState, useRef, useEffect } from 'react';
 import { Settings, createDefaultSettings } from '../types';
 
 export const useAppState = () => {
-  // Базовые состояния
+  
   const [settings, setSettings] = useState<Settings>(() => createDefaultSettings());
   const [showNewTabModal, setShowNewTabModal] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -17,7 +17,7 @@ export const useAppState = () => {
   
   const webviewRefs = useRef<Map<string, HTMLWebViewElement>>(new Map());
 
-  // Проверка первого запуска или настройки showWelcomeOnNextLaunch
+  
   useEffect(() => {
     const checkFirstLaunch = async () => {
       try {
@@ -26,7 +26,7 @@ export const useAppState = () => {
         const shouldShowWelcome = isFirst || savedSettings?.showWelcomeOnNextLaunch;
         setShowWelcome(shouldShowWelcome);
         
-        // Если показываем приветствие из-за настройки, сбрасываем её
+        
         if (savedSettings?.showWelcomeOnNextLaunch && !isFirst) {
           const updatedSettings = { ...savedSettings, showWelcomeOnNextLaunch: false };
           await window.electronAPI.setSettings(updatedSettings);
@@ -43,11 +43,11 @@ export const useAppState = () => {
     checkFirstLaunch();
   }, []);
 
-  // Вычисляемые значения
+  
   const isModalOpen = showNewTabModal || showImportDialog || showTabSearch;
 
   return {
-    // State
+    
     settings,
     setSettings,
     showNewTabModal,

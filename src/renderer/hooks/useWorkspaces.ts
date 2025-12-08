@@ -16,13 +16,13 @@ export const useWorkspaces = ({ settings, language }: UseWorkspacesOptions) => {
   const [closedTabs, setClosedTabs] = useState<Tab[]>([]);
   const t = useTranslation(language);
   
-  // Ref для актуального состояния workspaces
+  
   const workspacesRef = useRef(workspaces);
   useEffect(() => {
     workspacesRef.current = workspaces;
   }, [workspaces]);
 
-  // Update tab titles based on URL changes
+  
   useEffect(() => {
     setWorkspaces(prev => prev.map(ws => ({
       ...ws,
@@ -41,7 +41,7 @@ export const useWorkspaces = ({ settings, language }: UseWorkspacesOptions) => {
   }) => {
     const workspaceId = uuidv4();
     
-    // Получаем title и favicon из URL
+    
     let title = t.common.home;
     let favicon: string | undefined;
     
@@ -49,7 +49,7 @@ export const useWorkspaces = ({ settings, language }: UseWorkspacesOptions) => {
       try {
         const urlObj = new URL(options.initialUrl);
         title = urlObj.hostname.replace('www.', '');
-        favicon = `https://www.google.com/s2/favicons?domain=${urlObj.hostname}&sz=32`;
+        favicon = `https://${urlObj.hostname}/favicon.ico`;
       } catch {
         title = t.common.newTab;
       }
@@ -119,7 +119,7 @@ export const useWorkspaces = ({ settings, language }: UseWorkspacesOptions) => {
       return;
     }
 
-    // Получаем title и favicon из URL
+    
     let title = t.common.home;
     let favicon: string | undefined;
     
@@ -127,7 +127,7 @@ export const useWorkspaces = ({ settings, language }: UseWorkspacesOptions) => {
       try {
         const urlObj = new URL(finalUrl);
         title = urlObj.hostname.replace('www.', '');
-        favicon = `https://www.google.com/s2/favicons?domain=${urlObj.hostname}&sz=32`;
+        favicon = `https://${urlObj.hostname}/favicon.ico`;
       } catch {
         title = t.common.newTab;
       }
@@ -152,14 +152,14 @@ export const useWorkspaces = ({ settings, language }: UseWorkspacesOptions) => {
   }, [activeWorkspaceId, createWorkspace, settings.searchEngine, t]);
 
   const closeTab = useCallback((tabId: string) => {
-    // Сохраняем закрытую вкладку для восстановления
+    
     const allTabs = workspaces.flatMap(ws => ws.tabs);
     const closedTab = allTabs.find(t => t.id === tabId);
     if (closedTab && closedTab.url) {
       setClosedTabs(prev => [closedTab, ...prev.slice(0, 9)]);
     }
 
-    // Удаляем WebView из глобального кэша и закрываем нативный WebView
+    
     removeWebViewFromCache(tabId);
     window.electronAPI.closeWebView?.(tabId).catch(console.error);
 
@@ -201,7 +201,7 @@ export const useWorkspaces = ({ settings, language }: UseWorkspacesOptions) => {
       tabs: ws.tabs.map(tab => {
         if (tab.id === tabId) {
           const updatedTab = { ...tab, ...updates };
-          // Update title based on URL change
+          
           if ('url' in updates) {
             updatedTab.title = updatedTab.url ? 
               (updatedTab.title === t.common.home ? t.common.newTab : updatedTab.title) : 
@@ -244,7 +244,7 @@ export const useWorkspaces = ({ settings, language }: UseWorkspacesOptions) => {
     ));
   }, [activeWorkspaceId]);
 
-  // Split View функции
+  
   const toggleSplitView = useCallback(() => {
     if (!activeWorkspaceId) return;
     
@@ -253,10 +253,10 @@ export const useWorkspaces = ({ settings, language }: UseWorkspacesOptions) => {
       
       const currentSplit = ws.splitView;
       if (currentSplit?.enabled) {
-        // Выключаем split view
+        
         return { ...ws, splitView: undefined };
       } else {
-        // Включаем split view - берём активную вкладку слева, следующую справа
+        
         const activeIdx = ws.tabs.findIndex(t => t.id === ws.activeTabId);
         const rightTab = ws.tabs[activeIdx + 1] || ws.tabs[0];
         return {
@@ -313,9 +313,9 @@ export const useWorkspaces = ({ settings, language }: UseWorkspacesOptions) => {
     }));
   }, [activeWorkspaceId]);
 
-  // ========== Tab Groups ==========
   
-  // Создать новую группу вкладок
+  
+  
   const createTabGroup = useCallback((name: string, colorId: TabGroupColorId, tabIds: string[]) => {
     if (!activeWorkspaceId) return;
     
@@ -342,7 +342,7 @@ export const useWorkspaces = ({ settings, language }: UseWorkspacesOptions) => {
     return groupId;
   }, [activeWorkspaceId]);
 
-  // Добавить вкладку в группу
+  
   const addTabToGroup = useCallback((tabId: string, groupId: string) => {
     if (!activeWorkspaceId) return;
     
@@ -358,7 +358,7 @@ export const useWorkspaces = ({ settings, language }: UseWorkspacesOptions) => {
     }));
   }, [activeWorkspaceId]);
 
-  // Удалить вкладку из группы
+  
   const removeTabFromGroup = useCallback((tabId: string) => {
     if (!activeWorkspaceId) return;
     
@@ -369,14 +369,14 @@ export const useWorkspaces = ({ settings, language }: UseWorkspacesOptions) => {
         tab.id === tabId ? { ...tab, groupId: undefined } : tab
       );
       
-      // Проверяем, остались ли вкладки в группах
+      
       const tab = ws.tabs.find(t => t.id === tabId);
       const groupId = tab?.groupId;
       
       if (groupId) {
         const remainingTabsInGroup = updatedTabs.filter(t => t.groupId === groupId);
         if (remainingTabsInGroup.length === 0) {
-          // Удаляем пустую группу
+          
           return {
             ...ws,
             tabs: updatedTabs,
@@ -389,7 +389,7 @@ export const useWorkspaces = ({ settings, language }: UseWorkspacesOptions) => {
     }));
   }, [activeWorkspaceId]);
 
-  // Обновить группу (имя, цвет, свёрнутость)
+  
   const updateTabGroup = useCallback((groupId: string, updates: Partial<Omit<TabGroup, 'id'>>) => {
     if (!activeWorkspaceId) return;
     
@@ -405,7 +405,7 @@ export const useWorkspaces = ({ settings, language }: UseWorkspacesOptions) => {
     }));
   }, [activeWorkspaceId]);
 
-  // Свернуть/развернуть группу
+  
   const toggleTabGroupCollapsed = useCallback((groupId: string) => {
     if (!activeWorkspaceId) return;
     
@@ -421,7 +421,7 @@ export const useWorkspaces = ({ settings, language }: UseWorkspacesOptions) => {
     }));
   }, [activeWorkspaceId]);
 
-  // Удалить группу (вкладки остаются)
+  
   const deleteTabGroup = useCallback((groupId: string) => {
     if (!activeWorkspaceId) return;
     
@@ -438,7 +438,7 @@ export const useWorkspaces = ({ settings, language }: UseWorkspacesOptions) => {
     }));
   }, [activeWorkspaceId]);
 
-  // Закрыть все вкладки в группе
+  
   const closeTabGroup = useCallback((groupId: string) => {
     if (!activeWorkspaceId) return;
     
@@ -448,7 +448,7 @@ export const useWorkspaces = ({ settings, language }: UseWorkspacesOptions) => {
     const tabsInGroup = ws.tabs.filter(t => t.groupId === groupId);
     tabsInGroup.forEach(tab => closeTab(tab.id));
     
-    // Удаляем группу
+    
     setWorkspaces(prev => prev.map(w => {
       if (w.id !== activeWorkspaceId) return w;
       return {
@@ -458,7 +458,7 @@ export const useWorkspaces = ({ settings, language }: UseWorkspacesOptions) => {
     }));
   }, [activeWorkspaceId, workspaces, closeTab]);
 
-  // Получение активного workspace и вкладки
+  
   const activeWorkspace = workspaces.find(w => w.id === activeWorkspaceId);
   const splitView = activeWorkspace?.splitView;
   const tabs = activeWorkspace?.tabs ?? [];
@@ -493,7 +493,7 @@ export const useWorkspaces = ({ settings, language }: UseWorkspacesOptions) => {
     setSplitViewTab,
     setSplitRatio,
     closeSplitView,
-    // Tab Groups
+    
     tabGroups,
     createTabGroup,
     addTabToGroup,

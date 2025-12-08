@@ -1,6 +1,3 @@
-//! Ad Blocker module using Brave's adblock-rust engine
-//! 
-//! Provides comprehensive ad and tracker blocking with EasyList support
 
 pub mod commands;
 
@@ -11,16 +8,12 @@ use adblock::request::Request;
 use std::sync::{Mutex, RwLock, LazyLock, atomic::{AtomicBool, AtomicU64, Ordering}};
 use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
-
-/// Default filter lists URLs
-const EASYLIST_URL: &str = "https://easylist.to/easylist/easylist.txt";
-const EASYPRIVACY_URL: &str = "https://easylist.to/easylist/easyprivacy.txt";
-const UBLOCK_FILTERS_URL: &str = "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters.txt";
-const UBLOCK_PRIVACY_URL: &str = "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/privacy.txt";
-const UBLOCK_BADWARE_URL: &str = "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/badware.txt";
-const PETER_LOWE_URL: &str = "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=adblockplus&showintro=1&mimetype=plaintext";
-
-/// Embedded fallback filter rules (basic protection when no lists are loaded)
+const EASYLIST_URL: &str = "https:
+const EASYPRIVACY_URL: &str = "https:
+const UBLOCK_FILTERS_URL: &str = "https:
+const UBLOCK_PRIVACY_URL: &str = "https:
+const UBLOCK_BADWARE_URL: &str = "https:
+const PETER_LOWE_URL: &str = "https:
 const FALLBACK_RULES: &str = r#"
 ||googlesyndication.com^
 ||googleadservices.com^
@@ -81,8 +74,6 @@ const FALLBACK_RULES: &str = r#"
 ||bugsnag.com^
 ||rollbar.com^
 "#;
-
-/// Statistics for blocked requests
 #[derive(Debug, Clone, Serialize, Deserialize, Default)]
 pub struct BlockerStats {
     pub total_blocked: u64,
@@ -90,37 +81,25 @@ pub struct BlockerStats {
     pub trackers_blocked: u64,
     pub blocked_domains: HashMap<String, u64>,
 }
-
-/// Global state for ad blocker
 static BLOCKER_ENABLED: AtomicBool = AtomicBool::new(true);
 static LISTS_LOADED: AtomicBool = AtomicBool::new(false);
 static TOTAL_BLOCKED: AtomicU64 = AtomicU64::new(0);
 static ADS_BLOCKED: AtomicU64 = AtomicU64::new(0);
 static TRACKERS_BLOCKED: AtomicU64 = AtomicU64::new(0);
 
-// Thread-local engine storage
-// Engine is not Send+Sync, so we use thread-local storage
 std::thread_local! {
     static ENGINE: std::cell::RefCell<Option<Engine>> = std::cell::RefCell::new(None);
 }
-
-/// Cached filter rules for rebuilding engine in each thread
 static FILTER_RULES: LazyLock<RwLock<Vec<String>>> = LazyLock::new(|| RwLock::new(Vec::new()));
-
-/// Blocked domains tracking
 static BLOCKED_DOMAINS: LazyLock<Mutex<HashMap<String, u64>>> = LazyLock::new(|| Mutex::new(HashMap::new()));
-
-/// Initialize engine in current thread with cached rules
 fn ensure_engine_initialized() {
     ENGINE.with(|engine| {
         let mut engine_ref = engine.borrow_mut();
         if engine_ref.is_none() {
             let mut filter_set = FilterSet::new(true);
             
-            // Add fallback rules
             filter_set.add_filter_list(FALLBACK_RULES, ParseOptions::default());
             
-            // Add cached rules if available
             if let Ok(rules) = FILTER_RULES.read() {
                 for rule_list in rules.iter() {
                     filter_set.add_filter_list(rule_list, ParseOptions::default());
@@ -131,24 +110,18 @@ fn ensure_engine_initialized() {
         }
     });
 }
-
-/// Check if a URL should be blocked
 pub fn should_block_url(url: &str, source_url: &str, request_type: &str) -> bool {
-    // Check if blocker is enabled
     if !BLOCKER_ENABLED.load(Ordering::Relaxed) {
         return false;
     }
     
-    // Ensure engine is initialized in this thread
     ensure_engine_initialized();
     
-    // Create request for adblock engine
     let request = match Request::new(url, source_url, request_type) {
         Ok(req) => req,
         Err(_) => return false,
     };
     
-    // Check with engine
     let matched = ENGINE.with(|engine| {
         if let Some(ref eng) = *engine.borrow() {
             eng.check_network_request(&request).matched
@@ -158,10 +131,8 @@ pub fn should_block_url(url: &str, source_url: &str, request_type: &str) -> bool
     });
     
     if matched {
-        // Update statistics
         TOTAL_BLOCKED.fetch_add(1, Ordering::Relaxed);
         
-        // Categorize the block
         let url_lower = url.to_lowercase();
         if url_lower.contains("track") || url_lower.contains("analytics") 
             || url_lower.contains("telemetry") || url_lower.contains("metric") {
@@ -170,7 +141,6 @@ pub fn should_block_url(url: &str, source_url: &str, request_type: &str) -> bool
             ADS_BLOCKED.fetch_add(1, Ordering::Relaxed);
         }
         
-        // Track domain
         if let Ok(parsed) = url::Url::parse(url) {
             if let Some(domain) = parsed.host_str() {
                 if let Ok(mut domains) = BLOCKED_DOMAINS.lock() {
@@ -182,8 +152,6 @@ pub fn should_block_url(url: &str, source_url: &str, request_type: &str) -> bool
     
     matched
 }
-
-/// Load filter lists from URLs (runs in blocking context)
 pub async fn load_filter_lists() -> Result<usize, String> {
     let lists = vec![
         ("EasyList", EASYLIST_URL),
@@ -213,12 +181,10 @@ pub async fn load_filter_lists() -> Result<usize, String> {
         }
     }
     
-    // Store rules for thread-local engine initialization
     if let Ok(mut rules) = FILTER_RULES.write() {
         *rules = downloaded_rules;
     }
     
-    // Reset thread-local engine to force reinitialization with new rules
     ENGINE.with(|engine| {
         *engine.borrow_mut() = None;
     });
@@ -228,23 +194,15 @@ pub async fn load_filter_lists() -> Result<usize, String> {
     println!("[AdBlock] Total rules loaded: {}", total_rules);
     Ok(total_rules)
 }
-
-/// Enable or disable the blocker
 pub fn set_enabled(enabled: bool) {
     BLOCKER_ENABLED.store(enabled, Ordering::Relaxed);
 }
-
-/// Check if blocker is enabled
 pub fn is_enabled() -> bool {
     BLOCKER_ENABLED.load(Ordering::Relaxed)
 }
-
-/// Check if filter lists are loaded
 pub fn are_lists_loaded() -> bool {
     LISTS_LOADED.load(Ordering::Relaxed)
 }
-
-/// Get blocking statistics
 pub fn get_stats() -> BlockerStats {
     let blocked_domains = BLOCKED_DOMAINS.lock()
         .map(|d| d.clone())
@@ -257,8 +215,6 @@ pub fn get_stats() -> BlockerStats {
         blocked_domains,
     }
 }
-
-/// Reset statistics
 pub fn reset_stats() {
     TOTAL_BLOCKED.store(0, Ordering::Relaxed);
     ADS_BLOCKED.store(0, Ordering::Relaxed);
@@ -267,14 +223,11 @@ pub fn reset_stats() {
         domains.clear();
     }
 }
-
-/// Add custom filter rules
 pub fn add_custom_rules(rules: &str) -> Result<(), String> {
     if let Ok(mut stored_rules) = FILTER_RULES.write() {
         stored_rules.push(rules.to_string());
     }
     
-    // Reset thread-local engine to force reinitialization
     ENGINE.with(|engine| {
         *engine.borrow_mut() = None;
     });
@@ -289,24 +242,21 @@ mod tests {
     
     #[test]
     fn test_basic_blocking() {
-        // Should block known ad domains
         assert!(should_block_url(
-            "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js",
-            "https://example.com",
+            "https:
+            "https:
             "script"
         ));
         
-        // Should block tracking
         assert!(should_block_url(
-            "https://www.google-analytics.com/analytics.js",
-            "https://example.com",
+            "https:
+            "https:
             "script"
         ));
         
-        // Should not block normal content
         assert!(!should_block_url(
-            "https://example.com/page.html",
-            "https://example.com",
+            "https:
+            "https:
             "document"
         ));
     }

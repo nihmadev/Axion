@@ -4,8 +4,6 @@ use tauri::{AppHandle, Emitter, Manager};
 use super::types::Download;
 use super::storage::{get_downloads, save_downloads};
 use super::utils::{get_downloads_dir, extract_filename, get_unique_filename};
-
-/// Начать загрузку файла
 pub async fn start_download(
     app: AppHandle,
     url: String,
@@ -14,13 +12,11 @@ pub async fn start_download(
     let download_id = format!("dl_{}", uuid::Uuid::new_v4().to_string().replace("-", "")[..12].to_string());
     let downloads_dir = get_downloads_dir()?;
     
-    // Создаём HTTP клиент
     let client = reqwest::Client::builder()
         .user_agent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36")
         .build()
         .map_err(|e| e.to_string())?;
     
-    // Делаем HEAD запрос для получения информации
     let head_response = client.head(&url).send().await;
     
     let (total_bytes, content_disposition, mime_type) = match head_response {
@@ -41,7 +37,6 @@ pub async fn start_download(
         Err(_) => (-1, None, None),
     };
     
-    // Определяем имя файла
     let filename = suggested_filename.unwrap_or_else(|| {
         extract_filename(&url, content_disposition.as_deref())
     });
@@ -61,19 +56,15 @@ pub async fn start_download(
         mime_type,
     };
     
-    // Отправляем начальное событие
     let _ = app.emit("download-started", &download);
     let _ = app.emit("download-update", &download);
     
-    // Сохраняем в историю
     let mut downloads = get_downloads().await.unwrap_or_default();
     downloads.insert(0, download.clone());
     let _ = save_downloads(downloads).await;
     
-    // Создаём канал для отмены
     let (cancel_tx, mut cancel_rx) = tokio::sync::watch::channel(false);
     
-    // Сохраняем sender для возможности отмены
     {
         let state = app.state::<crate::AppState>();
         if let Ok(mut manager) = state.download_manager.lock() {
@@ -81,7 +72,6 @@ pub async fn start_download(
         };
     }
     
-    // Запускаем загрузку в фоне
     let app_clone = app.clone();
     let download_id_clone = download_id.clone();
     let url_clone = url.clone();
@@ -97,7 +87,6 @@ pub async fn start_download(
             &mut cancel_rx,
         ).await;
         
-        // Удаляем из активных загрузок
         {
             let state = app_clone.state::<crate::AppState>();
             if let Ok(mut manager) = state.download_manager.lock() {
@@ -105,24 +94,20 @@ pub async fn start_download(
             };
         }
         
-        // Обновляем статус
         let (final_state, final_bytes) = match &result {
             Ok(bytes) => ("completed", *bytes),
             Err(e) if e.contains("cancelled") => ("cancelled", 0),
             Err(_) => ("interrupted", 0),
         };
         
-        // Обновляем в истории
         if let Ok(mut downloads) = get_downloads().await {
             if let Some(dl) = downloads.iter_mut().find(|d| d.id == download_id_clone) {
                 dl.state = final_state.to_string();
                 if final_state == "completed" {
-                    // Используем реальный размер скачанного файла
                     dl.received_bytes = final_bytes;
                     dl.total_bytes = final_bytes;
-                    dl.speed = 0; // Загрузка завершена, скорость 0
+                    dl.speed = 0;
                 }
-                // Отправляем оба события для гарантии обновления UI
                 let _ = app_clone.emit("download-progress", dl.clone());
                 let _ = app_clone.emit("download-update", dl.clone());
                 let _ = app_clone.emit("download-completed", dl.clone());
@@ -133,9 +118,6 @@ pub async fn start_download(
     
     Ok(download)
 }
-
-/// Загрузка файла с прогрессом
-/// Возвращает количество скачанных байт при успехе
 async fn download_file(
     app: AppHandle,
     download_id: String,
@@ -158,16 +140,13 @@ async fn download_file(
         return Err(format!("HTTP error: {}", response.status()));
     }
     
-    // Получаем Content-Length из GET ответа (более надёжно чем HEAD)
     let actual_total_bytes = response.headers()
         .get("content-length")
         .and_then(|v| v.to_str().ok())
         .and_then(|s| s.parse::<i64>().ok())
         .unwrap_or(total_bytes);
     
-    // Используем размер из GET если HEAD не вернул размер
     let total_bytes = if total_bytes <= 0 && actual_total_bytes > 0 {
-        // Сразу обновляем UI с правильным размером
         if let Ok(mut downloads) = get_downloads().await {
             if let Some(dl) = downloads.iter_mut().find(|d| d.id == download_id) {
                 dl.total_bytes = actual_total_bytes;
@@ -189,11 +168,9 @@ async fn download_file(
     let mut last_bytes = 0i64;
     let update_interval = std::time::Duration::from_millis(250);
     
-    // Отправляем первое обновление сразу после начала загрузки
     let mut first_update_sent = false;
     
     while let Some(chunk_result) = stream.next().await {
-        // Проверяем отмену
         if *cancel_rx.borrow() {
             let _ = tokio::fs::remove_file(&save_path).await;
             return Err("Download cancelled".to_string());
@@ -203,7 +180,6 @@ async fn download_file(
         file.write_all(&chunk).await.map_err(|e| e.to_string())?;
         received_bytes += chunk.len() as i64;
         
-        // Отправляем обновление прогресса
         let now = std::time::Instant::now();
         let should_update = !first_update_sent || now.duration_since(last_update) >= update_interval;
         
@@ -212,10 +188,8 @@ async fn download_file(
             let bytes_diff = received_bytes - last_bytes;
             let speed = if elapsed > 0.0 { (bytes_diff as f64 / elapsed) as i64 } else { 0 };
             
-            // Используем received_bytes как totalBytes если размер неизвестен (-1)
             let effective_total = if total_bytes > 0 { total_bytes } else { received_bytes };
             
-            // Обновляем в истории загрузок
             if let Ok(mut downloads) = get_downloads().await {
                 if let Some(dl) = downloads.iter_mut().find(|d| d.id == download_id) {
                     dl.received_bytes = received_bytes;
@@ -237,10 +211,7 @@ async fn download_file(
     
     Ok(received_bytes)
 }
-
-/// Отменить загрузку
 pub async fn cancel_download_by_id(app: &AppHandle, id: &str) -> Result<(), String> {
-    // Отправляем сигнал отмены
     {
         let state = app.state::<crate::AppState>();
         if let Ok(manager) = state.download_manager.lock() {
@@ -250,7 +221,6 @@ pub async fn cancel_download_by_id(app: &AppHandle, id: &str) -> Result<(), Stri
         };
     }
     
-    // Обновляем статус в истории
     if let Ok(mut downloads) = get_downloads().await {
         if let Some(dl) = downloads.iter_mut().find(|d| d.id == id) {
             dl.state = "cancelled".to_string();

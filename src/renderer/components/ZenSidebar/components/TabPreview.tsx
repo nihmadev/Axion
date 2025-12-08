@@ -43,7 +43,7 @@ export const TabPreview: React.FC<TabPreviewProps> = ({ tab, position, sidebarPo
     }
   })() : '';
 
-  // Позиционирование превью - появляется сбоку от сайдбара
+  
   const style: React.CSSProperties = {
     position: 'fixed',
     top: Math.max(60, Math.min(position.y - 100, window.innerHeight - 280)),
@@ -56,7 +56,7 @@ export const TabPreview: React.FC<TabPreviewProps> = ({ tab, position, sidebarPo
 
   return (
     <div className="tab-preview" style={style} data-position={sidebarPosition}>
-      {/* Миниатюра страницы */}
+      {}
       <div className="tab-preview__thumbnail">
         {isInternalPage ? (
           <div className="tab-preview__internal-page">
@@ -68,21 +68,21 @@ export const TabPreview: React.FC<TabPreviewProps> = ({ tab, position, sidebarPo
             </span>
           </div>
         ) : hasThumbnail ? (
-          /* Реальный скриншот страницы */
+          
           <div className="tab-preview__screenshot">
             <img 
               src={tab.thumbnail} 
               alt={tab.title || ''} 
               className="tab-preview__screenshot-img"
             />
-            {/* Оверлей с URL */}
+            {}
             <div className="tab-preview__screenshot-overlay">
               <div className="tab-preview__browser-url">{hostname}</div>
             </div>
           </div>
         ) : (
           <div className="tab-preview__site">
-            {/* Имитация окна браузера (fallback без скриншота) */}
+            {}
             <div className="tab-preview__browser-chrome">
               <div className="tab-preview__browser-dots">
                 <span></span>
@@ -102,7 +102,7 @@ export const TabPreview: React.FC<TabPreviewProps> = ({ tab, position, sidebarPo
           </div>
         )}
         
-        {/* Статус индикаторы */}
+        {}
         {(tab.isFrozen || tab.isLoading) && (
           <div className="tab-preview__status-badge">
             {tab.isFrozen && <span className="tab-preview__frozen"><SnowflakeIcon /></span>}
@@ -111,7 +111,7 @@ export const TabPreview: React.FC<TabPreviewProps> = ({ tab, position, sidebarPo
         )}
       </div>
       
-      {/* Информация о вкладке */}
+      {}
       <div className="tab-preview__info">
         <div className="tab-preview__title">
           {tab.title || (isInternalPage ? getInternalPageName(tab.url) : t.common.newTab)}
@@ -121,7 +121,7 @@ export const TabPreview: React.FC<TabPreviewProps> = ({ tab, position, sidebarPo
         )}
       </div>
       
-      {/* Стрелка-указатель */}
+      {}
       <div className="tab-preview__arrow"></div>
     </div>
   );

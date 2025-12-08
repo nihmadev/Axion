@@ -1,32 +1,30 @@
-/* ==============================================
-   Components Index
-   ============================================== */
 
-/* Layout */
+
+
 @import './title-bar.css';
 @import './tab-bar.css';
 @import './address-bar.css';
 @import './webview-container.css';
 @import './split-view.css';
 
-/* Navigation & Search */
+
 @import './tab-search.css';
 @import './search-box.css';
 @import './new-tab-modal.css';
 
-/* Pages */
+
 @import './welcome-page.css';
 @import './quicksites-page.css';
 @import './history-page.css';
 @import './downloads-page.css';
 @import './settings/index.css';
 
-/* Widgets */
+
 @import './clock-widget.css';
 @import './weather-widget.css';
 @import './quick-sites.css';
 
-/* UI Components */
+
 @import './banners.css';
 @import './toast.css';
 @import './frozen-tab.css';

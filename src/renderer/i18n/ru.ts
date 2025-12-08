@@ -1,4 +1,4 @@
-import type { Translations } from './types';
+﻿import type { Translations } from './types';
 
 export const ru: Translations = {
   settings: {
@@ -13,7 +13,7 @@ export const ru: Translations = {
       performance: 'Производительность',
       advanced: 'Дополнительно',
     },
-    // Appearance
+    
     search: 'Поиск',
     searchEngine: 'Поисковая система',
     searchEngineDesc: 'Выберите поисковую систему для адресной строки',
@@ -36,7 +36,7 @@ export const ru: Translations = {
     radiusLarge: 'Много',
     animations: 'Анимации',
     animationsDesc: 'Включить плавные анимации интерфейса',
-    // Sidebar
+    
     position: 'Расположение',
     sidebarPosition: 'Позиция сайдбара',
     sidebarPositionDesc: 'Выберите сторону экрана для сайдбара',
@@ -56,7 +56,7 @@ export const ru: Translations = {
     workspacesDesc: 'Показывать список воркспейсов',
     navigation: 'Навигация',
     navigationDesc: 'Показывать кнопки навигации',
-    // Tabs
+    
     tabsAppearance: 'Внешний вид вкладок',
     tabStyle: 'Стиль вкладок',
     tabStyleDesc: 'Выберите внешний вид вкладок',
@@ -72,7 +72,7 @@ export const ru: Translations = {
     closeNever: 'Никогда',
     tabPreviews: 'Превью вкладок',
     tabPreviewsDesc: 'Показывать миниатюры при наведении',
-    // Start page
+    
     background: 'Фон',
     wallpaper: 'Обои',
     wallpaperDesc: 'Выберите фоновое изображение',
@@ -96,7 +96,7 @@ export const ru: Translations = {
     viewGrid: 'Сетка',
     viewList: 'Список',
     viewCompact: 'Компактный',
-    // Privacy
+    
     protection: 'Защита',
     adBlock: 'Блокировка рекламы',
     adBlockDesc: 'Блокировать рекламу и трекеры',
@@ -107,7 +107,7 @@ export const ru: Translations = {
     data: 'Данные',
     clearOnExit: 'Очищать при выходе',
     clearOnExitDesc: 'Удалять историю и кэш при закрытии браузера',
-    // DNS-over-HTTPS
+    
     dnsOverHttps: 'DNS-over-HTTPS',
     dohEnabled: 'Включить DoH',
     dohEnabledDesc: 'Шифровать DNS-запросы для повышения приватности',
@@ -120,7 +120,7 @@ export const ru: Translations = {
     dohProviderQuad9: 'Quad9 (9.9.9.9)',
     dohProviderAdguard: 'AdGuard DNS',
     dohProviderCustom: 'Свой сервер',
-    // Performance
+    
     acceleration: 'Ускорение',
     hardwareAcceleration: 'Аппаратное ускорение',
     hardwareAccelerationDesc: 'Использовать GPU для рендеринга',
@@ -133,7 +133,7 @@ export const ru: Translations = {
     tabSuspensionDesc: 'Выгружать неактивные вкладки из памяти',
     suspensionTimeout: 'Таймаут заморозки',
     suspensionTimeoutDesc: 'минут',
-    // Advanced
+    
     interface: 'Интерфейс',
     bookmarksBar: 'Панель закладок',
     bookmarksBarDesc: 'Показывать панель закладок',

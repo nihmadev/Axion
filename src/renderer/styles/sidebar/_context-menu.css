@@ -1,8 +1,6 @@
-/* ==============================================
-   ZenSidebar - Context Menu
-   ============================================== */
 
-/* Context menu overlay */
+
+
 .zen-workspace-context-menu-overlay {
   position: fixed;
   top: 0;
@@ -13,7 +11,7 @@
   background: transparent;
 }
 
-/* Context menu */
+
 .zen-workspace-context-menu {
   position: fixed;
   z-index: 100001;

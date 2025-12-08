@@ -28,7 +28,6 @@ pub async fn clear_completed() -> Result<(), String> {
     let path = get_downloads_file()?;
     
     if path.exists() {
-        // Читаем текущие загрузки и оставляем только активные
         let downloads = get_downloads().await.unwrap_or_default();
         let active: Vec<Download> = downloads.into_iter()
             .filter(|d| d.state == "progressing")

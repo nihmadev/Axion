@@ -1,7 +1,7 @@
-export type Language = 'ru' | 'en' | 'es' | 'fr' | 'de' | 'zh-CN';
+﻿export type Language = 'ru' | 'en' | 'es' | 'fr' | 'de' | 'zh-CN';
 
 export interface Translations {
-  // Settings page
+  
   settings: {
     title: string;
     tabs: {
@@ -14,7 +14,7 @@ export interface Translations {
       performance: string;
       advanced: string;
     };
-    // Appearance
+    
     search: string;
     searchEngine: string;
     searchEngineDesc: string;
@@ -37,7 +37,7 @@ export interface Translations {
     radiusLarge: string;
     animations: string;
     animationsDesc: string;
-    // Sidebar
+    
     position: string;
     sidebarPosition: string;
     sidebarPositionDesc: string;
@@ -57,7 +57,7 @@ export interface Translations {
     workspacesDesc: string;
     navigation: string;
     navigationDesc: string;
-    // Tabs
+    
     tabsAppearance: string;
     tabStyle: string;
     tabStyleDesc: string;
@@ -73,7 +73,7 @@ export interface Translations {
     closeNever: string;
     tabPreviews: string;
     tabPreviewsDesc: string;
-    // Start page
+    
     background: string;
     wallpaper: string;
     wallpaperDesc: string;
@@ -97,7 +97,7 @@ export interface Translations {
     viewGrid: string;
     viewList: string;
     viewCompact: string;
-    // Privacy
+    
     protection: string;
     adBlock: string;
     adBlockDesc: string;
@@ -108,7 +108,7 @@ export interface Translations {
     data: string;
     clearOnExit: string;
     clearOnExitDesc: string;
-    // DNS-over-HTTPS
+    
     dnsOverHttps: string;
     dohEnabled: string;
     dohEnabledDesc: string;
@@ -121,7 +121,7 @@ export interface Translations {
     dohProviderQuad9: string;
     dohProviderAdguard: string;
     dohProviderCustom: string;
-    // Performance
+    
     acceleration: string;
     hardwareAcceleration: string;
     hardwareAccelerationDesc: string;
@@ -134,7 +134,7 @@ export interface Translations {
     tabSuspensionDesc: string;
     suspensionTimeout: string;
     suspensionTimeoutDesc: string;
-    // Advanced
+    
     interface: string;
     bookmarksBar: string;
     bookmarksBarDesc: string;
@@ -153,7 +153,7 @@ export interface Translations {
     showWelcomeOnNextLaunch: string;
     showWelcomeOnNextLaunchDesc: string;
   };
-  // QuickSites page
+  
   quickSitesPage: {
     title: string;
     searchPlaceholder: string;
@@ -168,7 +168,7 @@ export interface Translations {
     add: string;
     site: string;
   };
-  // Common
+  
   common: {
     yandex: string;
     newTab: string;
@@ -213,7 +213,7 @@ export interface Translations {
     unknown: string;
     pip: string;
   };
-  // Weather descriptions
+  
   weather: {
     clear: string;
     mostlyClear: string;
@@ -225,7 +225,7 @@ export interface Translations {
     snow: string;
     thunderstorm: string;
   };
-  // Password manager
+  
   passwords: {
     setupTitle: string;
     setupDesc: string;
@@ -258,7 +258,7 @@ export interface Translations {
     fillAll: string;
     vaultDeleted: string;
   };
-  // Welcome page
+  
   welcome: {
     importData: string;
     importDescription: string;
@@ -274,7 +274,7 @@ export interface Translations {
     close: string;
     minimize: string;
     maximize: string;
-    // Accent colors
+    
     colors: {
       white: string;
       gray: string;
@@ -288,7 +288,7 @@ export interface Translations {
       cyan: string;
     };
   };
-  // Tab Groups
+  
   tabGroups: {
     createGroup: string;
     groupName: string;
@@ -299,7 +299,7 @@ export interface Translations {
     removeFromGroup: string;
     newGroup: string;
   };
-  // Autofill
+  
   autofill: {
     savePassword: string;
     save: string;

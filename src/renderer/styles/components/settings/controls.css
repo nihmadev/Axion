@@ -1,4 +1,4 @@
-/* Select */
+
 .settings-page-item select {
   padding: 10px 14px;
   background: rgba(0, 0, 0, 0.5);
@@ -21,14 +21,14 @@
   padding: 10px;
 }
 
-/* Range input */
+
 .settings-page-item input[type="range"] {
   width: 150px;
   accent-color: var(--accent, #7c3aed);
   cursor: pointer;
 }
 
-/* Toggle */
+
 .settings-toggle {
   width: 44px;
   height: 24px;
@@ -61,7 +61,7 @@
   left: 22px;
 }
 
-/* Text Input */
+
 .settings-input {
   width: 100%;
   padding: 10px 14px;
@@ -83,7 +83,7 @@
   color: rgba(255, 255, 255, 0.4);
 }
 
-/* DoH Provider Info */
+
 .doh-provider-info {
   display: flex;
   align-items: center;

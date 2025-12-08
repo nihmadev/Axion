@@ -1,6 +1,4 @@
-/// JavaScript для извлечения метаданных страницы
 pub const METADATA_EXTRACTORS_JS: &str = r#"
-    // Получаем заголовок с сайт-специфичной логикой
     function getTitle() {
         if (isReddit) {
             const postTitle = document.querySelector('[data-testid="post-title"]') ||
@@ -19,7 +17,6 @@ pub const METADATA_EXTRACTORS_JS: &str = r#"
         return document.title;
     }
     
-    // Получаем автора
     function getAuthor() {
         if (isReddit) {
             const author = document.querySelector('[data-testid="post_author_link"]') ||
@@ -45,7 +42,6 @@ pub const METADATA_EXTRACTORS_JS: &str = r#"
         return '';
     }
     
-    // Получаем дату публикации
     function getPublishDate() {
         const selectors = [
             'time[datetime]',
@@ -71,7 +67,6 @@ pub const METADATA_EXTRACTORS_JS: &str = r#"
         return '';
     }
     
-    // Получаем сабреддит для Reddit
     function getSubreddit() {
         if (!isReddit) return '';
         const subredditLink = document.querySelector('a[href*="/r/"][data-click-id="subreddit"]') ||
@@ -80,7 +75,6 @@ pub const METADATA_EXTRACTORS_JS: &str = r#"
         if (subredditLink) {
             return typeof subredditLink === 'string' ? subredditLink : subredditLink.innerText;
         }
-        // Извлекаем из URL
         const match = window.location.pathname.match(/\/r\/([^\/]+)/);
         return match ? 'r/' + match[1] : '';
     }

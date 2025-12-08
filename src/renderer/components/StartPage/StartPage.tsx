@@ -7,11 +7,11 @@ import { defaultSites } from './constants';
 import { useClock, useWeather, useSearchWidth } from './hooks';
 import { ClockWidget, WeatherWidget, SearchBox, QuickSites } from './components';
 
-// Функция для получения favicon
+
 const getFaviconUrl = (url: string) => {
   try {
     const urlObj = new URL(url);
-    return `https://www.google.com/s2/favicons?domain=${urlObj.hostname}&sz=64`;
+    return `https://${urlObj.hostname}/favicon.ico`;
   } catch {
     return '';
   }
@@ -35,7 +35,7 @@ const StartPage: React.FC<StartPageProps> = ({
   const weather = useWeather(language);
   const searchWidth = useSearchWidth(searchValue);
 
-  // Фильтруем скрытые сайты и применяем переименования
+  
   const displaySites = useMemo(() => {
     if (recentSites.length > 0) {
       return recentSites

@@ -1,4 +1,4 @@
-import type { Translations } from './types';
+﻿import type { Translations } from './types';
 
 export const de: Translations = {
   settings: {
@@ -13,7 +13,7 @@ export const de: Translations = {
       performance: 'Leistung',
       advanced: 'Erweitert',
     },
-    // Appearance
+    
     search: 'Suche',
     searchEngine: 'Suchmaschine',
     searchEngineDesc: 'Suchmaschine für die Adressleiste auswählen',
@@ -36,7 +36,7 @@ export const de: Translations = {
     radiusLarge: 'Groß',
     animations: 'Animationen',
     animationsDesc: 'Flüssige Oberflächenanimationen aktivieren',
-    // Sidebar
+    
     position: 'Position',
     sidebarPosition: 'Position der Seitenleiste',
     sidebarPositionDesc: 'Seite des Bildschirms für die Seitenleiste auswählen',
@@ -56,7 +56,7 @@ export const de: Translations = {
     workspacesDesc: 'Liste der Arbeitsbereiche anzeigen',
     navigation: 'Navigation',
     navigationDesc: 'Navigationsschaltflächen anzeigen',
-    // Tabs
+    
     tabsAppearance: 'Tab-Aussehen',
     tabStyle: 'Tab-Stil',
     tabStyleDesc: 'Aussehen der Tabs auswählen',
@@ -72,7 +72,7 @@ export const de: Translations = {
     closeNever: 'Nie',
     tabPreviews: 'Tab-Vorschau',
     tabPreviewsDesc: 'Miniaturansichten bei Hover anzeigen',
-    // Start page
+    
     background: 'Hintergrund',
     wallpaper: 'Hintergrundbild',
     wallpaperDesc: 'Hintergrundbild auswählen',
@@ -96,7 +96,7 @@ export const de: Translations = {
     viewGrid: 'Raster',
     viewList: 'Liste',
     viewCompact: 'Kompakt',
-    // Privacy
+    
     protection: 'Schutz',
     adBlock: 'Werbeblocker',
     adBlockDesc: 'Werbung und Tracker blockieren',
@@ -107,7 +107,7 @@ export const de: Translations = {
     data: 'Daten',
     clearOnExit: 'Beim Beenden löschen',
     clearOnExitDesc: 'Verlauf und Cache beim Schließen des Browsers löschen',
-    // DNS-over-HTTPS
+    
     dnsOverHttps: 'DNS-over-HTTPS',
     dohEnabled: 'DoH aktivieren',
     dohEnabledDesc: 'DNS-Anfragen für mehr Datenschutz verschlüsseln',
@@ -120,7 +120,7 @@ export const de: Translations = {
     dohProviderQuad9: 'Quad9 (9.9.9.9)',
     dohProviderAdguard: 'AdGuard DNS',
     dohProviderCustom: 'Benutzerdefinierter Server',
-    // Performance
+    
     acceleration: 'Beschleunigung',
     hardwareAcceleration: 'Hardwarebeschleunigung',
     hardwareAccelerationDesc: 'GPU für Rendering verwenden',
@@ -133,7 +133,7 @@ export const de: Translations = {
     tabSuspensionDesc: 'Inaktive Tabs aus dem Speicher entladen',
     suspensionTimeout: 'Suspendierungs-Timeout',
     suspensionTimeoutDesc: 'Minuten',
-    // Advanced
+    
     interface: 'Oberfläche',
     bookmarksBar: 'Lesezeichenleiste',
     bookmarksBarDesc: 'Lesezeichenleiste anzeigen',

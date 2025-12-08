@@ -5,9 +5,7 @@ import { MIN_SIDEBAR_WIDTH, MAX_SIDEBAR_WIDTH, DEFAULT_QUICK_SITES } from './con
 const QUICK_SITES_STORAGE_KEY = 'axion-quick-sites';
 const QUICK_SITES_CHANGE_EVENT = 'quick-sites-changed';
 
-/**
- * Hook for managing QuickSites with localStorage persistence
- */
+
 export function useQuickSites() {
   const [sites, setSites] = useState<QuickSite[]>(() => {
     try {
@@ -23,19 +21,19 @@ export function useQuickSites() {
 
   const [isEditMode, setIsEditMode] = useState(false);
 
-  // Persist to localStorage and dispatch custom event
+  
   const saveSites = useCallback((newSites: QuickSite[]) => {
     try {
       localStorage.setItem(QUICK_SITES_STORAGE_KEY, JSON.stringify(newSites));
       setSites(newSites);
-      // Dispatch custom event for same-window sync
+      
       window.dispatchEvent(new CustomEvent(QUICK_SITES_CHANGE_EVENT, { detail: newSites }));
     } catch (e) {
       console.error('Failed to save quick sites:', e);
     }
   }, []);
 
-  // Listen for changes from other components (same window)
+  
   useEffect(() => {
     const handleQuickSitesChange = (e: CustomEvent<QuickSite[]>) => {
       setSites(e.detail);
@@ -46,7 +44,7 @@ export function useQuickSites() {
         try {
           setSites(JSON.parse(e.newValue));
         } catch {
-          // ignore
+          
         }
       }
     };
@@ -94,9 +92,7 @@ export function useQuickSites() {
   };
 }
 
-/**
- * Hook for managing workspace editing state
- */
+
 export function useWorkspaceEdit() {
   const [editingWorkspaceId, setEditingWorkspaceId] = useState<string | null>(null);
   const [editingName, setEditingName] = useState('');
@@ -138,15 +134,13 @@ export function useWorkspaceEdit() {
   };
 }
 
-/**
- * Hook for managing context menu state
- */
+
 export function useContextMenu(sidebarRef: RefObject<HTMLDivElement>) {
   const [contextMenuWorkspace, setContextMenuWorkspace] = useState<ContextMenuPosition | null>(null);
   const [showIconPicker, setShowIconPicker] = useState(false);
   const contextMenuRef = useRef<HTMLDivElement>(null);
 
-  // Close context menu on outside click
+  
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (contextMenuRef.current && !contextMenuRef.current.contains(e.target as Node)) {
@@ -253,9 +247,7 @@ export function useContextMenu(sidebarRef: RefObject<HTMLDivElement>) {
   };
 }
 
-/**
- * Hook for sidebar resizing
- */
+
 export function useSidebarResize(
   position: 'left' | 'right',
   onSidebarWidthChange?: (width: number) => void

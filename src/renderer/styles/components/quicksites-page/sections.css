@@ -1,4 +1,4 @@
-/* Sections and grid */
+
 .quicksites-section {
   padding: 24px 32px;
 }
@@ -16,14 +16,14 @@
   margin: 0 0 16px 0;
 }
 
-/* Grid */
+
 .quicksites-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 12px;
 }
 
-/* Scrollable content */
+
 .quicksites-page > .quicksites-section:first-of-type,
 .quicksites-page > .quicksites-section:last-of-type {
   overflow-y: auto;

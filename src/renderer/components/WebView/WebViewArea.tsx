@@ -25,23 +25,23 @@ interface WebViewAreaProps {
   clearHistory: () => void;
   updateSettings: (settings: Partial<Settings>) => void;
   
-  // StartPage props
+  
   hiddenSites: string[];
   renamedSites: Record<string, string>;
   onHideSite: (url: string) => void;
   onDeleteSite: (url: string) => void;
   onRenameSite: (url: string, newName: string) => void;
   
-  // Split View props
+  
   splitView?: SplitView;
   onSetSplitViewTab?: (side: 'left' | 'right', tabId: string) => void;
   onSetSplitRatio?: (ratio: number) => void;
   onCloseSplitView?: () => void;
   
-  t: any; // Translation object
+  t: any; 
 }
 
-// Компонент для рендеринга контента вкладки (внутренние страницы)
+
 const TabContent: React.FC<{
   tab: Tab;
   settings: Settings;
@@ -141,7 +141,7 @@ const WebViewArea: React.FC<WebViewAreaProps> = ({
   const [isDragging, setIsDragging] = useState(false);
   const splitContainerRef = useRef<HTMLDivElement>(null);
 
-  // Обработчик перетаскивания разделителя
+  
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
     e.preventDefault();
     setIsDragging(true);
@@ -159,16 +159,16 @@ const WebViewArea: React.FC<WebViewAreaProps> = ({
     setIsDragging(false);
   }, []);
 
-  // Проверяем, активен ли Split View
+  
   const isSplitViewActive = splitView?.enabled && splitView.leftTabId && splitView.rightTabId;
 
-  // Находим вкладки для Split View
+  
   const leftTab = isSplitViewActive ? tabs.find(t => t.id === splitView.leftTabId) : null;
   const rightTab = isSplitViewActive ? tabs.find(t => t.id === splitView.rightTabId) : null;
 
-  // Рендер одиночной панели (WebView или внутренняя страница)
+  
   const renderPanel = (tab: Tab, isActive: boolean) => {
-    // Проверяем замороженность в первую очередь - показываем плейсхолдер с кнопкой разморозки
+    
     if (tab.isFrozen) {
       return (
         <div className="frozen-tab-placeholder">
@@ -215,7 +215,7 @@ const WebViewArea: React.FC<WebViewAreaProps> = ({
     );
   };
 
-  // Split View режим
+  
   if (isSplitViewActive && leftTab && rightTab) {
     const splitRatio = splitView.splitRatio || 0.5;
     
@@ -227,7 +227,7 @@ const WebViewArea: React.FC<WebViewAreaProps> = ({
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
       >
-        {/* Левая панель */}
+        {}
         <div 
           className="split-view-panel split-view-left"
           style={{ width: `calc(${splitRatio * 100}% - 3px)` }}
@@ -235,9 +235,9 @@ const WebViewArea: React.FC<WebViewAreaProps> = ({
           <div className="split-view-header">
             <span className="split-view-title" title={leftTab.url}>
               {leftTab.favicon && <img src={leftTab.favicon} alt="" className="split-view-favicon" />}
-              {leftTab.title || leftTab.url || 'Новая вкладка'}
+              {leftTab.title || leftTab.url || '����� �������'}
             </span>
-            <button className="split-view-close" onClick={onCloseSplitView} title="Закрыть Split View">
+            <button className="split-view-close" onClick={onCloseSplitView} title="������� Split View">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M18 6L6 18M6 6l12 12"/>
               </svg>
@@ -248,7 +248,7 @@ const WebViewArea: React.FC<WebViewAreaProps> = ({
           </div>
         </div>
 
-        {/* Разделитель */}
+        {}
         <div 
           className={`split-view-divider ${isDragging ? 'dragging' : ''}`}
           onMouseDown={handleMouseDown}
@@ -256,7 +256,7 @@ const WebViewArea: React.FC<WebViewAreaProps> = ({
           <div className="split-view-divider-handle" />
         </div>
 
-        {/* Правая панель */}
+        {}
         <div 
           className="split-view-panel split-view-right"
           style={{ width: `calc(${(1 - splitRatio) * 100}% - 3px)` }}
@@ -264,9 +264,9 @@ const WebViewArea: React.FC<WebViewAreaProps> = ({
           <div className="split-view-header">
             <span className="split-view-title" title={rightTab.url}>
               {rightTab.favicon && <img src={rightTab.favicon} alt="" className="split-view-favicon" />}
-              {rightTab.title || rightTab.url || 'Новая вкладка'}
+              {rightTab.title || rightTab.url || '����� �������'}
             </span>
-            <button className="split-view-close" onClick={onCloseSplitView} title="Закрыть Split View">
+            <button className="split-view-close" onClick={onCloseSplitView} title="������� Split View">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M18 6L6 18M6 6l12 12"/>
               </svg>
@@ -280,10 +280,10 @@ const WebViewArea: React.FC<WebViewAreaProps> = ({
     );
   }
 
-  // Обычный режим (без Split View)
+  
   return (
     <div className="webview-area">
-      {/* WebView для всех воркспейсов */}
+      {}
       {workspaces.map(workspace =>
         workspace.tabs.map(tab => {
           const isCurrentWorkspace = workspace.id === activeWorkspaceId;
@@ -313,7 +313,7 @@ const WebViewArea: React.FC<WebViewAreaProps> = ({
         })
       )}
       
-      {/* Внутренние страницы и стартовая */}
+      {}
       {tabs.map(tab => {
         const isActiveTab = tab.id === activeTabId;
         const hasWebView = tab.url && !tab.url.startsWith('axion://');

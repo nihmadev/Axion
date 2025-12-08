@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { useTranslation } from '../../hooks/useTranslation';
 import { DownloadFileIcon, FolderIcon, FolderOpenIcon, PauseIcon, CheckIcon } from '../ZenSidebar/icons';
 import '../../styles/components/downloads-page.css';
@@ -44,11 +44,11 @@ const DownloadsPage: React.FC<DownloadsPageProps> = ({ language }) => {
         const index = prev.findIndex(d => d.id === download.id);
         if (index >= 0) {
           const updated = [...prev];
-          // Мержим обновление с существующими данными
+          
           updated[index] = { ...updated[index], ...download };
           return updated;
         }
-        // Если это новая загрузка, добавляем только если есть все поля
+        
         if ('filename' in download && 'url' in download) {
           return [download as Download, ...prev];
         }

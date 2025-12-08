@@ -1,4 +1,4 @@
-import type { Translations } from './types';
+﻿import type { Translations } from './types';
 
 export const en: Translations = {
   settings: {
@@ -13,7 +13,7 @@ export const en: Translations = {
       performance: 'Performance',
       advanced: 'Advanced',
     },
-    // Appearance
+    
     search: 'Search',
     searchEngine: 'Search Engine',
     searchEngineDesc: 'Choose search engine for address bar',
@@ -36,7 +36,7 @@ export const en: Translations = {
     radiusLarge: 'Large',
     animations: 'Animations',
     animationsDesc: 'Enable smooth interface animations',
-    // Sidebar
+    
     position: 'Position',
     sidebarPosition: 'Sidebar Position',
     sidebarPositionDesc: 'Choose screen side for sidebar',
@@ -56,7 +56,7 @@ export const en: Translations = {
     workspacesDesc: 'Show workspaces list',
     navigation: 'Navigation',
     navigationDesc: 'Show navigation buttons',
-    // Tabs
+    
     tabsAppearance: 'Tabs Appearance',
     tabStyle: 'Tab Style',
     tabStyleDesc: 'Choose tabs appearance',
@@ -72,7 +72,7 @@ export const en: Translations = {
     closeNever: 'Never',
     tabPreviews: 'Tab Previews',
     tabPreviewsDesc: 'Show thumbnails on hover',
-    // Start page
+    
     background: 'Background',
     wallpaper: 'Wallpaper',
     wallpaperDesc: 'Choose background image',
@@ -96,7 +96,7 @@ export const en: Translations = {
     viewGrid: 'Grid',
     viewList: 'List',
     viewCompact: 'Compact',
-    // Privacy
+    
     protection: 'Protection',
     adBlock: 'Ad Blocker',
     adBlockDesc: 'Block ads and trackers',
@@ -107,7 +107,7 @@ export const en: Translations = {
     data: 'Data',
     clearOnExit: 'Clear on Exit',
     clearOnExitDesc: 'Delete history and cache when closing browser',
-    // DNS-over-HTTPS
+    
     dnsOverHttps: 'DNS-over-HTTPS',
     dohEnabled: 'Enable DoH',
     dohEnabledDesc: 'Encrypt DNS queries for enhanced privacy',
@@ -120,7 +120,7 @@ export const en: Translations = {
     dohProviderQuad9: 'Quad9 (9.9.9.9)',
     dohProviderAdguard: 'AdGuard DNS',
     dohProviderCustom: 'Custom Server',
-    // Performance
+    
     acceleration: 'Acceleration',
     hardwareAcceleration: 'Hardware Acceleration',
     hardwareAccelerationDesc: 'Use GPU for rendering',
@@ -133,7 +133,7 @@ export const en: Translations = {
     tabSuspensionDesc: 'Unload inactive tabs from memory',
     suspensionTimeout: 'Suspension Timeout',
     suspensionTimeoutDesc: 'minutes',
-    // Advanced
+    
     interface: 'Interface',
     bookmarksBar: 'Bookmarks Bar',
     bookmarksBarDesc: 'Show bookmarks bar',

@@ -1,8 +1,5 @@
-//! Команды управления масштабом
-
 use tauri::{AppHandle, Manager};
 
-/// Установка масштаба
 #[tauri::command]
 pub async fn set_zoom(
     app: AppHandle,

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { electronAPI } from '../../tauri-api';
 import './Autofill.css';
 
@@ -59,7 +59,7 @@ export const SavePasswordPrompt: React.FC<SavePasswordPromptProps> = ({
     setError('');
     
     try {
-      // Extract domain from URL
+      
       let domain = url;
       try {
         const urlObj = new URL(url);
@@ -76,13 +76,13 @@ export const SavePasswordPrompt: React.FC<SavePasswordPromptProps> = ({
     }
   };
 
-  // Auto-close after 15 seconds
+  
   useEffect(() => {
     const timer = setTimeout(onClose, 15000);
     return () => clearTimeout(timer);
   }, [onClose]);
 
-  // Close on Escape
+  
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -92,7 +92,7 @@ export const SavePasswordPrompt: React.FC<SavePasswordPromptProps> = ({
   }, [onClose]);
 
   if (noVault) {
-    return null; // Don't show prompt if no vault exists
+    return null; 
   }
 
   return (

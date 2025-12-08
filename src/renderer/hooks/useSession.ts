@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+﻿import { useState, useEffect, useCallback } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Tab, Workspace, Settings, Bookmark, HistoryEntry, defaultSettings } from '../types';
 
@@ -25,7 +25,7 @@ export const useSession = ({
 }: UseSessionOptions) => {
   const [sessionRestored, setSessionRestored] = useState(false);
 
-  // Загрузка данных
+  
   const loadData = useCallback(async () => {
     try {
       const [savedSettings, savedBookmarks, savedHistory] = await Promise.all([
@@ -43,7 +43,7 @@ export const useSession = ({
     }
   }, [setSettings, setBookmarks, setHistory]);
 
-  // Восстановление сессии при запуске
+  
   useEffect(() => {
     let initialized = false;
     
@@ -53,22 +53,22 @@ export const useSession = ({
       
       await loadData();
       
-      // Восстанавливаем ширину сайдбара из localStorage
+      
       const savedWidth = localStorage.getItem('sidebarWidth');
       if (savedWidth) {
         setSidebarWidth(parseInt(savedWidth, 10));
       }
       
-      // Пытаемся восстановить сессию
+      
       const savedSession = await window.electronAPI.restoreSession();
       if (savedSession && savedSession.workspaces && savedSession.workspaces.length > 0) {
         setWorkspaces(savedSession.workspaces);
         setActiveWorkspaceId(savedSession.activeWorkspaceId || savedSession.workspaces[0].id);
         setSessionRestored(true);
-        // Очищаем файл сессии после успешного восстановления
+        
         window.electronAPI.clearSession();
       } else {
-        // Создаем первый workspace
+        
         const workspaceId = uuidv4();
         const initialTab: Tab = {
           id: uuidv4(),
@@ -96,7 +96,7 @@ export const useSession = ({
     initApp();
   }, []);
 
-  // Слушаем событие open-url для открытия файлов через "Открыть с помощью"
+  
   useEffect(() => {
     const unlisten = window.electronAPI.onOpenUrl((url: string) => {
       console.log('[Session] Received open-url event:', url);
@@ -104,15 +104,15 @@ export const useSession = ({
       setWorkspaces(prev => {
         if (prev.length === 0) return prev;
         
-        // Находим активный workspace
+        
         const wsIndex = prev.findIndex(ws => ws.id === activeWorkspaceId) || 0;
         const workspace = prev[wsIndex] || prev[0];
         
-        // Проверяем, есть ли пустая вкладка (новая вкладка без URL)
+        
         const emptyTabIndex = workspace.tabs.findIndex(t => !t.url || t.url === '');
         
         if (emptyTabIndex !== -1) {
-          // Используем существующую пустую вкладку
+          
           const updatedTabs = [...workspace.tabs];
           updatedTabs[emptyTabIndex] = {
             ...updatedTabs[emptyTabIndex],
@@ -131,7 +131,7 @@ export const useSession = ({
           newWorkspaces[wsIndex !== -1 ? wsIndex : 0] = updatedWorkspace;
           return newWorkspaces;
         } else {
-          // Создаем новую вкладку
+          
           const newTab: Tab = {
             id: uuidv4(),
             url,
@@ -158,7 +158,7 @@ export const useSession = ({
     return unlisten;
   }, [activeWorkspaceId, setWorkspaces]);
 
-  // Автосохранение сессии каждые 30 секунд и при закрытии
+  
   useEffect(() => {
     if (workspaces.length === 0) return;
 
@@ -182,10 +182,10 @@ export const useSession = ({
       window.electronAPI.saveSession(sessionData);
     };
 
-    // Сохраняем каждые 30 секунд
+    
     const interval = setInterval(saveCurrentSession, 30000);
 
-    // Сохраняем при закрытии окна
+    
     const handleBeforeUnload = () => {
       saveCurrentSession();
     };

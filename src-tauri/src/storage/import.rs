@@ -14,14 +14,11 @@ pub struct DetectedBrowser {
     pub name: String,
     pub available: bool,
 }
-
-/// Detects which browsers are installed on the system
 pub async fn detect_browsers() -> Result<Vec<DetectedBrowser>, String> {
     let home_dir = dirs::home_dir().ok_or_else(|| "Could not find home directory".to_string())?;
     
     let mut browsers = Vec::new();
     
-    // Chrome detection
     #[cfg(target_os = "windows")]
     let chrome_path = home_dir.join("AppData/Local/Google/Chrome/User Data/Default");
     #[cfg(target_os = "macos")]
@@ -35,7 +32,6 @@ pub async fn detect_browsers() -> Result<Vec<DetectedBrowser>, String> {
         available: chrome_path.exists(),
     });
     
-    // Edge detection
     #[cfg(target_os = "windows")]
     let edge_path = home_dir.join("AppData/Local/Microsoft/Edge/User Data/Default");
     #[cfg(target_os = "macos")]
@@ -49,16 +45,14 @@ pub async fn detect_browsers() -> Result<Vec<DetectedBrowser>, String> {
         available: edge_path.exists(),
     });
     
-    // Firefox detection
     #[cfg(target_os = "windows")]
-    let firefox_path = home_dir.join("AppData/Local/Mozilla/Firefox/Profiles");
+    let firefox_path = home_dir.join("AppData/Roaming/Mozilla/Firefox/Profiles");
     #[cfg(target_os = "macos")]
     let firefox_path = home_dir.join("Library/Application Support/Firefox/Profiles");
     #[cfg(target_os = "linux")]
     let firefox_path = home_dir.join(".mozilla/firefox");
     
     let firefox_available = if firefox_path.exists() {
-        // Check if there's at least one profile with places.sqlite
         if let Ok(mut entries) = tokio::fs::read_dir(&firefox_path).await {
             let mut found = false;
             while let Ok(Some(entry)) = entries.next_entry().await {
@@ -82,7 +76,6 @@ pub async fn detect_browsers() -> Result<Vec<DetectedBrowser>, String> {
         available: firefox_available,
     });
     
-    // Zen Browser detection
     #[cfg(target_os = "windows")]
     let zen_path = home_dir.join("AppData/Local/Zen Browser/Profiles");
     #[cfg(target_os = "macos")]
@@ -185,7 +178,6 @@ async fn import_chrome_based_browser(browser: &str) -> Result<Option<ImportResul
 
     let mut bookmarks = Vec::new();
 
-    // Импорт закладок
     if bookmarks_path.exists() {
         let content = tokio::fs::read_to_string(&bookmarks_path)
             .await
@@ -229,7 +221,6 @@ async fn import_chrome_based_browser(browser: &str) -> Result<Option<ImportResul
         }
     }
 
-    // Импорт истории
     let mut history = Vec::new();
     if history_path.exists() {
         history = import_chrome_history(&history_path).await?;
@@ -242,10 +233,8 @@ async fn import_chrome_based_browser(browser: &str) -> Result<Option<ImportResul
 }
 
 async fn import_chrome_history(history_path: &std::path::Path) -> Result<Vec<HistoryEntry>, String> {
-    // Chrome хранит историю в SQLite базе данных
     let temp_path = history_path.with_extension("temp");
 
-    // Копируем файл, так как Chrome может держать его заблокированным
     tokio::fs::copy(history_path, &temp_path)
         .await
         .map_err(|e| e.to_string())?;
@@ -295,14 +284,12 @@ async fn import_chrome_history(history_path: &std::path::Path) -> Result<Vec<His
     .await
     .map_err(|e| e.to_string())??;
 
-    // Удаляем временный файл
     let _ = tokio::fs::remove_file(&temp_path).await;
 
     Ok(history)
 }
 
 fn chrome_time_to_timestamp(chrome_time: i64) -> i64 {
-    // Chrome использует время с 1601-01-01 в микросекундах
     const WEBKIT_TIMESTAMP_TO_UNIX_EPOCH: i64 = 11644473600000000;
     (chrome_time - WEBKIT_TIMESTAMP_TO_UNIX_EPOCH) / 1000000
 }
@@ -331,7 +318,6 @@ async fn import_firefox_browser() -> Result<Option<ImportResult>, String> {
 }
 
 async fn import_zen_browser() -> Result<Option<ImportResult>, String> {
-    // Zen основан на Firefox, используем ту же логику
     let home_dir = dirs::home_dir().ok_or_else(|| "Could not find home directory".to_string())?;
 
     #[cfg(target_os = "windows")]
@@ -364,7 +350,7 @@ async fn find_firefox_profile(
     home_dir: &std::path::Path,
 ) -> Result<Option<std::path::PathBuf>, String> {
     #[cfg(target_os = "windows")]
-    let firefox_dir = home_dir.join("AppData/Local/Mozilla/Firefox/Profiles");
+    let firefox_dir = home_dir.join("AppData/Roaming/Mozilla/Firefox/Profiles");
 
     #[cfg(target_os = "macos")]
     let firefox_dir = home_dir.join("Library/Application Support/Firefox/Profiles");
@@ -412,7 +398,6 @@ async fn import_firefox_data(
 ) -> Result<(Vec<Bookmark>, Vec<HistoryEntry>), String> {
     let temp_path = places_path.with_extension("temp");
 
-    // Копируем файл, так как Firefox может держать его заблокированным
     tokio::fs::copy(places_path, &temp_path)
         .await
         .map_err(|e| e.to_string())?;
@@ -421,7 +406,6 @@ async fn import_firefox_data(
     let result = tokio::task::spawn_blocking(move || {
         let conn = rusqlite::Connection::open(&temp_path_clone).map_err(|e| e.to_string())?;
 
-        // Импорт закладок
         let mut bookmarks = Vec::new();
         let mut stmt = conn
             .prepare(
@@ -458,7 +442,6 @@ async fn import_firefox_data(
             bookmarks.push(row.map_err(|e| e.to_string())?);
         }
 
-        // Импорт истории
         let mut history = Vec::new();
         let mut stmt = conn
             .prepare(
@@ -501,13 +484,11 @@ async fn import_firefox_data(
     .await
     .map_err(|e| e.to_string())??;
 
-    // Удаляем временный файл
     let _ = tokio::fs::remove_file(&temp_path).await;
 
     Ok(result)
 }
 
 fn firefox_time_to_timestamp(firefox_time: i64) -> i64 {
-    // Firefox использует время с 1970-01-01 в микросекундах
     firefox_time / 1000000
 }

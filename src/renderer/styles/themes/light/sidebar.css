@@ -1,6 +1,4 @@
-/* ============================================== 
-   Sidebar - Light Theme
-   ============================================== */
+
 
 .app[data-theme="light"] .zen-sidebar {
   background: rgba(250, 251, 252, 0.95);
@@ -8,7 +6,7 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
 }
 
-/* Sidebar tabs */
+
 .app[data-theme="light"] .zen-sidebar__tabs {
   border-color: rgba(0, 0, 0, 0.04);
 }
@@ -47,7 +45,7 @@
   border-top-color: var(--accent, #7c3aed);
 }
 
-/* Sidebar new tab button */
+
 .app[data-theme="light"] .zen-sidebar__new-tab {
   color: #64748b;
 }
@@ -57,7 +55,7 @@
   color: #1e293b;
 }
 
-/* Sidebar search */
+
 .app[data-theme="light"] .zen-sidebar__search {
   background: rgba(0, 0, 0, 0.04);
 }
@@ -83,7 +81,7 @@
   color: #94a3b8;
 }
 
-/* Sidebar navigation */
+
 .app[data-theme="light"] .zen-sidebar__nav-btn {
   color: #64748b;
 }
@@ -93,7 +91,7 @@
   color: #1e293b;
 }
 
-/* Sidebar workspaces */
+
 .app[data-theme="light"] .zen-sidebar__workspaces {
   border-color: rgba(0, 0, 0, 0.04);
 }
@@ -131,7 +129,7 @@
   color: #64748b;
 }
 
-/* Sidebar bottom toolbar */
+
 .app[data-theme="light"] .zen-sidebar__bottom {
   border-color: rgba(0, 0, 0, 0.04);
 }
@@ -154,9 +152,7 @@
   background: rgba(255, 180, 50, 0.2);
 }
 
-/* ============================================== 
-   Quick Sites in Sidebar - Light Theme
-   ============================================== */
+
 
 .app[data-theme="light"] .zen-sidebar__quick-sites {
   border-color: rgba(0, 0, 0, 0.04);
@@ -174,17 +170,13 @@
   color: #475569;
 }
 
-/* ============================================== 
-   Sidebar Quick Sites Section - Light Theme
-   ============================================== */
+
 
 .app[data-theme="light"] .zen-sidebar__section-title {
   color: #94a3b8;
 }
 
-/* ============================================== 
-   Active Tab Indicator - Light Theme
-   ============================================== */
+
 
 .app[data-theme="light"] .zen-sidebar__tab.is-active::before {
   background: linear-gradient(180deg, var(--accent, #7c3aed) 0%, #9333ea 100%);

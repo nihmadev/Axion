@@ -1,4 +1,3 @@
-/// CSS стили для Reader Mode
 pub const READER_MODE_STYLES: &str = r#"
     <style id="axion-reader-styles">
         .axion-reader-mode {

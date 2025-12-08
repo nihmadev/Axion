@@ -33,17 +33,17 @@ export const useNavigation = ({
     
     let finalUrl = url.trim();
 
-    // Если URL пустой, переходим на StartPage
+    
     if (!finalUrl) {
       updateTab(currentActiveId, { 
         url: '', 
         isLoading: false, 
-        title: 'Новая вкладка' 
+        title: '����� �������' 
       });
       return;
     }
 
-    // Проверяем внутренние URL браузера
+    
     if (finalUrl.startsWith('axion://')) {
       updateTab(currentActiveId, { 
         url: finalUrl, 
@@ -113,7 +113,7 @@ export const useNavigation = ({
     }
   }, [updateTab]);
   
-  // Открытие внутренних страниц с toggle функциональностью
+  
   const openInternalPage = useCallback((page: 'history' | 'downloads' | 'settings') => {
     const url = INTERNAL_URLS[page];
     const title = getInternalPageTitle(url);
@@ -123,7 +123,7 @@ export const useNavigation = ({
       
       const existingTab = ws.tabs.find(t => t.url === url);
       
-      // Toggle: если вкладка уже открыта и активна - закрываем её
+      
       if (existingTab && ws.activeTabId === existingTab.id) {
         const remaining = ws.tabs.filter(t => t.id !== existingTab.id);
         
@@ -131,7 +131,7 @@ export const useNavigation = ({
           const newTab: Tab = {
             id: uuidv4(),
             url: '',
-            title: 'Новая вкладка',
+            title: '����� �������',
             isLoading: false,
             canGoBack: false,
             canGoForward: false,
@@ -145,12 +145,12 @@ export const useNavigation = ({
         return { ...ws, tabs: remaining, activeTabId: remaining[newIndex].id };
       }
       
-      // Если вкладка существует но не активна - активируем её
+      
       if (existingTab) {
         return { ...ws, activeTabId: existingTab.id };
       }
       
-      // Создаем новую вкладку с внутренней страницей
+      
       const newTab: Tab = {
         id: uuidv4(),
         url,

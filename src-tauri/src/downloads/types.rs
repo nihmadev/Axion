@@ -21,7 +21,6 @@ pub struct Download {
     pub mime_type: Option<String>,
 }
 
-/// Менеджер активных загрузок
 pub struct DownloadManager {
     pub cancel_senders: HashMap<String, tokio::sync::watch::Sender<bool>>,
 }

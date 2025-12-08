@@ -1,6 +1,6 @@
-import React from 'react';
+﻿import React from 'react';
 
-// Компонент Toggle
+
 export const Toggle: React.FC<{ checked: boolean; onChange: (checked: boolean) => void }> = ({ checked, onChange }) => (
   <button
     className={`settings-toggle ${checked ? 'active' : ''}`}
@@ -10,7 +10,7 @@ export const Toggle: React.FC<{ checked: boolean; onChange: (checked: boolean) =
   </button>
 );
 
-// Компонент Select
+
 export const Select: React.FC<{
   value: string;
   options: { value: string; label: string }[];
@@ -23,7 +23,7 @@ export const Select: React.FC<{
   </select>
 );
 
-// Компонент SettingItem
+
 export const SettingItem: React.FC<{
   label: string;
   description?: string;

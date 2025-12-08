@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+﻿import { useState, useCallback } from 'react';
 
 export const useStartPageData = () => {
   const [hiddenSites, setHiddenSites] = useState<string[]>(() => {
@@ -20,13 +20,13 @@ export const useStartPageData = () => {
   }, []);
 
   const handleDeleteSite = useCallback((url: string) => {
-    // Удаление = скрытие + удаление из истории (история обрабатывается отдельно, но скрытие здесь)
+    
     setHiddenSites(prev => {
       const updated = [...prev, url];
       localStorage.setItem('hiddenSites', JSON.stringify(updated));
       return updated;
     });
-    // Также удаляем переименование если было
+    
     setRenamedSites(prev => {
       const updated = { ...prev };
       delete updated[url];

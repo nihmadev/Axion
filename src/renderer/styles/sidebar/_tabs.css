@@ -1,6 +1,4 @@
-/* ==============================================
-   ZenSidebar - Tabs List
-   ============================================== */
+
 
 .zen-sidebar__tabs {
   flex: 1;
@@ -126,12 +124,12 @@
   color: rgba(255, 255, 255, 0.9);
 }
 
-/* Tab close button always visible */
+
 .zen-sidebar__tab-close.always-visible {
   opacity: 1;
 }
 
-/* Internal pages styling */
+
 .zen-sidebar__tab.is-internal .zen-sidebar__tab-icon {
   color: var(--workspace-accent, var(--accent, #6366f1));
 }
@@ -140,7 +138,7 @@
   color: var(--workspace-accent, var(--accent, #6366f1));
 }
 
-/* New tab button */
+
 .zen-sidebar__new-tab {
   display: flex;
   align-items: center;
@@ -161,7 +159,7 @@
   color: rgba(255, 255, 255, 0.9);
 }
 
-/* Active tab indicator position */
+
 .zen-sidebar--left .zen-sidebar__tab.is-active::before {
   left: 0;
   right: auto;
@@ -179,9 +177,7 @@
 }
 
 
-/* ==============================================
-   Tab Preview - Miniature Window Style
-   ============================================== */
+
 
 .tab-preview {
   background: rgba(24, 24, 28, 0.98);
@@ -198,7 +194,7 @@
   pointer-events: none;
 }
 
-/* Анимация появления в зависимости от позиции сайдбара */
+
 .tab-preview[data-position="right"] {
   animation-name: tab-preview-slide-left;
 }
@@ -229,7 +225,7 @@
   }
 }
 
-/* Миниатюра страницы */
+
 .tab-preview__thumbnail {
   position: relative;
   width: 100%;
@@ -238,7 +234,7 @@
   overflow: hidden;
 }
 
-/* Внутренние страницы */
+
 .tab-preview__internal-page {
   width: 100%;
   height: 100%;
@@ -275,7 +271,7 @@
   color: rgba(255, 255, 255, 0.7);
 }
 
-/* Реальный скриншот страницы */
+
 .tab-preview__screenshot {
   width: 100%;
   height: 100%;
@@ -304,7 +300,7 @@
   backdrop-filter: blur(4px);
 }
 
-/* Имитация окна браузера для сайтов */
+
 .tab-preview__site {
   width: 100%;
   height: 100%;
@@ -392,7 +388,7 @@
   text-overflow: ellipsis;
 }
 
-/* Статус бейджи */
+
 .tab-preview__status-badge {
   position: absolute;
   top: 8px;
@@ -414,7 +410,7 @@
   animation: zen-spin 0.8s linear infinite;
 }
 
-/* Информация о вкладке */
+
 .tab-preview__info {
   padding: 10px 12px;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
@@ -440,7 +436,7 @@
   margin-top: 2px;
 }
 
-/* Стрелка-указатель */
+
 .tab-preview__arrow {
   position: absolute;
   top: 50%;
@@ -460,7 +456,7 @@
   border-right-color: rgba(24, 24, 28, 0.98);
 }
 
-/* Light theme support */
+
 [data-theme="light"] .tab-preview {
   background: rgba(255, 255, 255, 0.98);
   border-color: rgba(0, 0, 0, 0.1);
@@ -536,7 +532,7 @@
   border-right-color: rgba(255, 255, 255, 0.98);
 }
 
-/* Light theme screenshot styles */
+
 [data-theme="light"] .tab-preview__screenshot-overlay {
   background: linear-gradient(transparent, rgba(255, 255, 255, 0.9));
 }
@@ -546,9 +542,7 @@
   color: rgba(0, 0, 0, 0.6);
 }
 
-/* ==============================================
-   Split View Combined Tab
-   ============================================== */
+
 
 .zen-sidebar__tab--split-view {
   background: linear-gradient(135deg, 
@@ -630,7 +624,7 @@
   padding: 0 2px;
 }
 
-/* Light theme */
+
 [data-theme="light"] .zen-sidebar__tab--split-view {
   background: linear-gradient(135deg, 
     rgba(var(--accent-rgb, 124, 58, 237), 0.12) 0%, 
@@ -659,9 +653,7 @@
   color: rgba(0, 0, 0, 0.25);
 }
 
-/* ==============================================
-   Tab Groups
-   ============================================== */
+
 
 .tab-group {
   display: flex;
@@ -763,7 +755,7 @@
   padding-left: 8px;
 }
 
-/* Tab with group indicator */
+
 .zen-sidebar__tab--grouped {
   position: relative;
 }
@@ -780,7 +772,7 @@
   opacity: 0.6;
 }
 
-/* Tab Group Context Menu */
+
 .tab-group__menu {
   position: absolute;
   z-index: 1000;
@@ -823,7 +815,7 @@
   margin: 4px 0;
 }
 
-/* Color Picker for Tab Groups */
+
 .tab-group__colors {
   display: flex;
   flex-wrap: wrap;
@@ -849,7 +841,7 @@
   box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
 }
 
-/* Create Group Modal */
+
 .tab-group-modal {
   position: fixed;
   top: 50%;
@@ -963,7 +955,7 @@
   cursor: not-allowed;
 }
 
-/* Light theme */
+
 [data-theme="light"] .tab-group__header:hover {
   background: rgba(0, 0, 0, 0.05);
 }

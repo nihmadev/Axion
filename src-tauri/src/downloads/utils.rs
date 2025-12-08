@@ -1,7 +1,6 @@
 use std::path::PathBuf;
 
 pub fn get_downloads_dir() -> Result<PathBuf, String> {
-    // Используем стандартную папку Загрузки
     dirs::download_dir()
         .ok_or_else(|| "Could not find downloads directory".to_string())
 }
@@ -16,11 +15,8 @@ pub fn get_downloads_file() -> Result<PathBuf, String> {
     Ok(data_dir.join("downloads.json"))
 }
 
-/// Извлечь имя файла из URL или Content-Disposition
 pub fn extract_filename(url: &str, content_disposition: Option<&str>) -> String {
-    // Сначала пробуем Content-Disposition
     if let Some(cd) = content_disposition {
-        // filename="example.pdf" или filename*=UTF-8''example.pdf
         if let Some(start) = cd.find("filename=") {
             let rest = &cd[start + 9..];
             let filename = if rest.starts_with('"') {
@@ -34,7 +30,6 @@ pub fn extract_filename(url: &str, content_disposition: Option<&str>) -> String 
         }
     }
     
-    // Извлекаем из URL
     if let Ok(parsed) = url::Url::parse(url) {
         if let Some(segments) = parsed.path_segments() {
             if let Some(last) = segments.last() {
@@ -46,11 +41,9 @@ pub fn extract_filename(url: &str, content_disposition: Option<&str>) -> String 
         }
     }
     
-    // Fallback
     format!("download_{}", chrono::Utc::now().timestamp())
 }
 
-/// Получить уникальное имя файла (добавляет (1), (2) и т.д. если файл существует)
 pub fn get_unique_filename(dir: &PathBuf, filename: &str) -> String {
     let path = dir.join(filename);
     if !path.exists() {

@@ -11,7 +11,7 @@ const WALLPAPERS = [
   'walpaper8.jpg',
 ];
 
-const CHANGE_INTERVAL = 10 * 60 * 1000; // 10 минут в миллисекундах
+const CHANGE_INTERVAL = 10 * 60 * 1000;
 
 export const useWallpaper = () => {
   const [currentWallpaper, setCurrentWallpaper] = useState<string>('');
@@ -29,20 +29,16 @@ export const useWallpaper = () => {
   };
 
   useEffect(() => {
-    // При первой загрузке проверяем, нужно ли менять обои
     const lastWallpaper = localStorage.getItem('lastWallpaper');
     const lastChange = localStorage.getItem('lastWallpaperChange');
     const now = Date.now();
 
     if (!lastWallpaper || !lastChange || now - parseInt(lastChange) > CHANGE_INTERVAL) {
-      // Если обоев нет или прошло больше 10 минут - меняем
       changeWallpaper();
     } else {
-      // Используем сохраненные обои
       setCurrentWallpaper(lastWallpaper);
     }
 
-    // Устанавливаем интервал для автоматической смены
     const interval = setInterval(changeWallpaper, CHANGE_INTERVAL);
 
     return () => clearInterval(interval);

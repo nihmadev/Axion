@@ -1,8 +1,6 @@
-/* ==============================================
-   ZenSidebar - Position & Style Variants
-   ============================================== */
 
-/* Position variants */
+
+
 .zen-sidebar--right {
   border-left: 1px solid rgba(255, 255, 255, 0.05);
   box-shadow: -4px 0 24px rgba(0, 0, 0, 0.3);
@@ -15,10 +13,7 @@
   order: 0;
 }
 
-/* ==============================================
-   Style variants - Compact
-   Промежуточный режим: показывает текст, но компактнее
-   ============================================== */
+
 .zen-sidebar--compact {
   padding: 8px;
   gap: 4px;
@@ -110,10 +105,7 @@
   gap: 1px;
 }
 
-/* ==============================================
-   Style variants - Minimal
-   Только иконки с улучшенным UX
-   ============================================== */
+
 .zen-sidebar--minimal {
   width: 56px !important;
   min-width: 56px;
@@ -122,7 +114,7 @@
   gap: 6px;
 }
 
-/* Скрываем текстовые элементы */
+
 .zen-sidebar--minimal .zen-sidebar__search-input,
 .zen-sidebar--minimal .zen-sidebar__workspace-name,
 .zen-sidebar--minimal .zen-sidebar__tab-title,
@@ -131,7 +123,7 @@
   display: none;
 }
 
-/* Поиск как иконка */
+
 .zen-sidebar--minimal .zen-sidebar__search {
   padding: 10px;
   justify-content: center;
@@ -148,7 +140,7 @@
   height: 18px;
 }
 
-/* Вкладки */
+
 .zen-sidebar--minimal .zen-sidebar__tab {
   justify-content: center;
   padding: 10px;
@@ -181,7 +173,7 @@
   height: 22px;
 }
 
-/* Воркспейсы */
+
 .zen-sidebar--minimal .zen-sidebar__workspace-btn {
   justify-content: center;
   padding: 10px;
@@ -209,7 +201,7 @@
   border-radius: 10px;
 }
 
-/* Новая вкладка */
+
 .zen-sidebar--minimal .zen-sidebar__new-tab {
   justify-content: center;
   padding: 10px;
@@ -221,7 +213,7 @@
   height: 18px;
 }
 
-/* Нижняя панель */
+
 .zen-sidebar--minimal .zen-sidebar__bottom {
   flex-direction: column;
   gap: 4px;
@@ -234,7 +226,7 @@
   border-radius: 10px;
 }
 
-/* Навигация */
+
 .zen-sidebar--minimal .zen-sidebar__nav {
   flex-wrap: wrap;
   gap: 2px;
@@ -246,7 +238,7 @@
   border-radius: 10px;
 }
 
-/* Секции */
+
 .zen-sidebar--minimal .zen-sidebar__workspaces {
   padding: 6px 0;
   gap: 3px;
@@ -257,9 +249,7 @@
   gap: 3px;
 }
 
-/* ==============================================
-   Tooltips для minimal режима
-   ============================================== */
+
 .zen-sidebar--minimal .zen-sidebar__workspace-btn,
 .zen-sidebar--minimal .zen-sidebar__tab,
 .zen-sidebar--minimal .zen-sidebar__new-tab,
@@ -268,7 +258,7 @@
   position: relative;
 }
 
-/* Tooltip базовые стили */
+
 .zen-sidebar--minimal .zen-sidebar__workspace-btn::after,
 .zen-sidebar--minimal .zen-sidebar__tab::after,
 .zen-sidebar--minimal .zen-sidebar__new-tab::after,
@@ -295,7 +285,7 @@
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
 }
 
-/* Позиция tooltip в зависимости от стороны сайдбара */
+
 .zen-sidebar--minimal.zen-sidebar--right .zen-sidebar__workspace-btn::after,
 .zen-sidebar--minimal.zen-sidebar--right .zen-sidebar__tab::after,
 .zen-sidebar--minimal.zen-sidebar--right .zen-sidebar__new-tab::after,
@@ -316,7 +306,7 @@
   transform: translateY(-50%) translateX(-4px);
 }
 
-/* Hover состояние */
+
 .zen-sidebar--minimal .zen-sidebar__workspace-btn:hover::after,
 .zen-sidebar--minimal .zen-sidebar__tab:hover::after,
 .zen-sidebar--minimal .zen-sidebar__new-tab:hover::after,
@@ -326,7 +316,7 @@
   transform: translateY(-50%) translateX(0);
 }
 
-/* Скрываем tooltip если нет title */
+
 .zen-sidebar--minimal .zen-sidebar__workspace-btn:not([title])::after,
 .zen-sidebar--minimal .zen-sidebar__tab:not([title])::after,
 .zen-sidebar--minimal .zen-sidebar__new-tab:not([title])::after,
@@ -335,9 +325,7 @@
   display: none;
 }
 
-/* ==============================================
-   Hover эффекты для minimal
-   ============================================== */
+
 .zen-sidebar--minimal .zen-sidebar__tab:hover,
 .zen-sidebar--minimal .zen-sidebar__workspace-btn:hover {
   background: rgba(255, 255, 255, 0.08);
@@ -352,7 +340,7 @@
   background: rgba(255, 255, 255, 0.12);
 }
 
-/* Light theme для minimal */
+
 [data-theme="light"] .zen-sidebar--minimal .zen-sidebar__workspace-btn::after,
 [data-theme="light"] .zen-sidebar--minimal .zen-sidebar__tab::after,
 [data-theme="light"] .zen-sidebar--minimal .zen-sidebar__new-tab::after,

@@ -9,11 +9,6 @@ interface UseWebViewVisibilityProps {
   isModalOpen: boolean;
 }
 
-/**
- * Управляет видимостью нативных WebView.
- * Скрывает все WebView когда открыто модальное окно,
- * чтобы нативный WebView не перекрывал UI React.
- */
 export const useWebViewVisibility = ({
   workspaces,
   activeWorkspaceId,
@@ -25,7 +20,6 @@ export const useWebViewVisibility = ({
     const wasModalOpen = previousModalStateRef.current;
     previousModalStateRef.current = isModalOpen;
 
-    // Находим активную вкладку
     const activeWorkspace = workspaces.find(w => w.id === activeWorkspaceId);
     if (!activeWorkspace) return;
 
@@ -35,10 +29,8 @@ export const useWebViewVisibility = ({
     const tabId = activeTab.id;
 
     if (isModalOpen && !wasModalOpen) {
-      // Модальное окно открылось - скрываем WebView
       invoke('set_webview_visible', { id: tabId, visible: false }).catch(console.error);
     } else if (!isModalOpen && wasModalOpen) {
-      // Модальное окно закрылось - показываем WebView обратно
       invoke('set_webview_visible', { id: tabId, visible: true }).catch(console.error);
     }
   }, [isModalOpen, workspaces, activeWorkspaceId]);

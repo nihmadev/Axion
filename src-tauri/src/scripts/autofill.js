@@ -1,12 +1,8 @@
-// Axion Password Autofill Script
-// Detects login forms and communicates with the browser for autofill
 
 (function() {
-    // Avoid re-initialization
     if (window.__AXION_AUTOFILL_INITIALIZED__) return 'already_initialized';
     window.__AXION_AUTOFILL_INITIALIZED__ = true;
 
-    // Common selectors for login forms
     const USERNAME_SELECTORS = [
         'input[type="email"]',
         'input[type="text"][name*="user"]',
@@ -36,7 +32,6 @@
     let autofillIcon = null;
     let pendingCredentials = null;
 
-    // Find username field near password field
     function findUsernameField(passwordField) {
         const form = passwordField.closest('form');
         const container = form || passwordField.parentElement?.parentElement?.parentElement || document.body;
@@ -50,7 +45,6 @@
             }
         }
         
-        // Fallback: find any text input before password field
         const allInputs = container.querySelectorAll('input[type="text"], input[type="email"]');
         for (const input of allInputs) {
             if (isVisible(input) && input.compareDocumentPosition(passwordField) & Node.DOCUMENT_POSITION_FOLLOWING) {
@@ -61,7 +55,6 @@
         return null;
     }
 
-    // Check if element is visible
     function isVisible(el) {
         if (!el) return false;
         const style = window.getComputedStyle(el);
@@ -71,7 +64,6 @@
                el.offsetParent !== null;
     }
 
-    // Create autofill icon
     function createAutofillIcon() {
         if (autofillIcon) return autofillIcon;
         
@@ -112,14 +104,12 @@
         return icon;
     }
 
-    // Position icon next to input field
     function positionIcon(icon, inputField) {
         const rect = inputField.getBoundingClientRect();
         icon.style.top = `${window.scrollY + rect.top + (rect.height - 24) / 2}px`;
         icon.style.left = `${window.scrollX + rect.right - 28}px`;
     }
 
-    // Send message to Rust via title IPC
     function sendToRust(type, data) {
         const message = JSON.stringify({ type, data });
         const originalTitle = document.title;
@@ -129,11 +119,9 @@
         }, 50);
     }
 
-    // Detect login forms
     function detectLoginForms() {
         const passwordFields = document.querySelectorAll(PASSWORD_SELECTORS.join(', '));
         
-        // Group password fields by form
         const formPasswordFields = new Map();
         for (const passwordField of passwordFields) {
             if (!isVisible(passwordField)) continue;
@@ -144,27 +132,23 @@
             formPasswordFields.get(form).push(passwordField);
         }
         
-        // Process each form - use first password field (not confirm password)
         for (const [form, fields] of formPasswordFields) {
-            const passwordField = fields[0]; // First password field
+            const passwordField = fields[0];
             
             const usernameField = findUsernameField(passwordField);
             if (!usernameField) continue;
             
-            // Found a login form
             const formData = {
                 url: window.location.href,
                 hasUsername: !!usernameField,
                 hasPassword: true,
             };
             
-            // Store reference for autofill
             lastDetectedForm = {
                 usernameField,
                 passwordField,
             };
             
-            // Create and position autofill icon
             const icon = createAutofillIcon();
             positionIcon(icon, passwordField);
             icon.style.display = 'flex';
@@ -173,20 +157,16 @@
                 sendToRust('request_autofill', { url: window.location.href });
             };
             
-            // Notify Rust about detected form
             sendToRust('form_detected', formData);
             
-            // Only handle first visible form
             return;
         }
         
-        // No form found, hide icon
         if (autofillIcon) {
             autofillIcon.style.display = 'none';
         }
     }
 
-    // Fill credentials
     window.__axionFillCredentials__ = function(username, password) {
         if (!lastDetectedForm) return false;
         
@@ -206,7 +186,6 @@
             passwordField.dispatchEvent(new Event('change', { bubbles: true }));
         }
         
-        // Hide icon after fill
         if (autofillIcon) {
             autofillIcon.style.display = 'none';
         }
@@ -214,10 +193,9 @@
         return true;
     };
 
-    // Capture credentials before form submission
     function captureCredentials(form) {
         const passwordFields = form.querySelectorAll('input[type="password"]');
-        const passwordField = passwordFields[0]; // First password field (not confirm)
+        const passwordField = passwordFields[0];
         if (!passwordField || !passwordField.value) return null;
         
         const usernameField = findUsernameField(passwordField);
@@ -230,9 +208,7 @@
         };
     }
 
-    // Detect form submission for save password prompt
     function setupFormSubmitDetection() {
-        // Capture credentials on submit event (capture phase - runs first)
         document.addEventListener('submit', (e) => {
             const form = e.target;
             if (!(form instanceof HTMLFormElement)) return;
@@ -240,12 +216,10 @@
             const credentials = captureCredentials(form);
             if (credentials) {
                 pendingCredentials = credentials;
-                // Send immediately in case preventDefault is called
                 sendToRust('credentials_submitted', credentials);
             }
         }, true);
         
-        // Also detect click on submit buttons (for SPA and forms with preventDefault)
         document.addEventListener('click', (e) => {
             const target = e.target;
             if (!(target instanceof HTMLElement)) return;
@@ -259,7 +233,6 @@
             const credentials = captureCredentials(form);
             if (credentials) {
                 pendingCredentials = credentials;
-                // Delay slightly to allow form validation, but send before potential navigation
                 setTimeout(() => {
                     if (pendingCredentials) {
                         sendToRust('credentials_submitted', pendingCredentials);
@@ -269,7 +242,6 @@
             }
         }, true);
 
-        // Monitor password field changes to capture credentials on blur
         document.addEventListener('blur', (e) => {
             const target = e.target;
             if (!(target instanceof HTMLInputElement)) return;
@@ -284,7 +256,6 @@
             }
         }, true);
 
-        // Send pending credentials on beforeunload (page navigation)
         window.addEventListener('beforeunload', () => {
             if (pendingCredentials) {
                 sendToRust('credentials_submitted', pendingCredentials);
@@ -292,7 +263,6 @@
         });
     }
 
-    // Update icon position on scroll/resize
     function updateIconPosition() {
         if (!autofillIcon || autofillIcon.style.display === 'none') return;
         if (!lastDetectedForm?.passwordField) return;
@@ -304,22 +274,18 @@
         }
     }
 
-    // Initialize
     function init() {
         detectLoginForms();
         setupFormSubmitDetection();
         
-        // Re-detect on DOM changes
         const observer = new MutationObserver(() => {
             setTimeout(detectLoginForms, 100);
         });
         observer.observe(document.body, { childList: true, subtree: true });
         
-        // Update icon position
         window.addEventListener('scroll', updateIconPosition);
         window.addEventListener('resize', updateIconPosition);
         
-        // Periodic check for SPA
         setInterval(detectLoginForms, 2000);
     }
 

@@ -36,7 +36,7 @@ export const useWeather = (language: Language = 'ru') => {
         const { latitude, longitude } = position.coords;
 
         const response = await fetch(
-          `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&timezone=auto`
+          `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`
         );
 
         if (!mounted) return;
@@ -61,7 +61,7 @@ export const useWeather = (language: Language = 'ru') => {
           const icon = weatherIconMap[weatherCode] || weatherIconMap[0];
           
           const geoResponse = await fetch(
-            `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json&accept-language=${locale}`
+            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&accept-language=${locale}`
           );
           
           if (!mounted) return;

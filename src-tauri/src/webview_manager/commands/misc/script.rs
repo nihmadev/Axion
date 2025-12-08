@@ -1,8 +1,5 @@
-//! Команды выполнения JavaScript
-
 use tauri::{AppHandle, Manager};
 
-/// Выполнение JavaScript
 #[tauri::command]
 pub async fn execute_script(
     app: AppHandle,

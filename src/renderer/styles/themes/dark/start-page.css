@@ -1,8 +1,6 @@
-/* ============================================== 
-   Start Page - Dark Theme
-   ============================================== */
 
-/* Clock widget */
+
+
 .app[data-theme="dark"] .clock-time {
   color: #e4e4e7;
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
@@ -39,7 +37,7 @@
   text-shadow: none;
 }
 
-/* Quick sites / Recent sites */
+
 .app[data-theme="dark"] .recent-site-item {
   background: rgba(0, 0, 0, 0.75);
   border-color: rgba(255, 255, 255, 0.08);
@@ -84,9 +82,7 @@
   color: #e4e4e7;
 }
 
-/* ============================================== 
-   Weather Widget - Dark Theme
-   ============================================== */
+
 
 .app[data-theme="dark"] .weather-widget {
   background: rgba(0, 0, 0, 0.75);

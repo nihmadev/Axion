@@ -14,7 +14,7 @@ const HistoryPage: React.FC<HistoryPageProps> = ({ history, onNavigate, onClearH
   const [searchFilter, setSearchFilter] = useState('');
   const t = useTranslation(language);
 
-  // Функция для получения правильной локали
+  
   const getLocale = (lang: string) => {
     switch (lang) {
       case 'ru': return 'ru-RU';
@@ -35,7 +35,7 @@ const HistoryPage: React.FC<HistoryPageProps> = ({ history, onNavigate, onClearH
       h.url.toLowerCase().includes(searchFilter.toLowerCase())
     ), [history, searchFilter]);
 
-  // Группировка по дням
+  
   const groupedHistory = useMemo(() => {
     const groups: { [key: string]: HistoryEntry[] } = {};
     
@@ -75,7 +75,7 @@ const HistoryPage: React.FC<HistoryPageProps> = ({ history, onNavigate, onClearH
   const getFaviconUrl = (url: string) => {
     try {
       const urlObj = new URL(url);
-      return `https://www.google.com/s2/favicons?domain=${urlObj.hostname}&sz=32`;
+      return `https://${urlObj.hostname}/favicon.ico`;
     } catch {
       return '';
     }

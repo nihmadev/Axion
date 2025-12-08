@@ -1,6 +1,4 @@
-/* ============================================== 
-   Settings Page - Light Theme
-   ============================================== */
+
 
 .app[data-theme="light"] .settings-page {
   background: #f0f2f5;
@@ -71,7 +69,7 @@
   background: var(--accent, #7c3aed);
 }
 
-/* Theme selector in settings */
+
 .app[data-theme="light"] .theme-option {
   background: rgba(0, 0, 0, 0.03);
 }
@@ -88,7 +86,7 @@
   color: var(--accent, #7c3aed);
 }
 
-/* Color picker */
+
 .app[data-theme="light"] .color-preset {
   box-shadow: none;
 }
@@ -101,7 +99,7 @@
   border-color: rgba(255, 255, 255, 0.95);
 }
 
-/* Radius selector */
+
 .app[data-theme="light"] .radius-option {
   background: rgba(0, 0, 0, 0.03);
   color: #64748b;
@@ -120,7 +118,7 @@
   background: rgba(0, 0, 0, 0.08);
 }
 
-/* Range input */
+
 .app[data-theme="light"] input[type="range"] {
   background: rgba(0, 0, 0, 0.08);
 }
@@ -130,7 +128,7 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
-/* Search engine selector */
+
 .app[data-theme="light"] .search-engine-option {
   background: rgba(0, 0, 0, 0.03);
   color: #475569;
@@ -145,7 +143,7 @@
   border-color: var(--accent, #7c3aed);
 }
 
-/* Wallpaper presets */
+
 .app[data-theme="light"] .wallpaper-preset {
   border-color: rgba(0, 0, 0, 0.1);
 }
@@ -154,11 +152,9 @@
   border-color: var(--accent, #7c3aed);
 }
 
-/* ============================================== 
-   Settings Page Additional - Light Theme
-   ============================================== */
 
-/* Position selector */
+
+
 .app[data-theme="light"] .position-option {
   background: rgba(0, 0, 0, 0.03);
   color: #64748b;
@@ -188,7 +184,7 @@
   background: rgba(0, 0, 0, 0.08);
 }
 
-/* Tab style selector */
+
 .app[data-theme="light"] .tab-style-option {
   background: rgba(0, 0, 0, 0.03);
   color: #64748b;
@@ -218,7 +214,7 @@
   background: rgba(0, 0, 0, 0.1);
 }
 
-/* About browser section */
+
 .app[data-theme="light"] .about-browser {
   background: transparent;
 }
@@ -239,12 +235,12 @@
   color: #94a3b8 !important;
 }
 
-/* Color input custom */
+
 .app[data-theme="light"] .color-input-custom::-webkit-color-swatch {
   border-color: rgba(0, 0, 0, 0.2);
 }
 
-/* Settings scrollbar */
+
 .app[data-theme="light"] .settings-page-content::-webkit-scrollbar-thumb,
 .app[data-theme="light"] .settings-nav::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.1);
@@ -255,7 +251,7 @@
   background: rgba(0, 0, 0, 0.18);
 }
 
-/* Sidebar style selector */
+
 .app[data-theme="light"] .sidebar-style-option {
   background: rgba(0, 0, 0, 0.03);
   color: #64748b;
@@ -277,7 +273,7 @@
   color: var(--accent, #7c3aed);
 }
 
-/* Text Input */
+
 .app[data-theme="light"] .settings-input {
   background: rgba(0, 0, 0, 0.04);
   border-color: rgba(0, 0, 0, 0.08);
@@ -288,7 +284,7 @@
   color: rgba(0, 0, 0, 0.4);
 }
 
-/* DoH Provider Info */
+
 .app[data-theme="light"] .doh-provider-info {
   background: rgba(0, 0, 0, 0.04);
 }

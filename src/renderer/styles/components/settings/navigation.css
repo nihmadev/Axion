@@ -45,7 +45,7 @@
   opacity: 1;
 }
 
-/* Scrollbar */
+
 .settings-nav::-webkit-scrollbar {
   width: 6px;
 }
@@ -63,7 +63,7 @@
   background: rgba(255, 255, 255, 0.2);
 }
 
-/* Responsive */
+
 @media (max-width: 900px) {
   .settings-nav {
     width: 180px;

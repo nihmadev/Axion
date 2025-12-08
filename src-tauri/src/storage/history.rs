@@ -18,7 +18,6 @@ pub async fn add_history(entry: HistoryEntry) -> Result<(), String> {
     let mut history = get_history().await?;
     history.insert(0, entry);
 
-    // Ограничиваем до 5000 записей
     if history.len() > 5000 {
         history.truncate(5000);
     }

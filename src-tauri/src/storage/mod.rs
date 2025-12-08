@@ -8,7 +8,6 @@ mod settings;
 use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
 
-// Re-exports
 pub use bookmarks::{get_bookmarks, set_bookmarks};
 pub use history::{add_history, clear_history, get_history, set_history};
 pub use import::{detect_browsers, import_from_browser, DetectedBrowser, ImportResult};
