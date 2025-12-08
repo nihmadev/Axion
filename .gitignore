@@ -29,7 +29,12 @@ npm-debug.log*
 # Tauri
 src-tauri/target/
 src-tauri/Cargo.lock
+
+# Project files
 soon.md
 STRUCTURE.md
-.kiro
-.vscode
+
+# IDE and tools
+.kiro/
+.vscode/
+.git/

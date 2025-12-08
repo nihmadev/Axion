@@ -32,6 +32,10 @@ Axion/
 │       ├── components/
 │       │   ├── AddressBar/
 │       │   │   └── index.tsx
+│       │   ├── Autofill/
+│       │   │   ├── AutofillPopup.tsx
+│       │   │   ├── SavePasswordPrompt.tsx
+│       │   │   └── Autofill.css
 │       │   ├── Downloads/
 │       │   │   └── index.tsx
 │       │   ├── History/
@@ -81,11 +85,23 @@ Axion/
 │       ├── constants/
 │       │   └── index.ts
 │       ├── hooks/
+│       │   ├── index.ts
+│       │   ├── useAppHandlers.ts
+│       │   ├── useAppState.ts
+│       │   ├── useAutofill.ts
 │       │   ├── useBookmarks.ts
 │       │   ├── useHistory.ts
-│       │   ├── useKeyboardShortcuts.ts
-│       │   ├── useSettings.ts
-│       │   └── useTabs.ts
+│       │   ├── useNavigation.ts
+│       │   ├── useSession.ts
+│       │   ├── useShortcuts.ts
+│       │   ├── useStartPageData.ts
+│       │   ├── useTabMemory.ts
+│       │   ├── useTabThumbnails.ts
+│       │   ├── useTranslation.ts
+│       │   ├── useWallpaper.ts
+│       │   ├── useWebViewVisibility.ts
+│       │   ├── useWorkspaces.ts
+│       │   └── useZoom.ts
 │       ├── i18n/
 │       │   ├── en.json
 │       │   ├── index.ts
@@ -258,6 +274,7 @@ Axion/
 │   │   │   └── utils.rs
 │   │   ├── scripts/
 │   │   │   ├── mod.rs
+│   │   │   ├── autofill.js
 │   │   │   └── page_observer.js
 │   │   ├── storage/
 │   │   │   ├── passwords/
@@ -274,6 +291,12 @@ Axion/
 │   │   │   └── settings.rs
 │   │   ├── webview_manager/
 │   │   │   ├── commands/
+│   │   │   │   ├── lifecycle/
+│   │   │   │   │   ├── close.rs
+│   │   │   │   │   ├── create.rs
+│   │   │   │   │   ├── download_handler.rs
+│   │   │   │   │   ├── mod.rs
+│   │   │   │   │   └── utils.rs
 │   │   │   │   ├── misc/
 │   │   │   │   │   ├── reader_mode/
 │   │   │   │   │   │   ├── content_finder.rs
@@ -291,7 +314,6 @@ Axion/
 │   │   │   │   │   ├── script.rs
 │   │   │   │   │   └── zoom.rs
 │   │   │   │   ├── info.rs
-│   │   │   │   ├── lifecycle.rs
 │   │   │   │   ├── mod.rs
 │   │   │   │   ├── navigation.rs
 │   │   │   │   └── visibility.rs
@@ -317,21 +339,26 @@ Axion/
 | Directory | Description |
 |-----------|-------------|
 | `.kiro/steering/` | Project documentation (product, structure, tech specs) |
-| `public/` | Static assets (icons, wallpapers) |
+| `public/` | Static assets (icons, wallpapers, autofill script) |
 | `src/renderer/` | Frontend React application |
-| `src/renderer/components/` | React components |
-| `src/renderer/hooks/` | Custom React hooks |
-| `src/renderer/i18n/` | Internationalization (EN, RU) |
+| `src/renderer/components/` | React components (AddressBar, Autofill, Downloads, etc.) |
+| `src/renderer/hooks/` | Custom React hooks (17 hooks) |
+| `src/renderer/i18n/` | Internationalization (EN, RU, ES, FR, DE, ZH-CN) |
 | `src/renderer/styles/` | CSS styles (components, themes, layout) |
 | `src-tauri/` | Tauri backend (Rust) |
 | `src-tauri/src/adblock/` | Ad blocking functionality |
 | `src-tauri/src/downloads/` | Download manager |
+| `src-tauri/src/scripts/` | JavaScript injection scripts (autofill, page observer) |
 | `src-tauri/src/storage/` | Data persistence (bookmarks, history, passwords, settings) |
 | `src-tauri/src/webview_manager/` | WebView management and commands |
+| `src-tauri/src/webview_manager/commands/lifecycle/` | WebView create/close/download handling |
+| `src-tauri/src/webview_manager/commands/misc/` | Scripts, zoom, PiP, reader mode |
 
 ## Tech Stack
 
-- **Frontend**: React + TypeScript + Vite
-- **Backend**: Tauri (Rust)
+- **Frontend**: React 18 + TypeScript 5 + Vite 5
+- **Backend**: Tauri 2.0 (Rust Edition 2021)
+- **WebView**: Native WebView2 via webview2-com
+- **Database**: SQLite (rusqlite)
 - **Styling**: CSS with themes (dark/light)
-- **i18n**: Custom implementation (EN, RU)
+- **i18n**: Custom implementation (EN, RU, ES, FR, DE, ZH-CN)

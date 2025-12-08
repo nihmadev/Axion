@@ -24,6 +24,7 @@ Axion is a lightweight, high-performance web browser for Windows that emphasizes
 - **HTTPS-Only Mode**: Force HTTPS connections
 - **DNS-over-HTTPS**: Support for Cloudflare, Google, Quad9, AdGuard, or custom DoH providers
 - **Password Vault**: Encrypted password storage with AES-GCM and Argon2 key derivation
+- **Password Autofill**: Automatic form filling with saved credentials
 - **Clear Data on Exit**: Optional automatic data clearing
 
 ## Performance Features
@@ -40,6 +41,8 @@ Axion is a lightweight, high-performance web browser for Windows that emphasizes
 - **Quick Sites**: Pinned sites grid with multiple layout options
 - **Notifications**: Toast notification system
 - **Update Banner**: In-app update notifications
+- **Autofill Popup**: Password autofill suggestions UI
+- **Reader Mode**: Distraction-free reading view
 
 ## Target Platform
 

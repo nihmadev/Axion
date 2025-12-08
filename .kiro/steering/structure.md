@@ -18,6 +18,7 @@ XOLO/
 renderer/
 ├── components/            # React components (organized by feature)
 │   ├── AddressBar/       # URL bar and navigation controls
+│   ├── Autofill/         # Password autofill popup and save prompt
 │   ├── Downloads/        # Download manager UI
 │   ├── History/          # Browsing history page
 │   ├── Import/           # Browser data import wizard
@@ -35,6 +36,7 @@ renderer/
 ├── hooks/                # Custom React hooks
 │   ├── useAppHandlers.ts # App-level event handlers
 │   ├── useAppState.ts    # Global app state management
+│   ├── useAutofill.ts    # Password autofill management
 │   ├── useBookmarks.ts   # Bookmarks CRUD operations
 │   ├── useHistory.ts     # Browsing history management
 │   ├── useNavigation.ts  # WebView navigation controls
@@ -79,6 +81,8 @@ src/
 │   ├── types.rs          # Download types
 │   └── utils.rs          # Download utilities
 ├── scripts/              # JavaScript injection scripts
+│   ├── mod.rs            # Module exports
+│   ├── autofill.js       # Password autofill injection script
 │   └── page_observer.js  # Page info observer script
 ├── storage/              # Data persistence modules
 │   ├── mod.rs            # Module exports
@@ -101,10 +105,21 @@ src/
     └── commands/         # WebView-specific commands
         ├── mod.rs        # Commands exports
         ├── info.rs       # WebView info queries
-        ├── lifecycle.rs  # Create/close WebView
         ├── navigation.rs # Navigate, back, forward, reload
         ├── visibility.rs # Show/hide, bounds updates
-        └── misc/         # Additional commands (zoom, PiP, scripts)
+        ├── lifecycle/    # WebView lifecycle commands
+        │   ├── mod.rs    # Lifecycle exports
+        │   ├── create.rs # Create WebView instance
+        │   ├── close.rs  # Close WebView instance
+        │   ├── download_handler.rs # Download event handling
+        │   └── utils.rs  # Lifecycle utilities
+        └── misc/         # Additional commands
+            ├── mod.rs    # Misc exports
+            ├── page_info.rs # Page information extraction
+            ├── pip.rs    # Picture-in-Picture mode
+            ├── script.rs # Script injection
+            ├── zoom.rs   # Zoom controls
+            └── reader_mode/ # Reader mode feature
 ```
 
 ## Code Organization Patterns

@@ -40,6 +40,7 @@ Axion/
 │   └── renderer/               # Frontend (React)
 │       ├── components/         # UI components
 │       │   ├── AddressBar/     # URL input and navigation
+│       │   ├── Autofill/       # Password autofill UI
 │       │   ├── Downloads/      # Download manager UI
 │       │   ├── History/        # Browsing history
 │       │   ├── Import/         # Browser data import UI
@@ -78,6 +79,9 @@ Axion/
 │   │   │   ├── types.rs        # Download types
 │   │   │   └── utils.rs        # Download utilities
 │   │   ├── scripts/            # Injected JavaScript
+│   │   │   ├── mod.rs          # Module exports
+│   │   │   ├── autofill.js     # Password autofill script
+│   │   │   └── page_observer.js # Page info observer
 │   │   ├── storage/            # Data persistence
 │   │   │   ├── mod.rs          # Module exports
 │   │   │   ├── bookmarks.rs    # Bookmark storage
@@ -94,10 +98,14 @@ Axion/
 │   │       └── commands/       # WebView commands
 │   │           ├── mod.rs      # Command exports
 │   │           ├── info.rs     # WebView info queries
-│   │           ├── lifecycle.rs # Create/close WebView
 │   │           ├── navigation.rs # Navigate, back, forward, reload
 │   │           ├── visibility.rs # Show/hide, bounds updates
-│   │           └── misc/       # Scripts, zoom, PiP, etc.
+│   │           ├── lifecycle/  # WebView lifecycle
+│   │           │   ├── create.rs # Create WebView
+│   │           │   ├── close.rs  # Close WebView
+│   │           │   ├── download_handler.rs # Downloads
+│   │           │   └── utils.rs  # Utilities
+│   │           └── misc/       # Scripts, zoom, PiP, reader mode
 │   ├── Cargo.toml              # Rust dependencies
 │   └── tauri.conf.json         # Tauri configuration
 │
